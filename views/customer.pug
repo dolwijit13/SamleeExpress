@@ -1,0 +1,24 @@
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='description', content='Some description')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+    body
+        div.container
+            h3 Customer 
+            hr
+            //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
+            table.table.table-bordered
+                tr
+                    th.text-center(width='10%') id
+                    th.text-left(width='38%') FirstName
+                    th.text-left(width='38%') LastName
+                    th.text-left(width='14%') StartingDate
+                for ps in customer
+                    tr
+                        td=ps.RegisterID
+                        td=ps.FirstName
+                        td=ps.LastName
+                        td=ps.StartingDate

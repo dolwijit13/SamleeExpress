@@ -16,13 +16,15 @@ connection.connect(function(err) {
 
 app.use('/',require('./routes'));
 
-//app.get('/',(req,res) => res.send('hello world'));
+app.get('/',(req,res) => res.send('hello world'));
+
+/*
 app.get('/',(req,res) => {
-	connection.query('SELECT * FROM test',(err,result) => {
-		res.render('index',{
-			test:result
-		});
-	})
+    connection.query('SELECT * FROM posts',(err,result) => {
+        res.render('index',{
+            posts:result
+        });
+    })
 });
 
 app.get('/add',(req,res) => {
@@ -72,6 +74,7 @@ app.get('/delete/:id',(req,res) => {
         return res.redirect('/');
     });	
 });
+*/
 
 
 app.listen(port,() => console.log('Server Runing'));

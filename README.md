@@ -1,8 +1,8 @@
 Samlee Express
 ===
-####Database Systems term project
+#### Database Systems term project
 
-ก๊อบโค้ดข้างล่าง แล้วเซฟไว้ชื่อ database.js ด้วย
+ก๊อบโค้ดข้างล่าง แล้วเซฟไว้ชื่อ database.js ด้วย .gitignore เอาไว้
 อย่าลืมใส่ password ด้วยนะ
 ```
 const mysql = require('mysql');
