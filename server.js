@@ -1,20 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const mysql = require('mysql');
 const bodyParser = require('body-parser')
+const connection = require('./database')
 
 app.set('view engine','pug');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-
-var connection = mysql.createConnection({
-	host : 'localhost',
-	user : 'root',
-	password : '',
-	database : 'testdb'
-});
 
 connection.connect(function(err) {
   if (err) throw err;
