@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 
-router.use("/shiba", require("./shiba"));
-router.use("/akita", require("./akita"));
-router.use("/customer", require("./addCustomer"));
+router.use("/customer", require("./customer"));
 
 module.exports = router;

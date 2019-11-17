@@ -10,11 +10,12 @@ html
 			br 
 			form(action='' method='POST')
 				.form-group
-					label(for='post_id') id
+					label(for='id') id
 					input#post_title.form-control(type='text' name='id' placeholder='id' required='')
-					label(for='post_name') Post name
-					textarea#post_content.form-control(style='height:100px;' name='name' placeholder='Write something' required='')
-					br
+					label(for='FirstName') First name
+					textarea#post_title.form-control(type='text' name='FirstName' placeholder='Write something' required='')
+					label(for='LastName') Last name
+					textarea#post_title.form-control(type='text' name='LastName' placeholder='Write something' required='')
 					input.btn.btn-success(type='submit' value='ADD')
 			
-					a.btn.btn-info(href='/') Back
+					a.btn.btn-info(href='/customer') Back

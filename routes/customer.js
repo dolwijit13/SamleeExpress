@@ -12,21 +12,22 @@ router.get('/',(req,res) => {
 });
 
 router.get('/add',(req,res) => {
-		res.render('add')
+		res.render('addCustomer')
 });
 
 router.post('/add',(req,res) => {
-    console.log('addasdasd');
 	const id = req.body.id;
-    const FirstName = req.body.name;
-    const LastName = "Inu";
+    const FirstName = req.body.FirstName;
+	const LastName = req.body.LastName;
+	const StartingDate = new Date();
 	const post = {
 		RegisterID:id,
-        FirstName:FirstName,
+		FirstName:FirstName,
+		LastName:LastName,
+		StartingDate:StartingDate
     }
-    console.log(id);
 	connection.query('INSERT INTO customer SET ?',post,(err) => {
-		console.log('Data Inserted');
+		console.log('Inserted new customer');
 		return res.redirect('/customer');
 	});
 });
