@@ -4,7 +4,8 @@
   "description": "2110322 Database System term project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,14 @@
     "react-csv": "^1.1.2",
     "react-dom": "^16.11.0",
     "reactstrap": "^8.1.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolwijit13/SamleeExpress.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolwijit13/SamleeExpress/issues"
+  },
+  "homepage": "https://github.com/dolwijit13/SamleeExpress#readme"
 }
