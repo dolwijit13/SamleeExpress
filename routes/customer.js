@@ -13,28 +13,18 @@ router.get('/',(req,res) => {
 
 
 
-/*wait
+//*wait
 //Create
 router.get('/add',(req,res) => {
 		res.render('addCustomer');
 });
 
+//*
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
 router.post('/add',(req,res) => {
-	const RegisterID = req.body.RegisterID;
-	const FirstName = req.body.FirstName;
-	const LastName = req.body.LastName;
-	const TelephoneNo = req.body.TelephoneNo;
-	const EMail = req.body.EMail;
-	const HouseNo = req.body.HouseNo;
-	const Street = req.body.Street;
-	const SubDistrict = req.body.SubDistrict;
-	const District = req.body.District;
-	const Province = req.body.Province;
-	const Country = req.body.Country;
-	const PostalCode = req.body.PostalCode;
-	const StartingDate = new Date(); //Now
-	const Gender = req.body.Gender;
+	const { RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
+		PostalCode,Gender } = req.body;
+	StartingDate = new Date();
 	const customer = {
 		RegisterID : RegisterID,
 		FirstName : FirstName,

@@ -20,9 +20,9 @@ module.exports = mysql.createConnection({
 3.ลงๆ ตามลิงค์นี้
 https://monkeywebstudio.com/nodejs-express-js-curd-mysql-part-1/
 
-4.ตอนนี้ยังไม่ได้เชื่อมกับ front เลยใช้ pug ไปก่อน
-ไม่รู้ว่าแค่รันต้องลงอะไรเพิ่มมั้ย แต่ถ้าเออเร่อก็ลองทำๆตามลิงค์นี้
-https://monkeywebstudio.com/nodejs-express-js-curd-mysql-part-2/
 
-5.ตอนนี้เขียนไปหน้าเดียวคือ
-http://localhost:3000/customer
+4.npm install --save react-scripts
+
+5.รันโดย
+npm start ที่ samlee-frontend  
+node server.js ที่ root
