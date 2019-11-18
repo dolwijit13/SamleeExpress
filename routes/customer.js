@@ -11,6 +11,8 @@ router.get('/',(req,res) => {
 });
 
 
+
+
 /*wait
 //Create
 router.get('/add',(req,res) => {
@@ -55,7 +57,7 @@ router.post('/add',(req,res) => {
 	});
 });
 
-*/
+//*/
 
 
 /*wait
