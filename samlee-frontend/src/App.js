@@ -13,14 +13,36 @@ class App extends React.Component {
   }
 
   fetchUsers() {
+<<<<<<< HEAD
     fetch('http://localhost:8000/customer')
+||||||| merged common ancestors
+    fetch(`http://localhost:3000/customer`)
+=======
+    fetch(`http://localhost:8000/customer`)
+>>>>>>> b5733e19b35222545c91d71428bc68b5c7d8e8c5
       .then(response => response.json())
+<<<<<<< HEAD
       .then(data =>{
         console.log(data);
         this.setState({
           users: data,
           isLoading: false,
       })}
+||||||| merged common ancestors
+      .then(data =>
+        this.setState({
+          users: data,
+          isLoading: false,
+        })
+=======
+      .then(data =>
+        {
+          this.setState({
+            users: data,
+            isLoading: false,
+          })
+        }
+>>>>>>> b5733e19b35222545c91d71428bc68b5c7d8e8c5
       )
       .catch(error => this.setState({ error, isLoading: false }));
   }

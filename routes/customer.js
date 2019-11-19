@@ -1,9 +1,9 @@
 var express = require('express')
 var router = express.Router()
 const connection = require('../database')
- 
 
 //Read
+
 router.get('/',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
@@ -13,7 +13,9 @@ router.get('/',(req,res) => {
 
 
 
+//Add
 
+<<<<<<< HEAD
 /*wait
 //Create
 router.get('/add',(req,res) => {
@@ -21,43 +23,74 @@ router.get('/add',(req,res) => {
 });
 
 //*
-//RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
-router.post('/add',(req,res) => {
-	const { RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
-		PostalCode,Gender } = req.body;
-	StartingDate = new Date();
-	const customer = {
-		RegisterID : RegisterID,
-		FirstName : FirstName,
-		LastName : LastName,
-		TelephoneNo : TelephoneNo,
-		EMail : EMail,
-		HouseNo : HouseNo,
-		Street : Street,
-		SubDistrict : SubDistrict,
-		District : District,
-		Province : Province,
-		Country : Country,
-		PostalCode : PostalCode,
-		StartingDate : StartingDate,
-		Gender : Gender
-    }
-	connection.query('INSERT INTO customer SET ?',customer,(err) => {
-		console.log('Inserted customer id : '+ RegisterID + 'Name :'+FirstName+' '+LastName);
-		return res.redirect('/customer');
-	});
+||||||| merged common ancestors
+//*wait
+//Create
+router.get('/add',(req,res) => {
+		res.render('addCustomer');
 });
 
-//*/
+//*
+=======
+>>>>>>> b5733e19b35222545c91d71428bc68b5c7d8e8c5
+//RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
+
+router.post('/add',(req,res) => {
+	var mxId = 0;
+	connection.query('select MAX(RegisterID) FROM CUSTOMER;',(err,result) => {
+		mxId = parseInt(result[0]['MAX(RegisterID)'])+1;
+	
 
 
-/*wait
+	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender } = req.body;
+	StartingDate = new Date();
+	var RegisterID = "" + mxId;
+	const tmp=10-RegisterID.length;
+	for(var i=1;i<=tmp;i++) RegisterID = "0"+RegisterID;
+	const customer = {
+		RegisterID,
+		FirstName:FirstName,
+		LastName,
+		TelephoneNo,
+		EMail,
+		HouseNo,
+		Street,
+		SubDistrict,
+		District,
+		Province,
+		Country,
+		PostalCode,
+		StartingDate,
+		Gender
+	}
+	if(FirstName == undefined)
+	{
+		res.status(500).send("FirstName can't be empty");
+	}
+	else if(LastName == undefined)
+	{
+		res.status(501).send("LastName can't be empty");
+	}
+	else
+	{
+		connection.query('INSERT INTO customer SET ?',customer,(err) => {
+			console.log('Inserted customer id : '+ RegisterID + ' Name :'+FirstName+' '+LastName);
+			return res.redirect('/customer');
+		});
+
+	}
+
+	})
+});
+
+
+//*wait
 //Update
-router.get('/edit/:id',(req,res) => {
+router.get('/edit/:RegisterID',(req,res) => {
 	
 	const edit_ID = req.params.RegisterID;
 	
-	connection.query('SELECT * FROM CUSTOMER WHERE id=?',[edit_ID],(err,results) => {
+	connection.query('SELECT * FROM CUSTOMER WHERE RegisterID=?',[edit_ID],(err,results) => {
 		if(results){
 			res.render('edit',{
 				customer:results[0]
@@ -67,21 +100,10 @@ router.get('/edit/:id',(req,res) => {
 });
 
 
-router.post('/edit/:id',(req,res) => {
+router.post('/edit/:RegisterID',(req,res) => {
 	//can't edit primary key
-	const FirstName = req.body.FirstName;
-	const LastName = req.body.LastName;
-	const TelephoneNo = req.body.TelephoneNo;
-	const EMail = req.body.EMail;
-	const HouseNo = req.body.HouseNo;
-	const Street = req.body.Street;
-	const SubDistrict = req.body.SubDistrict;
-	const District = req.body.District;
-	const Province = req.body.Province;
-	const Country = req.body.Country;
-	const PostalCode = req.body.PostalCode;
-	const StartingDate = req.body.StartingDate;
-	const Gender = req.body.Gender;
+	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
+		PostalCode,StartingDate,Gender } = req.body;
 
 	const oldId = req.params.RegisterID;
 	
@@ -99,7 +121,7 @@ router.post('/edit/:id',(req,res) => {
 
 
 //Delete
-router.get('/delete/:id',(req,res) => {
+router.get('/delete/:RegisterID',(req,res) => {
     connection.query('DELETE FROM `CUSTOMER` WHERE RegisterID = ?', [req.params.RegisterID], (err, results) => {
         return res.redirect('/cutstomer');
     });	

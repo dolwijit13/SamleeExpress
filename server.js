@@ -22,7 +22,7 @@ app.get('/',(req,res) => res.send('hello world'));
 app.get('/',(req,res) => {
     connection.query('SELECT * FROM posts',(err,result) => {
         res.render('index',{
-            posts:result
+            test:result
         });
     })
 });
