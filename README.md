@@ -24,5 +24,5 @@ https://monkeywebstudio.com/nodejs-express-js-curd-mysql-part-1/
 4.npm install --save react-scripts
 
 5.รันโดย
-npm start ที่ samlee-frontend 
+npm start ที่ samlee-frontend  
 node server.js ที่ root
