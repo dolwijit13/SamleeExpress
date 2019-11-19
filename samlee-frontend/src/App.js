@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-class Customer extends React.Component {
+class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
@@ -24,4 +24,4 @@ class Customer extends React.Component {
     );
   }
 }
-export default Customer;
+export default App;
