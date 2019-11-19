@@ -86,8 +86,6 @@ create table Parcel
     Province Text,
     Country Text,
     PostalCode char(5),
-    StartingDate date,
-    Gender char(1),
     ShipmentType Text,
     FK_Send_Customer_SenderID char(10),
     FK_Receive_Customer_ReceiverID char(10),
@@ -109,6 +107,17 @@ create table ResponseTo
     Timestamp datetime
 );
 
+/*
+drop table PARCEL;
+delete From CUSTOMER where RegisterID = "2";
+*/
+
 select * from customer;
 insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000",DATE("2019-11-17"),"D");
 #(RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender)
+#insert into CUSTOMER (FirstName,LastName) VALUES ("Bump","Dolwijit");
+select MAX(RegisterID) FROM CUSTOMER c;
+
+select * from Parcel;
+#//ParcelID,Type,InsuranceType,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,ShipmentType,FK_Send_Customer_SenderID,FK_Receive_Customer_ReceiverID,FK_Store_Employee_StockSSN
+insert into PARCEL VALUES ("0000000001","EMS","Normal","10","street1","SubDistrict1","District1","Bangkok","Thailand","10000","Normal","0123456789","0123456789","0123456789012");
