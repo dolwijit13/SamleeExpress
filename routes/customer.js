@@ -1,9 +1,9 @@
 var express = require('express')
 var router = express.Router()
 const connection = require('../database')
- 
 
 //Read
+
 router.get('/',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
@@ -13,41 +13,56 @@ router.get('/',(req,res) => {
 
 
 
-/*wait
-//Create
-router.get('/add',(req,res) => {
-		res.render('addCustomer');
-});
+//Add
 
-//*
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
 router.post('/add',(req,res) => {
-	const { RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
-		PostalCode,Gender } = req.body;
-	StartingDate = new Date();
-	const customer = {
-		RegisterID : RegisterID,
-		FirstName : FirstName,
-		LastName : LastName,
-		TelephoneNo : TelephoneNo,
-		EMail : EMail,
-		HouseNo : HouseNo,
-		Street : Street,
-		SubDistrict : SubDistrict,
-		District : District,
-		Province : Province,
-		Country : Country,
-		PostalCode : PostalCode,
-		StartingDate : StartingDate,
-		Gender : Gender
-    }
-	connection.query('INSERT INTO customer SET ?',customer,(err) => {
-		console.log('Inserted customer id : '+ RegisterID + 'Name :'+FirstName+' '+LastName);
-		return res.redirect('/customer');
-	});
-});
+	var mxId = 0;
+	connection.query('select MAX(RegisterID) FROM CUSTOMER;',(err,result) => {
+		mxId = parseInt(result[0]['MAX(RegisterID)'])+1;
+	
 
-//*/
+
+	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender } = req.body;
+	StartingDate = new Date();
+	var RegisterID = "" + mxId;
+	const tmp=10-RegisterID.length;
+	for(var i=1;i<=tmp;i++) RegisterID = "0"+RegisterID;
+	const customer = {
+		RegisterID,
+		FirstName,
+		LastName,
+		TelephoneNo,
+		EMail,
+		HouseNo,
+		Street,
+		SubDistrict,
+		District,
+		Province,
+		Country,
+		PostalCode,
+		StartingDate,
+		Gender
+	}
+	if(FirstName == undefined)
+	{
+		res.status(500).send("FirstName can't be empty");
+	}
+	else if(LastName == undefined)
+	{
+		res.status(501).send("LastName can't be empty");
+	}
+	else
+	{
+		connection.query('INSERT INTO customer SET ?',customer,(err) => {
+			console.log('Inserted customer id : '+ RegisterID + ' Name :'+FirstName+' '+LastName);
+			return res.redirect('/customer');
+		});
+
+	}
+
+	})
+});
 
 
 //*wait
