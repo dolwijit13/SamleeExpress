@@ -5,6 +5,7 @@ const connection = require('../database')
 
 //Read
 router.get('/',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
 		res.json(result);
     })
@@ -13,7 +14,7 @@ router.get('/',(req,res) => {
 
 
 
-//*wait
+/*wait
 //Create
 router.get('/add',(req,res) => {
 		res.render('addCustomer');

@@ -2,60 +2,57 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
-  state = {
-    isLoading: true,
-    users: [],
-    error: null
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoading: true,
+      users: null,
+      error: null
+    };
+    this.fetchUsers = this.fetchUsers.bind(this);
+  }
 
   fetchUsers() {
-    fetch('http://localhost:3000/customer')
+    fetch('http://localhost:8000/customer')
       .then(response => response.json())
-      .then(data =>
+      .then(data =>{
+        console.log(data);
         this.setState({
           users: data,
           isLoading: false,
-        })
+      })}
       )
       .catch(error => this.setState({ error, isLoading: false }));
   }
-
-  componentDidMount() {
+  componentDidMount(){
     this.fetchUsers();
   }
   render() {
-    const { isLoading, users, error } = this.state;
     return (
-      <React.Fragment>
-
-        <form>
-          <label>
-            Name:
-            <input type="text" name="name" />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-
-        <h1>Customer</h1>
-        {error ? <p>{error.message}</p> : null}
-        {!isLoading ? (
-          users.map(user => {
+      <div>
+        <ul>
+          <li className="left"><a>SamleeExpress</a></li>
+          <li className="right"><a>Log out</a></li>
+          <li className="right"><a>History</a></li>
+        </ul>
+        <div className="search">
+          <input type="text" placeholder="Search.." />
+          <button type="submit" onClick={this.fetchUsers}>search</button>
+          {!this.state.isLoading ? (
+          this.state.users.map(user => {
             const { RegisterID, FirstName, LastName } = user;
             return (
-              <div key={RegisterID}>
+              <div key={RegisterID} className="parcel">
                 <p>FirstName: {FirstName}</p>
                 <p>LastName: {LastName}</p>
                 <hr />
               </div>
             );
           })
-        ) : (
-          <h3>Loading...</h3>
-        )}
-      </React.Fragment>
+        ) : null}
+        </div>
+      </div>
     );
   }
 }
-
-
 export default App;
