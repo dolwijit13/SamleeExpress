@@ -16,6 +16,7 @@ router.get('/',(req,res) => {
 //Add
 
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
+
 router.post('/add',(req,res) => {
 	var mxId = 0;
 	connection.query('select MAX(RegisterID) FROM CUSTOMER;',(err,result) => {
@@ -30,7 +31,7 @@ router.post('/add',(req,res) => {
 	for(var i=1;i<=tmp;i++) RegisterID = "0"+RegisterID;
 	const customer = {
 		RegisterID,
-		FirstName,
+		FirstName:FirstName,
 		LastName,
 		TelephoneNo,
 		EMail,
