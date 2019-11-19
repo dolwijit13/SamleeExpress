@@ -40,13 +40,15 @@ class App extends React.Component {
   };
 
   fetchUsers() {
-    fetch(`http://localhost:3000/customer`)
+    fetch(`http://localhost:8000/customer`)
       .then(response => response.json())
       .then(data =>
-        this.setState({
-          users: data,
-          isLoading: false,
-        })
+        {
+          this.setState({
+            users: data,
+            isLoading: false,
+          })
+        }
       )
       .catch(error => this.setState({ error, isLoading: false }));
   }

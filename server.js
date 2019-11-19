@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 8000;
 const bodyParser = require('body-parser')
 const connection = require('./database')
 
@@ -22,7 +22,7 @@ app.get('/',(req,res) => res.send('hello world'));
 app.get('/',(req,res) => {
     connection.query('SELECT * FROM posts',(err,result) => {
         res.render('index',{
-            posts:result
+            test:result
         });
     })
 });

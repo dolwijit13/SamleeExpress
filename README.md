@@ -23,6 +23,10 @@ https://monkeywebstudio.com/nodejs-express-js-curd-mysql-part-1/
 
 4.npm install --save react-scripts
 
-5.รันโดย
+5.รันโดย  
 npm start ที่ samlee-frontend  
 node server.js ที่ root
+
+6.ถ้าเกิด error ER_NOT_SUPPORTED_AUTH_MODE ให้รัน  
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'  
+ใน mySQL อย่าลืมเปลี่ยน password ด้วย

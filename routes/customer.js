@@ -5,6 +5,7 @@ const connection = require('../database')
 
 //Read
 router.get('/',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
 		res.json(result);
     })
@@ -12,8 +13,7 @@ router.get('/',(req,res) => {
 
 
 
-
-//*wait
+/*wait
 //Create
 router.get('/add',(req,res) => {
 		res.render('addCustomer');
@@ -50,13 +50,13 @@ router.post('/add',(req,res) => {
 //*/
 
 
-/*wait
+//*wait
 //Update
-router.get('/edit/:id',(req,res) => {
+router.get('/edit/:RegisterID',(req,res) => {
 	
 	const edit_ID = req.params.RegisterID;
 	
-	connection.query('SELECT * FROM CUSTOMER WHERE id=?',[edit_ID],(err,results) => {
+	connection.query('SELECT * FROM CUSTOMER WHERE RegisterID=?',[edit_ID],(err,results) => {
 		if(results){
 			res.render('edit',{
 				customer:results[0]
@@ -66,21 +66,10 @@ router.get('/edit/:id',(req,res) => {
 });
 
 
-router.post('/edit/:id',(req,res) => {
+router.post('/edit/:RegisterID',(req,res) => {
 	//can't edit primary key
-	const FirstName = req.body.FirstName;
-	const LastName = req.body.LastName;
-	const TelephoneNo = req.body.TelephoneNo;
-	const EMail = req.body.EMail;
-	const HouseNo = req.body.HouseNo;
-	const Street = req.body.Street;
-	const SubDistrict = req.body.SubDistrict;
-	const District = req.body.District;
-	const Province = req.body.Province;
-	const Country = req.body.Country;
-	const PostalCode = req.body.PostalCode;
-	const StartingDate = req.body.StartingDate;
-	const Gender = req.body.Gender;
+	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
+		PostalCode,StartingDate,Gender } = req.body;
 
 	const oldId = req.params.RegisterID;
 	
@@ -98,7 +87,7 @@ router.post('/edit/:id',(req,res) => {
 
 
 //Delete
-router.get('/delete/:id',(req,res) => {
+router.get('/delete/:RegisterID',(req,res) => {
     connection.query('DELETE FROM `CUSTOMER` WHERE RegisterID = ?', [req.params.RegisterID], (err, results) => {
         return res.redirect('/cutstomer');
     });	
