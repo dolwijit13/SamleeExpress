@@ -45,11 +45,11 @@ router.post('/add',(req,res) => {
 		StartingDate,
 		Gender
 	}
-	if(FirstName == undefined)
+	if(FirstName == undefined || FirstName == "")
 	{
 		res.status(500).send("FirstName can't be empty");
 	}
-	else if(LastName == undefined)
+	else if(LastName == undefined|| LastName == "")
 	{
 		res.status(501).send("LastName can't be empty");
 	}
