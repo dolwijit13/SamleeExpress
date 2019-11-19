@@ -1,0 +1,42 @@
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='description' content='Some description')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+    body
+        div.container(style="margin-top: 3rem;")
+            h1.text-center Edit Customer Data
+            br
+            - var url = "/customer/edit/" + customer["RegisterID"];
+            form(action=url method='POST')
+                each value,key in customer
+                    .form-group
+                        label.font-weight-bold(for=key) #{key}
+                        case key
+                            when "RegisterID"
+                                input.form-control(id=key name=key type="text" required='' placeholder='type here...' value=value disabled="")
+                            when "StartingDate"
+                                input.form-control(id=key name=key type="date" required='' placeholder='type here...' value=value)
+                            when "Gender"
+                                .form-check
+                                    case value
+                                        when "M"
+                                            input.form-check-input(type="radio" name=key id="male" value="M" checked="")
+                                        default
+                                            input.form-check-input(type="radio" name=key id="male" value="M")
+                                    label.form-check-label(for="male") male
+                                .form-check
+                                    case value
+                                        when "F"
+                                            input.form-check-input(type="radio" name=key id="female" value="F" checked="")
+                                        default
+                                            input.form-check-input(type="radio" name=key id="female" value="F")
+                                    label.form-check-label(for="female") female
+                            default
+                                input.form-control(id=key name=key type="text" required='' placeholder='type here...' value=value) 
+                br
+                input.btn.btn-success.mr-2(type='submit' value='UPDATE')
+
+                a.btn.btn-info(href='/') Back

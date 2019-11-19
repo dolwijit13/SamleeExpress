@@ -113,7 +113,7 @@ delete From CUSTOMER where RegisterID = "2";
 */
 
 select * from customer;
-insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000",DATE("2019-11-17"),"D");
+insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000",DATE("2019-11-17"),"M");
 #(RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender)
 #insert into CUSTOMER (FirstName,LastName) VALUES ("Bump","Dolwijit");
 select MAX(RegisterID) FROM CUSTOMER c;

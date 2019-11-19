@@ -8,31 +8,13 @@ router.get('/',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
 		res.json(result);
-    })
+	})
 });
 
 
 
 //Add
 
-<<<<<<< HEAD
-/*wait
-//Create
-router.get('/add',(req,res) => {
-		res.render('addCustomer');
-});
-
-//*
-||||||| merged common ancestors
-//*wait
-//Create
-router.get('/add',(req,res) => {
-		res.render('addCustomer');
-});
-
-//*
-=======
->>>>>>> b5733e19b35222545c91d71428bc68b5c7d8e8c5
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
 
 router.post('/add',(req,res) => {
@@ -92,13 +74,23 @@ router.get('/edit/:RegisterID',(req,res) => {
 	
 	connection.query('SELECT * FROM CUSTOMER WHERE RegisterID=?',[edit_ID],(err,results) => {
 		if(results){
-			res.render('edit',{
-				customer:results[0]
+			var data = JSON.parse(JSON.stringify(results[0]));
+			data["StartingDate"] = getOnlyDate(data["StartingDate"]);
+			res.render('editCustomer',{
+				customer:data,
 			});
 		}
 	});
 });
 
+//get only yyyy-mm-dd in datetime format from query
+function getOnlyDate(dtFromQuery){	
+	const index = dtFromQuery.indexOf("T");
+	if ( index > 0 ){
+		return dtFromQuery.slice(0,index);
+	}
+	return dtFromQuery;
+}
 
 router.post('/edit/:RegisterID',(req,res) => {
 	//can't edit primary key
@@ -107,14 +99,17 @@ router.post('/edit/:RegisterID',(req,res) => {
 
 	const oldId = req.params.RegisterID;
 	
-	connection.query('UPDATE `CUSTOMER` SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
-	, SubDistric = ?t, District = ?, Province, = ? Country = ?,PostalCode = ?, StartingDate = ?, Gender = ?  WHERE RegisterID = ?',
+	connection.query('UPDATE CUSTOMER SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
+	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?, Gender = ?  WHERE RegisterID = ?',
 	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode, StartingDate,
 		Gender,oldId], (err, results) => {
+			if ( err ){
+				return res.send(err);
+			}
         if(results.changedRows === 1){
-            console.log('Updated customer id : '+ RegisterID);
+            console.log('Updated customer id : '+ oldId);
         }
-		return res.redirect('/cutsomer');
+		return res.redirect('/customer');
     });
 });
 
