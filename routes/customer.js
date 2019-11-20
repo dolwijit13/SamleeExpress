@@ -50,27 +50,6 @@ router.post('/edit/:RegisterID', (req,res) => {
 
 
 
-//Add
-/*wait
-//Create
-router.get('/add',(req,res) => {
-		res.render('addCustomer');
-});
-
-//*
-||||||| merged common ancestors
-//*wait
-//Create
-router.get('/add',(req,res) => {
-		res.render('addCustomer');
-});
-
-//*
-=======
-=======
-
->>>>>>> fb7d05e0be275f395fec9aca6d1d6f891171d359
->>>>>>> master
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
 
 router.post('/add',(req,res) => {
@@ -120,67 +99,6 @@ router.post('/add',(req,res) => {
 
 	})
 });
-
-
-//*wait
-//Update
-/*router.get('/edit/:RegisterID',(req,res) => {
-	
-	const edit_ID = req.params.RegisterID;
-	
-	connection.query('SELECT * FROM CUSTOMER WHERE RegisterID=?',[edit_ID],(err,results) => {
-		if(results){
-			var data = JSON.parse(JSON.stringify(results[0]));
-			data["StartingDate"] = getOnlyDate(data["StartingDate"]);
-			res.render('editCustomer',{
-				customer:data,
-			});
-		}
-	});
-});
-
-//get only yyyy-mm-dd in datetime format from query
-function getOnlyDate(dtFromQuery){	
-	const index = dtFromQuery.indexOf("T");
-	if ( index > 0 ){
-		return dtFromQuery.slice(0,index);
-	}
-	return dtFromQuery;
-}
-
-router.post('/edit/:RegisterID',(req,res) => {
-	//can't edit primary key
-	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
-		PostalCode,StartingDate,Gender } = req.body;
-
-	const oldId = req.params.RegisterID;
-	
-	connection.query('UPDATE CUSTOMER SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
-	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?, Gender = ?  WHERE RegisterID = ?',
-	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode, StartingDate,
-		Gender,oldId], (err, results) => {
-			if ( err ){
-				return res.send(err);
-			}
-        if(results.changedRows === 1){
-            console.log('Updated customer id : '+ oldId);
-        }
-		return res.redirect('/customer');
-    });
-});
-
-
-
-//Delete
-router.get('/delete/:RegisterID',(req,res) => {
-    connection.query('DELETE FROM `CUSTOMER` WHERE RegisterID = ?', [req.params.RegisterID], (err, results) => {
-        return res.redirect('/cutstomer');
-    });	
-});
-
-//*/
-
-
 
 
 module.exports = router

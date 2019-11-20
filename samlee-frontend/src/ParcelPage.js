@@ -1,6 +1,6 @@
 import React from 'react';
 
-class EmployeeParcel extends React.Component {
+class ParcelPage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -39,9 +39,6 @@ class EmployeeParcel extends React.Component {
             {parcel.Province + " " + parcel.Country + " " + parcel.PostalCode}</td>
             <td>{parcel.Type}</td>
             <td>{parcel.InsuranceType}</td>
-            <td><button onClick={
-              ()=>this.props.changeParcelToEditParcel(parcel)} 
-              className="edit-parcel">Edit Parcel</button></td>
         </tr>
     );
     return (
@@ -65,4 +62,4 @@ class EmployeeParcel extends React.Component {
     );
   }
 }
-export default EmployeeParcel;
+export default ParcelPage;
