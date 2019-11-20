@@ -40,8 +40,8 @@ class EmployeeParcel extends React.Component {
             <td>{parcel.Type}</td>
             <td>{parcel.InsuranceType}</td>
             <td><button onClick={
-              ()=>this.props.changeParcelToUpdateParcel(parcel.ParcelID)} 
-              className="update-status">Update status</button></td>
+              ()=>this.props.changeParcelToEditParcel(parcel)} 
+              className="edit-parcel">Edit Parcel</button></td>
         </tr>
     );
     return (

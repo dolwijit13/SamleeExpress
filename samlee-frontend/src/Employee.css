@@ -36,7 +36,7 @@ html,body {
   .search {
     text-align: center;
   }
-  .parcel,.update-status {
+  .parcel,.edit-parcel {
     background-color: rgb(60, 185, 60);
   }
   .edit {
@@ -45,13 +45,13 @@ html,body {
   .delete {
     background-color: rgb(255, 51, 51);
   }
-  .customer-container,.parcel-container {
+  .customer-container,.parcel-container,.parcel-edit-container {
     margin-top: 5vh;
   }
-  .customer-header,.parcel-header {
+  .customer-header,.parcel-header,.parcel-edit-header {
     text-align: center;
   }
-  .customer-table,.parcel-table {
+  .customer-table,.parcel-table,.parcel-edit-table {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -79,4 +79,7 @@ html,body {
   }
   td a {
     color: black;
+  }
+  .parcel-detail-topic {
+    font-weight: bold;
   }

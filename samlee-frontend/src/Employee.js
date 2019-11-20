@@ -1,7 +1,7 @@
 import React from 'react';
 import EmployeeCustomer from './EmployeeCustomer';
 import EmployeeParcel from './EmployeeParcel';
-import EmployeeParcelUpdate from './EmployeeParcelUpdate';
+import EmployeeParcelEdit from './EmployeeParcelEdit';
 import './Employee.css';
 
 class Employee extends React.Component {
@@ -11,37 +11,37 @@ class Employee extends React.Component {
       onCustomerPage: true,
       onCustomerEditPage: false,
       onParcelPage: false,
-      onParcelUpdatePage: false,
+      onParcelEditPage: false,
       customerID: null,
-      parcelID: null,
+      parcel: null
     };
     this.changeCustomerToParcel = this.changeCustomerToParcel.bind(this);
-    this.changeParcelToUpdateParcel = this.changeParcelToUpdateParcel.bind(this);
-    this.changeUpdateParcelToParcel = this.changeUpdateParcelToParcel.bind(this);
+    this.changeParcelToEditParcel = this.changeParcelToEditParcel.bind(this);
+    this.changeEditParcelToParcel = this.changeEditParcelToParcel.bind(this);
   }
 
   changeCustomerToParcel(customerID){
     this.setState({onCustomerPage: false, onParcelPage: true, customerID: customerID});
   }
 
-  changeParcelToUpdateParcel(parcelID) {
-    this.setState({onParcelPage: false, onParcelUpdatePage: true, parcelID: parcelID});
+  changeParcelToEditParcel(parcel) {
+    this.setState({onParcelPage: false, onParcelEditPage: true, parcel: parcel});
   }
 
-  changeUpdateParcelToParcel(){
-    this.setState({onParcelUpdatePage: false, onParcelPage: true, parcelID: null});
+  changeEditParcelToParcel(){
+    this.setState({onParcelEditPage: false, onParcelPage: true, parcel: null});
   }
 
   render() {
-    var search = (this.state.onParcelUpdatePage?null:
+    var search = (this.state.onParcelEditPage?null:
       <div className="search">
         <input type="text" placeholder="Search.." />
         <button type="submit">search</button>
       </div>);
     var stage;
     if(this.state.onCustomerPage)  stage = <EmployeeCustomer changeCustomerToParcel={this.changeCustomerToParcel}/>;
-    else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToUpdateParcel={this.changeParcelToUpdateParcel}/>;
-    else if(this.state.onParcelUpdatePage) stage = <EmployeeParcelUpdate senderID={this.state.customerID} parcelID={this.state.parcelID} changeUpdateParcelToParcel={this.changeUpdateParcelToParcel} />;
+    else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel}/>;
+    else if(this.state.onParcelEditPage) stage = <EmployeeParcelEdit senderID={this.state.customerID} parcel={this.state.parcel} changeEditParcelToParcel={this.changeEditParcelToParcel} />;
     return (
       <div>
         <ul>
