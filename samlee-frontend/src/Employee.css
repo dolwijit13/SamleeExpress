@@ -36,7 +36,7 @@ html,body {
   .search {
     text-align: center;
   }
-  .parcel {
+  .parcel,.update-status {
     background-color: rgb(60, 185, 60);
   }
   .edit {
@@ -45,14 +45,18 @@ html,body {
   .delete {
     background-color: rgb(255, 51, 51);
   }
-  .customer-table {
+  .customer-container,.parcel-container {
+    margin-top: 5vh;
+  }
+  .customer-header,.parcel-header {
+    text-align: center;
+  }
+  .customer-table,.parcel-table {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     overflow-x: auto;
     margin-top: 5vh;
-  }
-  .align-customer-table {
     text-align: center;
   }
   th, td {
