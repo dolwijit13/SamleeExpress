@@ -70,7 +70,9 @@ class EmployeeCustomer extends React.Component {
             <td><button onClick={
               ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
               className="parcel">Parcel</button></td>
-            <td><button className="edit">Edit Customer</button></td>
+            <td><button onClick={
+              ()=>this.props.changeCustomerToUpdateCustomer(customer.RegisterID)} 
+              className="edit">Edit Customer</button></td>
             <td><button className="delete" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
         </tr>
     );
