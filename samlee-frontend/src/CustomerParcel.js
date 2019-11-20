@@ -34,7 +34,7 @@ class CustomerParcel extends React.Component {
 
   render() {
     if(!this.state.doneLoading) return null;
-    var dataParcel = this.state.parcels.map((parcel,index)=>
+    var dataParcel = this.state.parcel.map((parcel,index)=>
         <tr key={index} className="parcel-table-data">
             <td>{parcel.ParcelID}</td>
             <td><button onClick={
