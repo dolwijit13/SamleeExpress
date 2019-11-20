@@ -69,11 +69,11 @@ class EmployeeCustomer extends React.Component {
             <td>{customer.LastName}</td>
             <td><button onClick={
               ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
-              className="parcel">Parcel</button></td>
+              className="btn btn-success">Parcel</button></td>
             <td><button onClick={
               ()=>this.props.changeCustomerToUpdateCustomer(customer.RegisterID)} 
-              className="edit">Edit Customer</button></td>
-            <td><button className="delete" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
+              className="btn btn-primary">Edit Customer</button></td>
+            <td><button className="btn btn-danger" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
         </tr>
     );
     return (
