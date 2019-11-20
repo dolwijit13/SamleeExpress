@@ -1,4 +1,8 @@
 import React from 'react';
+import EmployeeParcel from './EmployeeParcel';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
+  
 
 class EmployeeCustomer extends React.Component {
   constructor(props){
@@ -28,7 +32,33 @@ class EmployeeCustomer extends React.Component {
 
   componentDidMount(){
     this.fetchDatas();
-}
+  }
+
+  deleteHandler(event, person){
+    var data = {
+      id: person.RegisterID
+    }
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: "Are you sure to delete " + person.FirstName + " " + person.LastName,
+      buttons:[
+        {
+          label: 'Yes',
+          onClick: () => {
+            fetch('http://localhost:8000/customer/delete',{
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(data)
+            }).then(response => response.JSON).then(function(data){}),
+            alert('Click Yes')
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    });
+  }
 
   render() {
     if(!this.state.doneLoading) return null;
@@ -41,7 +71,7 @@ class EmployeeCustomer extends React.Component {
               ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
               className="parcel">Parcel</button></td>
             <td><button className="edit">Edit Customer</button></td>
-            <td><button className="delete">Delete</button></td>
+            <td><button className="delete" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
         </tr>
     );
     return (
