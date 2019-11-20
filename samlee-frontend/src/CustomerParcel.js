@@ -1,5 +1,5 @@
 import React from 'react';
-import EmployeeParcel from './EmployeeParcel';
+
   
 
 class CustomerParcel extends React.Component {
@@ -37,18 +37,14 @@ class CustomerParcel extends React.Component {
     var dataParcel = this.state.parcels.map((parcel,index)=>
         <tr key={index} className="parcel-table-data">
             <td>{parcel.ParcelID}</td>
-            <td>{parcel.HouseNo + " "+ parcel.Street + " " + parcel.SubDistrict + " " + parcel.District}<br /> 
-            {parcel.Province + " " + parcel.Country + " " + parcel.PostalCode}</td>
-            <td>{parcel.Type}</td>
-            <td>{parcel.InsuranceType}</td>
             <td><button onClick={
-              ()=>this.props.changeToParcelPage(parcel)} 
-              className="edit-parcel">Edit Parcel</button></td>
+              ()=>this.props.changeToPacelPage(parcel.ParcelID)} 
+              className="parcel">Detail</button></td>
         </tr>
     );
     return (
       <div className="customer-container">
-        <h1 className="customer-header">Customer List</h1>
+        <h1 className="customer-header">Parcel List</h1>
         <table className="customer-table">
             <thead>
                 <tr className="customer-table-head">
