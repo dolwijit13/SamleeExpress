@@ -14,10 +14,20 @@ router.get('/',(req,res) => {
 	})
 });
 
-router.get('/delete/:RegisterID', (req,res) => { 
-	res.header("Access-Control-Allow-Origin", "*");
-	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.param.RegisterID],(err,result) => {
-		res.json(result);
+//Delete
+router.delete('/', (req,res) => { 
+	//res.header("Access-Control-Allow-Origin", "*");
+	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = 0000000003',(err,result,fields) => {
+		if(!err){
+			res.json(result);
+			res.send('delete success');
+			return;
+		}
+		else{
+			console.log(err);
+			res.sendStatus(500);
+			return;
+		}
 	})
 });
 
