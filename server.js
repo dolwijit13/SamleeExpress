@@ -9,9 +9,9 @@ app.set('view engine','pug');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+connection.connect((err) => {
+  if (err) console.log('DB Connection filed');//throw err;
+  else console.log("Connected!");
 });
 
 app.use('/',require('./routes'));
