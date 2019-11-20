@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Customer.css';
   
 
 class CustomerParcel extends React.Component {
@@ -43,7 +43,11 @@ class CustomerParcel extends React.Component {
         </tr>
     );
     return (
-      <div className="customer-container">
+	<div>
+	<ul>
+	  <li className="left"><a>SamleeExpress</a></li>
+          <li className="right"><a>Log out</a></li>
+	</ul>
         <h1 className="customer-header">Parcel List</h1>
         <table className="customer-table">
             <thead>

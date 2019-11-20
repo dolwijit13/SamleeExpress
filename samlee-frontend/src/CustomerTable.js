@@ -1,4 +1,5 @@
 import React from 'react';
+import './Customer.css';
 
 class CustomerTable extends React.Component{
     constructor(props){
@@ -8,14 +9,14 @@ class CustomerTable extends React.Component{
             datas: null,
             error: null
         };
-        this.fetchUsers = this.fetchUsers.bind(this);
+        //this.fetchUsers = this.fetchUsers.bind(this);
     }
 
     fetchDatas() {
-        fetch('http://localhost:8000/shipmentStatus/:employeeid')
+        fetch('http://localhost:8000/shipmentStatus/'+ this.state.employeeid)
           .then(response => response.json())
           .then(data =>{
-            console.log(data);
+            //console.log(data);
             this.setState({
               datas: data,
               doneLoading: true,
@@ -25,6 +26,7 @@ class CustomerTable extends React.Component{
       }
     
       componentDidMount(){
+	console.log(this.state.employeeid);
         this.fetchDatas();
     }
 /*{!this.state.isLoading ? (
@@ -40,12 +42,17 @@ class CustomerTable extends React.Component{
           })
         ) : null}*/
     render(){
-        if(!this.state.doneLoading) return null;
-
+        //if(!this.state.doneLoading) return null;
         return(
-            <table>
+	<div>
+	 <ul>
+	  <li className="left"><a>SamleeExpress</a></li>
+          <li className="right"><a>Log out</a></li>
+	</ul>
+	    <h1 className="customer-header">Parcel List</h1>
+            <table className="customer-table">
                 <thead>
-                    <tr>
+                    <tr className="customer-table-head">
                         <td>Parcel</td>
                         <td>Status</td>
                         <td>Location</td>
@@ -56,6 +63,7 @@ class CustomerTable extends React.Component{
 
                 </tbody>
             </table>
+	</div>
         );
     }
 }
