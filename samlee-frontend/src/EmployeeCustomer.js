@@ -1,7 +1,6 @@
 import React from 'react';
-import EmployeeParcel from './EmployeeParcel'; 
 
-class Employee extends React.Component {
+class EmployeeCustomer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -10,6 +9,7 @@ class Employee extends React.Component {
         error: null,
         gotoParcelPage: false,
         gotoEditPage: false,
+        customerID: null,
     };
   }
 
@@ -17,7 +17,7 @@ class Employee extends React.Component {
     fetch('http://localhost:8000/customer')
       .then(response => response.json())
       .then(data =>{
-        console.log(data);
+        //console.log(data);
         this.setState({
           customers: data,
           doneLoading: true,
@@ -31,19 +31,22 @@ class Employee extends React.Component {
 }
 
   render() {
-    if(this.state.gotoParcelPage) return <EmployeeParcel />
     if(!this.state.doneLoading) return null;
     var dataCustomer = this.state.customers.map((customer,index)=>
         <tr key={index} className="customer-table-data">
             <td>{customer.RegisterID}</td>
             <td>{customer.FirstName}</td>
             <td>{customer.LastName}</td>
-            <td><button onClick={()=>this.setState({gotoParcelPage:true})} className="parcel">Parcel</button></td>
+            <td><button onClick={
+              ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
+              className="parcel">Parcel</button></td>
             <td><button className="edit">Edit Customer</button></td>
             <td><button className="delete">Delete</button></td>
         </tr>
     );
     return (
+      <div className="customer-container">
+        <h1 className="customer-header">Customer List</h1>
         <table className="customer-table">
             <thead>
                 <tr className="customer-table-head">
@@ -59,7 +62,8 @@ class Employee extends React.Component {
                 {dataCustomer}
             </tbody>
         </table>
+      </div>
     );
   }
 }
-export default Employee;
+export default EmployeeCustomer;
