@@ -12,16 +12,16 @@ class CustomerTable extends React.Component{
     }
 
     fetchDatas() {
-        fetch('http://localhost:8000/customer')
+        fetch('http://localhost:8000/shipmentStatus/:employeeid')
           .then(response => response.json())
           .then(data =>{
             console.log(data);
             this.setState({
-              users: data,
-              doneLoading: false,
+              datas: data,
+              doneLoading: true,
           })}
           )
-          .catch(error => this.setState({ error, isLoading: false }));
+          .catch(error => this.setState({ error, doneLoading: false }));
       }
     
       componentDidMount(){
@@ -41,7 +41,7 @@ class CustomerTable extends React.Component{
         ) : null}*/
     render(){
         if(!this.state.doneLoading) return null;
-        
+
         return(
             <table>
                 <thead>

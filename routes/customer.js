@@ -11,10 +11,36 @@ router.get('/',(req,res) => {
 	})
 });
 
+router.get('/delete/:RegisterID', (req,res) => { 
+	res.header("Access-Control-Allow-Origin", "*");
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.param.RegisterID],(err,result) => {
+		res.json(result);
+	})
+});
+
 
 
 //Add
+/*wait
+//Create
+router.get('/add',(req,res) => {
+		res.render('addCustomer');
+});
 
+//*
+||||||| merged common ancestors
+//*wait
+//Create
+router.get('/add',(req,res) => {
+		res.render('addCustomer');
+});
+
+//*
+=======
+=======
+
+>>>>>>> fb7d05e0be275f395fec9aca6d1d6f891171d359
+>>>>>>> master
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
 
 router.post('/add',(req,res) => {
@@ -68,7 +94,7 @@ router.post('/add',(req,res) => {
 
 //*wait
 //Update
-router.get('/edit/:RegisterID',(req,res) => {
+/*router.get('/edit/:RegisterID',(req,res) => {
 	
 	const edit_ID = req.params.RegisterID;
 	

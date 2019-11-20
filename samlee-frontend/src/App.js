@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Login from './login.js';
 
 class App extends React.Component {
   constructor(props){
@@ -7,20 +8,9 @@ class App extends React.Component {
     this.state = {};
     
   }
-
   render() {
     return (
-      <div>
-        <ul>
-          <li className="left"><a>SamleeExpress</a></li>
-          <li className="right"><a>Log out</a></li>
-          <li className="right"><a>History</a></li>
-        </ul>
-        <div className="search">
-          <input type="text" placeholder="Search.." />
-          <button type="submit">search</button>
-        </div>
-      </div>
+      <Login />
     );
   }
 }
