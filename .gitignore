@@ -1,13 +1,12 @@
 database.js
 package.json
 package-lock.json
-node_modules
+node_modules*
 1.sql
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-samlee-frontend/node_modules
 
 # testing
 /coverage
