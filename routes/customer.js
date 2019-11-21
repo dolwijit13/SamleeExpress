@@ -34,7 +34,6 @@ router.delete('/', (req,res) => {
 //update
 router.get('/edit/:RegisterID', (req,res) => { 
 	connection.query("SELECT * FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
-		console.log(result);
 		res.json(result);
 	})
 });
