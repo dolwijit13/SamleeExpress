@@ -44,6 +44,7 @@ class EmployeeCustomer extends React.Component {
           label: 'Yes',
           onClick: () => {
             Axios.get(url + person.RegisterID);
+            window.location.reload();
           }
         },
         {
