@@ -2,6 +2,7 @@ import React from 'react';
 import EmployeeParcel from './EmployeeParcel';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Axios from 'axios';
   
 
 class EmployeeCustomer extends React.Component {
@@ -34,10 +35,7 @@ class EmployeeCustomer extends React.Component {
   }
 
   deleteHandler(event, person){
-    var data = {
-      RegisterID : person.RegisterID
-    }
-    //alert(JSON.stringify(data));
+    var url = "http://localhost:8000/customer/delete/";
     confirmAlert({
       title: 'Confirm to delete',
       message: "Are you sure to delete " + person.FirstName + " " + person.LastName,
@@ -45,12 +43,7 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            fetch('http://localhost:8000/customer',{
-              method: 'delete',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify(data)
-            }).then(respond => respond.JSON).then(function(data){})//,
-            //alert('Click Yes')
+            Axios.get(url + person.RegisterID);
           }
         },
         {

@@ -14,18 +14,18 @@ router.get('/',(req,res) => {
 	})
 });
 
+
 //Delete
-router.delete('/delete/:RegisterID', (req,res) => {
-	console.log(req.param.RegisterID);
-	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = ?',[req.param.RegisterID],(err,result,fields) => {
+router.get('/delete/:RegisterID',(req,res) => {
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
 		if(!err){
 			res.json(result);
-			//res.send('delete success');
-			//return res.redirect('/');
+			console.log('WoW');
+			console.log(result);
 		}
 		else{
 			console.log(err);
-			res.sendStatus(500);
+			//res.sendStatus(500);
 			return;
 		}
 	})
