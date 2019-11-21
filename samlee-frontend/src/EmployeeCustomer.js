@@ -21,7 +21,6 @@ class EmployeeCustomer extends React.Component {
     fetch('http://localhost:8000/customer')
       .then(response => response.json())
       .then(data =>{
-        //console.log(data);
         this.setState({
           customers: data,
           doneLoading: true,
@@ -36,8 +35,9 @@ class EmployeeCustomer extends React.Component {
 
   deleteHandler(event, person){
     var data = {
-      id: person.RegisterID
+      RegisterID : person.RegisterID
     }
+    alert(JSON.stringify(data));
     confirmAlert({
       title: 'Confirm to delete',
       message: "Are you sure to delete " + person.FirstName + " " + person.LastName,
@@ -49,7 +49,7 @@ class EmployeeCustomer extends React.Component {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify(data)
-            }).then(response => response.JSON).then(function(data){}),
+            }).then(respond => respond.JSON).then(function(data){}),
             alert('Click Yes')
           }
         },
