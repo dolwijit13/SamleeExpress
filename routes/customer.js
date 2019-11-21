@@ -1,23 +1,65 @@
 var express = require('express')
 var router = express.Router()
 const connection = require('../database')
+var cors = require('cors');
 
 //Read
+
+router.use(cors());
 
 router.get('/',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('SELECT * FROM CUSTOMER',(err,result) => {
 		res.json(result);
-    })
+	})
 });
 
-
-router.get('/delete/:RegisterID', (req,res) => { 
+//Delete
+router.delete('/', (req,res) => { 
 	res.header("Access-Control-Allow-Origin", "*");
-	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.param.RegisterID],(err,result) => {
+	console.log(req.body.RegisterID);
+	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = ?',req.body.RegisterID,(err,result,fields) => {
+		if(!err){
+			res.json(result);
+			//res.send('delete success');
+			//return res.redirect('/');
+		}
+		else{
+			console.log(err);
+			res.sendStatus(500);
+			return;
+		}
+	})
+});
+
+//update
+router.get('/edit/:RegisterID', (req,res) => { 
+	connection.query("SELECT * FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
+		console.log(result);
 		res.json(result);
 	})
 });
+
+router.post('/edit/:RegisterID', (req,res) => { 
+	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
+		PostalCode,StartingDate,Gender } = req.body;
+
+	const oldId = req.params.RegisterID
+	
+	connection.query('UPDATE CUSTOMER SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
+	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?, Gender = ?  WHERE RegisterID = ?',
+	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode, StartingDate,
+		Gender,oldId], (err, results) => {
+			if ( err ){
+				res.send(err);
+			}
+        if(results.changedRows === 1){
+			console.log('Updated customer id : '+ oldId);
+			res.send("success");
+        }
+    });
+});
+
 
 
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
