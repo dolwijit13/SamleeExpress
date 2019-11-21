@@ -28,11 +28,17 @@ class EmployeeEdit extends React.Component {
     }
 
     getOnlyDate(dtFromQuery){	
-        const index = dtFromQuery.indexOf("T");
-        if ( index > 0 ){
-            return dtFromQuery.slice(0,index);
-        }
-        return dtFromQuery;
+        var d = new Date(dtFromQuery),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
     }
 
     resetData(){

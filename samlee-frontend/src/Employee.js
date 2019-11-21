@@ -5,6 +5,7 @@ import EmployeeCustomerUpdate from './EmployeeCustomerUpdate';
 import EmployeeParcelEdit from './EmployeeParcelEdit';
 import EmployeeEdit from './EmployeeEdit';
 import EmployeeShipmentStatus from './EmployeeShipmentStatus';
+import EmployeeShipmentStatusEdit from './EmployeeShipmentStatusEdit';
 import './Employee.css';
 
 class Employee extends React.Component {
@@ -17,8 +18,10 @@ class Employee extends React.Component {
       onParcelPage: false,
       onParcelEditPage: false,
       onShipmentStatusPage: false,
+      onShipmentStatusEditPage: false,
       customerID: null,
       parcel: null,
+      responseToKey: null,
       SSN: "1314651155100"
     };
     this.changeCustomerToParcel = this.changeCustomerToParcel.bind(this);
@@ -28,6 +31,7 @@ class Employee extends React.Component {
     this.editEmployee = this.editEmployee.bind(this);
     this.backMenu = this.backMenu.bind(this);
     this.changeParcelToShipmentStatus = this.changeParcelToShipmentStatus.bind(this);
+    this.changeShipmentStatusToEditShipmentStatus = this.changeShipmentStatusToEditShipmentStatus.bind(this);
   }
 
   changeCustomerToUpdateCustomer(customerID){
@@ -48,6 +52,10 @@ class Employee extends React.Component {
 
   changeParcelToShipmentStatus(parcel){
     this.setState({onParcelPage: false, onShipmentStatusPage: true, parcel: parcel});
+  }
+
+  changeShipmentStatusToEditShipmentStatus(responseToKey){
+    this.setState({onShipmentStatusPage: false, onShipmentStatusEditPage: true, responseToKey: responseToKey});
   }
 
   editEmployee(){
@@ -91,7 +99,8 @@ class Employee extends React.Component {
     else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel} changeParcelToShipmentStatus={this.changeParcelToShipmentStatus}/>;
     else if(this.state.onParcelEditPage) stage = <EmployeeParcelEdit senderID={this.state.customerID} parcel={this.state.parcel} changeEditParcelToParcel={this.changeEditParcelToParcel} />;
     else if ( this.state.onEmployeeEditPage) stage = <EmployeeEdit SSN={this.state.SSN}/>;
-    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel}/>;
+    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel} changeShipmentStatusToEditShipmentStatus={this.changeShipmentStatusToEditShipmentStatus}/>;
+    else if (this.state.onShipmentStatusEditPage) stage = <EmployeeShipmentStatusEdit responseToKey={this.state.responseToKey}/>
     return (
       <div className="mb-5">
         <ul>

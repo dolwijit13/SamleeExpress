@@ -35,10 +35,18 @@ class EmployeeShipmentStatus extends React.Component {
 
         var data = this.state.responseTos.map((responseTo,index)=>
         <tr key={index} className="parcel-table-data">
-            <td>{responseTo.FirstName}</td>
-            <td>{responseTo.LastName}</td>
-            <td>{responseTo.ShipmentPoint}</td>
-            <td>{responseTo.Status}</td>
+            <td width="15%">{responseTo.FirstName}</td>
+            <td width="15%">{responseTo.LastName}</td>
+            <td width="30%">{Date(responseTo.Timestamp)}</td>
+            <td width="10%">{responseTo.ShipmentPoint}</td>
+            <td width="30%">{responseTo.Status}</td>
+            <td><button className="btn btn-primary" onClick={
+                ()=>this.props.changeShipmentStatusToEditShipmentStatus({
+                    Employee_DeliverSSN: responseTo.Employee_DeliverSSN,
+                    Parcel_ParcelID: responseTo.Parcel_ParcelID,
+                    ShipmentStatus_ShipmentID: responseTo.ShipmentStatus_ShipmentID
+                })}>Edit</button></td>
+            <td><button className="btn btn-danger">Delete</button></td>
         </tr>
     );
 
@@ -47,10 +55,13 @@ class EmployeeShipmentStatus extends React.Component {
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
-                    <th className="data-width-table">Deliver FirstName</th>
-                    <th className="data-width-table">Deliver LastName</th>
-                    <th className="data-width-table">Shipment Point</th>
-                    <th className="data-width-table">Shipment Status</th>
+                    <th width="15%">Deliver FirstName</th>
+                    <th width="15%">Deliver LastName</th>
+                    <th width="30%">Date Time</th>
+                    <th width="10%">Shipment Point</th>
+                    <th width="30%">Shipment Status</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

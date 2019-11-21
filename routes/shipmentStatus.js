@@ -1,12 +1,19 @@
 var express = require('express')
 var router = express.Router()
 const connection = require('../database')
+var cors = require('cors');
+
+router.use(cors());
+
+connection.on('error', function(err){
+	console.log(err.code);
+});
 
 //Read
 
 router.get('/:Parcel_ParcelID',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
-	const query = "SELECT e.FirstName, e.LastName, rt.ShipmentPoint, ss.Status \
+	const query = "SELECT e.FirstName, e.LastName, rt.ShipmentPoint, rt.Timestamp, ss.Status, rt.Employee_DeliverSSN, rt.Parcel_ParcelID, rt.ShipmentStatus_ShipmentID \
 	FROM ResponseTo rt \
 	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
 	INNER JOIN Employee e on e.SSN = rt.Employee_DeliverSSN \
@@ -16,6 +23,60 @@ router.get('/:Parcel_ParcelID',(req,res) => {
     })
 });
 
+//update
+router.get('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
+	const Employee_DeliverSSN = req.params.Employee_DeliverSSN;
+	const Parcel_ParcelID = req.params.Parcel_ParcelID;
+	const ShipmentStatus_ShipmentID = req.params.ShipmentStatus_ShipmentID;
+
+	const query = "SELECT rt.Timestamp, rt.ShipmentPoint, ss.Status \
+				FROM ResponseTo rt \
+				INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID\
+				WHERE rt.Employee_DeliverSSN = ? AND rt.Parcel_ParcelID = ? AND rt.ShipmentStatus_ShipmentID = ?";
+	connection.query(query,[Employee_DeliverSSN,Parcel_ParcelID,ShipmentStatus_ShipmentID], (err,result)=>{
+		res.json(result);
+	});
+	
+});
+
+router.post('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
+	const Employee_DeliverSSN = req.params.Employee_DeliverSSN;
+	const Parcel_ParcelID = req.params.Parcel_ParcelID;
+	const ShipmentStatus_ShipmentID = req.params.ShipmentStatus_ShipmentID;
+
+	var {Timestamp,ShipmentPoint,Status} = req.body;
+	
+	connection.beginTransaction(function(err){
+		if ( err ) throw err;
+		connection.query("UPDATE ResponseTo SET Timestamp = ?, ShipmentPoint = ? 	\
+			WHERE Employee_DeliverSSN = ? AND Parcel_ParcelID = ? AND ShipmentStatus_ShipmentID = ?;",
+			[Timestamp,ShipmentPoint,Employee_DeliverSSN,Parcel_ParcelID,ShipmentStatus_ShipmentID],(error,result)=>{
+				if ( error ) {
+					return connection.rollback(function() {
+						throw error;
+					});
+				}
+				connection.query("UPDATE ShipmentStatus SET Status = ? WHERE ShipmentID = ?;",
+					[Status,ShipmentStatus_ShipmentID], (error,result)=>{
+						if ( error ) {
+							return connection.rollback(function() {
+								throw error;
+							});
+						}
+						connection.commit(function(err){
+							if (err) {
+								return connection.rollback(function() {
+								  throw err;
+								});
+							}
+							res.send("success");
+							console.log("shipment status updated");
+						});
+					});
+			});
+	});
+	
+});
 
 //Add
 
