@@ -127,6 +127,7 @@ class EmployeeEdit extends React.Component {
         }
 
         return <div className="container">
+            <h1 className="text-center mt-5">Edit Your Infomation</h1>
             <form onSubmit={this.handleSubmit}>
             {items}
             <div className="d-flex flex-row justify-content-between">

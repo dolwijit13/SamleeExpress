@@ -126,3 +126,7 @@ insert into PARCEL VALUES ("0000000002","EMS","Normal","10","street1","SubDistri
 
 insert into EMPLOYEE values("1314651155100", "Somchai", "Chaidee","0451321548","somchai@hotmail.com",Date("2019-11-14"),
 "1","street1","subdis1","dis1","provin1","thailand","10400",Date("2019-11-18"),"M","90000","Ph.D","Administrator",NULL,NULL,NULL);
+
+insert into ShipmentStatus values ("0000000001", "shiped to sorting center in Zhenshen");
+
+insert into ResponseTo values("1314651155100","0000000002","0000000001", "Zhenshen", CURRENT_TIMESTAMP);

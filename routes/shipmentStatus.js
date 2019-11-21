@@ -5,8 +5,13 @@ const connection = require('../database')
 //Read
 
 router.get('/:Parcel_ParcelID',(req,res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-	connection.query('SELECT * FROM ResponseTo WHERE Parcel_ParcelID = ?',req.params.Parcel_ParcelID,(err,result) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	const query = "SELECT e.FirstName, e.LastName, rt.ShipmentPoint, ss.Status \
+	FROM ResponseTo rt \
+	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
+	INNER JOIN Employee e on e.SSN = rt.Employee_DeliverSSN \
+	WHERE rt.Parcel_ParcelID = ?";
+	connection.query(query,req.params.Parcel_ParcelID,(err,result) => {
 		res.json(result);
     })
 });

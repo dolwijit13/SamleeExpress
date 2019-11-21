@@ -67,6 +67,7 @@ class Employee extends React.Component {
     else if(this.state.onEmployeeEditPage)  this.setState({onEmployeeEditPage: false, onCustomerPage: true});
     else if(this.state.onParcelPage) this.setState({onParcelPage: false, onCustomerPage: true});
     else if(this.state.onParcelEditPage) this.setState({onParcelEditPage: false, onParcelPage: true});
+    else if(this.state.onShipmentStatusPage) this.setState({onShipmentStatusPage: false, onParcelPage: true});
   }
 
   render() {
@@ -90,7 +91,7 @@ class Employee extends React.Component {
     else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel} changeParcelToShipmentStatus={this.changeParcelToShipmentStatus}/>;
     else if(this.state.onParcelEditPage) stage = <EmployeeParcelEdit senderID={this.state.customerID} parcel={this.state.parcel} changeEditParcelToParcel={this.changeEditParcelToParcel} />;
     else if ( this.state.onEmployeeEditPage) stage = <EmployeeEdit SSN={this.state.SSN}/>;
-    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus/>;
+    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel}/>;
     return (
       <div className="mb-5">
         <ul>
