@@ -15,10 +15,9 @@ router.get('/',(req,res) => {
 });
 
 //Delete
-router.delete('/', (req,res) => { 
-	res.header("Access-Control-Allow-Origin", "*");
-	console.log(req.body.RegisterID);
-	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = ?',req.body.RegisterID,(err,result,fields) => {
+router.delete('/delete/:RegisterID', (req,res) => {
+	console.log(req.param.RegisterID);
+	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = ?',[req.param.RegisterID],(err,result,fields) => {
 		if(!err){
 			res.json(result);
 			//res.send('delete success');
