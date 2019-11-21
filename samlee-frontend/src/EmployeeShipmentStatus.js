@@ -33,7 +33,7 @@ class EmployeeShipmentStatus extends React.Component {
             return null;
         }
 
-        var dataParcel = this.state.responseTos.map((responseTo,index)=>
+        var data = this.state.responseTos.map((responseTo,index)=>
         <tr key={index} className="parcel-table-data">
             <td>{responseTo.FirstName}</td>
             <td>{responseTo.LastName}</td>
@@ -43,7 +43,7 @@ class EmployeeShipmentStatus extends React.Component {
     );
 
         return <div className="parcel-container">
-        <h1 className="parcel-header">Parcel List</h1>
+        <h1 className="parcel-header">Shipment Status List</h1>
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
@@ -54,7 +54,7 @@ class EmployeeShipmentStatus extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                {dataParcel}
+                {data}
             </tbody>
         </table>
       </div>

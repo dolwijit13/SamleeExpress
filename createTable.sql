@@ -100,11 +100,12 @@ create table ShipmentStatus
 
 create table ResponseTo
 (
-	Employee_DeliverSSN char(13) primary key,
+	Employee_DeliverSSN char(13),
     Parcel_ParcelID char(10),
     ShipmentStatus_ShipmentID char(10),
     ShipmentPoint Text,
-    Timestamp datetime
+    Timestamp datetime,
+    PRIMARY KEY(Employee_DeliverSSN, Parcel_ParcelID, ShipmentStatus_ShipmentID)
 );
 
 /*
@@ -128,5 +129,7 @@ insert into EMPLOYEE values("1314651155100", "Somchai", "Chaidee","0451321548","
 "1","street1","subdis1","dis1","provin1","thailand","10400",Date("2019-11-18"),"M","90000","Ph.D","Administrator",NULL,NULL,NULL);
 
 insert into ShipmentStatus values ("0000000001", "shiped to sorting center in Zhenshen");
+insert into ShipmentStatus values ("0000000002", "[THAI DC] your parcel has been received by sorting center");
 
 insert into ResponseTo values("1314651155100","0000000002","0000000001", "Zhenshen", CURRENT_TIMESTAMP);
+insert into ResponseTo values("1314651155100", "0000000002","0000000002","Bangkok Thailand", CURRENT_TIMESTAMP);
