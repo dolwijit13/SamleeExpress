@@ -120,7 +120,8 @@ class EmployeeCustomerUpdate extends React.Component {
             );
         }
 
-        return <div className="container">
+        return <div className="container mt-5">
+            <h1 className="text-center">Edit Customer</h1>
             <form onSubmit={this.handleSubmit}>
             {items}
             <div className="d-flex flex-row justify-content-between">

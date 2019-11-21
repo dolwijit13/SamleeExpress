@@ -41,7 +41,8 @@ class EmployeeParcel extends React.Component {
             <td>{parcel.InsuranceType}</td>
             <td><button onClick={
               ()=>this.props.changeParcelToEditParcel(parcel)} 
-              className="btn btn-success">Edit Parcel</button></td>
+              className="btn btn-success">Edit</button></td>
+            <td><button className="btn btn-primary" onClick={()=>this.props.changeParcelToShipmentStatus(parcel)}>Status</button></td>
         </tr>
     );
     return (
@@ -54,6 +55,7 @@ class EmployeeParcel extends React.Component {
                     <th className="data-width-table">Terminal</th>
                     <th className="data-width-table">Type</th>
                     <th className="data-width-table">InsuranceType</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
