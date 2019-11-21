@@ -83,3 +83,6 @@ html,body {
   .parcel-detail-topic {
     font-weight: bold;
   }
+  .parcel-btn-space {
+    width: 30%;
+  }
