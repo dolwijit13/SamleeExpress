@@ -24,10 +24,7 @@ class Employee extends React.Component {
     this.changeParcelToEditParcel = this.changeParcelToEditParcel.bind(this);
     this.changeEditParcelToParcel = this.changeEditParcelToParcel.bind(this);
     this.editEmployee = this.editEmployee.bind(this);
-<<<<<<< HEAD
-=======
     this.backMenu = this.backMenu.bind(this);
->>>>>>> 36f50d941f87ca96d9e9efbcb39e319dcb278279
   }
 
   changeCustomerToUpdateCustomer(customerID){
@@ -58,8 +55,6 @@ class Employee extends React.Component {
     });
   }
 
-<<<<<<< HEAD
-=======
   backMenu(){
     if(this.state.onCustomerEditPage) this.setState({onCustomerEditPage: false, onCustomerPage: true});
     else if(this.state.onEmployeeEditPage)  this.setState({onEmployeeEditPage: false, onCustomerPage: true});
@@ -67,7 +62,6 @@ class Employee extends React.Component {
     else if(this.state.onParcelEditPage) this.setState({onParcelEditPage: false, onParcelPage: true});
   }
 
->>>>>>> 36f50d941f87ca96d9e9efbcb39e319dcb278279
   render() {
     var editEmployee = <button className="btn btn-outline-primary" onClick={this.editEmployee}>Edit Your Infomation</button>;
     var search = (this.state.onParcelEditPage?null:
@@ -75,15 +69,10 @@ class Employee extends React.Component {
         <input className="form-control mr-1" type="text" placeholder="Search.." />
         <button className="btn btn-outline-primary" type="submit">search</button>
       </div>);
-<<<<<<< HEAD
-    var topMenu = 
-      <div className="container d-flex flex-row justify-content-between mb-3">
-=======
     var backBtn = <button className="btn btn-dark" onClick={this.backMenu}>Back</button>
     var topMenu = 
       <div className="container d-flex flex-row justify-content-between mb-3">
         {backBtn}
->>>>>>> 36f50d941f87ca96d9e9efbcb39e319dcb278279
         {search}
         {editEmployee}
       </div>
