@@ -4,6 +4,8 @@ import EmployeeParcel from './EmployeeParcel';
 import EmployeeCustomerUpdate from './EmployeeCustomerUpdate';
 import EmployeeParcelEdit from './EmployeeParcelEdit';
 import EmployeeEdit from './EmployeeEdit';
+import EmployeeShipmentStatus from './EmployeeShipmentStatus';
+import EmployeeShipmentStatusEdit from './EmployeeShipmentStatusEdit';
 import './Employee.css';
 
 class Employee extends React.Component {
@@ -15,16 +17,22 @@ class Employee extends React.Component {
       onEmployeeEditPage: false,
       onParcelPage: false,
       onParcelEditPage: false,
+      onShipmentStatusPage: false,
+      onShipmentStatusEditPage: false,
       customerID: null,
       parcel: null,
-      SSN: "1314651155100"
+      responseToKey: null,
+      SSN: "1314651155100",
+      addCustomer: false,
     };
     this.changeCustomerToParcel = this.changeCustomerToParcel.bind(this);
     this.changeCustomerToUpdateCustomer = this.changeCustomerToUpdateCustomer.bind(this);
     this.changeParcelToEditParcel = this.changeParcelToEditParcel.bind(this);
     this.changeEditParcelToParcel = this.changeEditParcelToParcel.bind(this);
-    this.editCustomer = this.editCustomer.bind(this);
+    this.addCustomer = this.addCustomer.bind(this);
     this.backMenu = this.backMenu.bind(this);
+    this.changeParcelToShipmentStatus = this.changeParcelToShipmentStatus.bind(this);
+    this.changeShipmentStatusToEditShipmentStatus = this.changeShipmentStatusToEditShipmentStatus.bind(this);
   }
 
   changeCustomerToUpdateCustomer(customerID){
@@ -43,7 +51,15 @@ class Employee extends React.Component {
     this.setState({onParcelEditPage: false, onParcelPage: true, parcel: null});
   }
 
-  editCustomer(){
+  changeParcelToShipmentStatus(parcel){
+    this.setState({onParcelPage: false, onShipmentStatusPage: true, parcel: parcel});
+  }
+
+  changeShipmentStatusToEditShipmentStatus(responseToKey){
+    this.setState({onShipmentStatusPage: false, onShipmentStatusEditPage: true, responseToKey: responseToKey});
+  }
+
+  addCustomer(){
     this.setState({
       onCustomerPage: false,
       onCustomerEditPage: true,
@@ -51,7 +67,8 @@ class Employee extends React.Component {
       onParcelPage: false,
       onParcelEditPage: false,
       customerID: null,
-      parcel: null
+      parcel: null,
+      addCustomer: true,
     });
   }
 
@@ -60,12 +77,13 @@ class Employee extends React.Component {
     else if(this.state.onEmployeeEditPage)  this.setState({onEmployeeEditPage: false, onCustomerPage: true});
     else if(this.state.onParcelPage) this.setState({onParcelPage: false, onCustomerPage: true});
     else if(this.state.onParcelEditPage) this.setState({onParcelEditPage: false, onParcelPage: true});
+    else if(this.state.onShipmentStatusPage) this.setState({onShipmentStatusPage: false, onParcelPage: true});
   }
 
   render() {
     var addBtn;
     if(this.state.onCustomerPage) {
-      addBtn = <button className="btn btn-dark" onClick={this.editCustomer}>Add Customer</button>;
+      addBtn = <button className="btn btn-dark" onClick={this.addCustomer}>Add Customer</button>;
     }
     
     var search = (this.state.onParcelEditPage?null:
@@ -78,7 +96,7 @@ class Employee extends React.Component {
       backBtn = <button className="btn btn-dark" onClick={this.backMenu}>Back</button>;
     }
     var topMenu = 
-      <div className="container d-flex flex-row justify-content-between mb-3">
+      <div className="container d-flex flex-row justify-content-between mt-3">
         {backBtn}
         {search}
         {addBtn}
@@ -86,10 +104,12 @@ class Employee extends React.Component {
 
     var stage;
     if(this.state.onCustomerPage)  stage = <EmployeeCustomer changeCustomerToParcel={this.changeCustomerToParcel} changeCustomerToUpdateCustomer={this.changeCustomerToUpdateCustomer}/>;
-    else if (this.state.onCustomerEditPage) stage = <EmployeeCustomerUpdate customerID={this.state.customerID}/>;
-    else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel}/>;
+    else if (this.state.onCustomerEditPage) stage = <EmployeeCustomerUpdate customerID={this.state.customerID} addCustomer={this.state.addCustomer} />;
+    else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel} changeParcelToShipmentStatus={this.changeParcelToShipmentStatus}/>;
     else if(this.state.onParcelEditPage) stage = <EmployeeParcelEdit senderID={this.state.customerID} parcel={this.state.parcel} changeEditParcelToParcel={this.changeEditParcelToParcel} />;
     else if ( this.state.onEmployeeEditPage) stage = <EmployeeEdit SSN={this.state.SSN}/>;
+    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel} changeShipmentStatusToEditShipmentStatus={this.changeShipmentStatusToEditShipmentStatus}/>;
+    else if (this.state.onShipmentStatusEditPage) stage = <EmployeeShipmentStatusEdit responseToKey={this.state.responseToKey}/>
     return (
       <div className="mb-5">
         <ul>

@@ -100,11 +100,12 @@ create table ShipmentStatus
 
 create table ResponseTo
 (
-	Employee_DeliverSSN char(13) primary key,
+	Employee_DeliverSSN char(13),
     Parcel_ParcelID char(10),
     ShipmentStatus_ShipmentID char(10),
     ShipmentPoint Text,
-    Timestamp datetime
+    Timestamp datetime,
+    PRIMARY KEY(Employee_DeliverSSN, Parcel_ParcelID, ShipmentStatus_ShipmentID)
 );
 
 /*
@@ -116,11 +117,19 @@ select * from customer;
 insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000",DATE("2019-11-17"),"M");
 #(RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender)
 #insert into CUSTOMER (FirstName,LastName) VALUES ("Bump","Dolwijit");
+insert into CUSTOMER VALUES ("0000000002", "Sookjai","Painaidee","0115484652","Sookjai@hotmail.com","2","street_2","subdis_2","dis_2","Bangkok","Thailand","10800","2019-11-180","F");
 select MAX(RegisterID) FROM CUSTOMER c;
 
 select * from Parcel;
 #//ParcelID,Type,InsuranceType,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,ShipmentType,FK_Send_Customer_SenderID,FK_Receive_Customer_ReceiverID,FK_Store_Employee_StockSSN
 insert into PARCEL VALUES ("0000000001","EMS","Normal","10","street1","SubDistrict1","District1","Bangkok","Thailand","10000","Normal","0123456789","0123456789","0123456789012");
+insert into PARCEL VALUES ("0000000002","EMS","Normal","10","street1","SubDistrict1","District1","Bangkok","Thailand","10000","Normal","0000000001","0000000002","1314651155100");
 
 insert into EMPLOYEE values("1314651155100", "Somchai", "Chaidee","0451321548","somchai@hotmail.com",Date("2019-11-14"),
 "1","street1","subdis1","dis1","provin1","thailand","10400",Date("2019-11-18"),"M","90000","Ph.D","Administrator",NULL,NULL,NULL);
+
+insert into ShipmentStatus values ("0000000001", "shiped to sorting center in Zhenshen");
+insert into ShipmentStatus values ("0000000002", "[THAI DC] your parcel has been received by sorting center");
+
+insert into ResponseTo values("1314651155100","0000000002","0000000001", "Zhenshen", CURRENT_TIMESTAMP);
+insert into ResponseTo values("1314651155100", "0000000002","0000000002","Bangkok Thailand", CURRENT_TIMESTAMP);

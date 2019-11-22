@@ -31,16 +31,16 @@ class App extends React.Component {
           <li className="left"><a>SamleeExpress</a></li>
         </ul>
 	      <div className="center">
-          <a>Welcome to SamleeExpress</a>
+          <h1>Welcome to SamleeExpress</h1>
         </div>
-        <div className="center">
-          <input type="text" /*placeholder="Username"*/name='username' onChange={this.paramField}/>
+        <div className="center form-group form-inline">
+          <input id="email" className="form-control" type="text" placeholder="Username" name='username' onChange={this.paramField}/>
         </div>
-	      <div className="center">
-	        <input type="text" /*placeholder="Password"*/name='password' onChange={this.paramField}/>
+	      <div className="center form-group form-inline">
+	        <input className="form-control" type="password" placeholder="Password" name='password' onChange={this.paramField}/>
         </div>
 	<     div className="center">
-          <button type="submit" onClick = { <Customer /> }>Sign in</button>
+          <button className="btn btn-primary" type="submit" onClick = { <Customer /> }>Sign in</button>
         </div>
         <div className="center">
           <h4>Hello {this.state.username}</h4>

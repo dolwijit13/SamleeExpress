@@ -6,11 +6,27 @@ class EmployeeCustomerUpdate extends React.Component {
         super(props);
         this.state = {
             doneLoading: false,
-            data: null,
+            data: {
+                RegisterID: null,
+                FirstName: null,
+                LastName: null,
+                TelephoneNo: null,
+                EMail: null,
+                HouseNo: null,
+                Street: null,
+                SubDistrict: null,
+                District: null,
+                Province: null,
+                Country: null,
+                PostalCode: null,
+                StartingDate: null,
+                Gender: null,
+            },
             error: null,
             gotoParcelPage: false,
             gotoEditPage: false,
-            customerID: this.props.customerID
+            customerID: this.props.customerID,
+            addCustomer: this.props.addCustomer,
         };
         this.resetData = this.resetData.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -28,15 +44,23 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     componentDidMount(){
-        this.fetchDatas();
+        if(this.state.customerID !== null) {
+            this.fetchDatas();
+        }
     }
 
     getOnlyDate(dtFromQuery){	
-        const index = dtFromQuery.indexOf("T");
-        if ( index > 0 ){
-            return dtFromQuery.slice(0,index);
-        }
-        return dtFromQuery;
+        var d = new Date(dtFromQuery),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
     }
 
     resetData(){
@@ -52,21 +76,36 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     handleSubmit(event){
-        event.preventDefault();
-        const data = this.state.data;
-        const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
-        axios.post(url, data).then((res)=>{
-            if ( res.status === 200 ){
-                console.log("success");
-                alert("customer data updated!");
-            }
-        }).catch((err)=>{
-            console.log(err);
-        });
+        if(this.state.customerID !== null){
+            event.preventDefault();
+            const data = this.state.data;
+            const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
+            axios.post(url, data).then((res)=>{
+                if ( res.status === 200 ){
+                    console.log("success");
+                    alert("customer data updated!");
+                }
+            }).catch((err)=>{
+                console.log(err);
+            });
+        }
+        else {
+            event.preventDefault();
+            const data = this.state.data;
+            const url = "http://localhost:8000/customer/add";
+            axios.post(url, data).then((res)=>{
+                if ( res.status === 200 ){
+                    console.log("success");
+                    alert("customer data added!");
+                }
+            }).catch((err)=>{
+                console.log(err);
+            });
+        }
     }
 
     render(){
-        if ( !this.state.doneLoading ){
+        if ( !this.state.doneLoading && !this.state.addCustomer){
             return null;
         }
 
@@ -76,11 +115,17 @@ class EmployeeCustomerUpdate extends React.Component {
 
             let input;
             if ( key === "RegisterID" ){
-                input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange} disabled></input>
+                if(value === null)  continue;
+                if(value !== null){
+                    input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange} disabled></input>
+                } 
             }
             else if ( key === "StartingDate" ){
-                const date = this.getOnlyDate(this.state.data["StartingDate"]);
-                input = <input name={key} className="form-control" type="date" id={key} value={date} onChange={this.handleChange}></input>
+                if(value === null)  continue;
+                if(value !== null){
+                    const date = this.getOnlyDate(this.state.data["StartingDate"]);
+                    input = <input name={key} className="form-control" type="date" id={key} value={date} onChange={this.handleChange}></input>
+                }
             }
             else if ( key === "Gender" ){
                 if ( value === "M"){
@@ -109,7 +154,8 @@ class EmployeeCustomerUpdate extends React.Component {
                 }
             }
             else {
-                input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange}></input>
+                if(value !== null) input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange}></input>
+                else input = <input name={key} className="form-control" type="text" id={key} onChange={this.handleChange}></input>
             }
 
             items.push(
@@ -119,8 +165,8 @@ class EmployeeCustomerUpdate extends React.Component {
                 </div>
             );
         }
-
-        return <div className="container">
+        return <div className="container mt-5">
+            <h1 className="text-center">Edit Customer</h1>
             <form onSubmit={this.handleSubmit}>
             {items}
             <div className="d-flex flex-row justify-content-between">

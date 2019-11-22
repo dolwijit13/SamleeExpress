@@ -28,11 +28,17 @@ class EmployeeEdit extends React.Component {
     }
 
     getOnlyDate(dtFromQuery){	
-        const index = dtFromQuery.indexOf("T");
-        if ( index > 0 ){
-            return dtFromQuery.slice(0,index);
-        }
-        return dtFromQuery;
+        var d = new Date(dtFromQuery),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
     }
 
     resetData(){
@@ -127,6 +133,7 @@ class EmployeeEdit extends React.Component {
         }
 
         return <div className="container">
+            <h1 className="text-center mt-5">Edit Your Infomation</h1>
             <form onSubmit={this.handleSubmit}>
             {items}
             <div className="d-flex flex-row justify-content-between">

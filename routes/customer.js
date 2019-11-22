@@ -14,18 +14,18 @@ router.get('/',(req,res) => {
 	})
 });
 
+
 //Delete
-router.delete('/', (req,res) => { 
-	//res.header("Access-Control-Allow-Origin", "*");
-	connection.query('DELETE FROM CUSTOMER WHERE RegisterID = 0000000003',(err,result,fields) => {
+router.get('/delete/:RegisterID',(req,res) => {
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
 		if(!err){
 			res.json(result);
-			res.send('delete success');
-			return;
+			console.log('WoW');
+			console.log(result);
 		}
 		else{
 			console.log(err);
-			res.sendStatus(500);
+			//res.sendStatus(500);
 			return;
 		}
 	})
@@ -34,7 +34,6 @@ router.delete('/', (req,res) => {
 //update
 router.get('/edit/:RegisterID', (req,res) => { 
 	connection.query("SELECT * FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
-		console.log(result);
 		res.json(result);
 	})
 });
