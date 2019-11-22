@@ -11,9 +11,6 @@ class EmployeeCustomer extends React.Component {
         doneLoading: false,
         customers: null,
         error: null,
-        gotoParcelPage: false,
-        gotoEditPage: false,
-        customerID: null,
     };
   }
 

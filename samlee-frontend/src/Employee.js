@@ -23,7 +23,7 @@ class Employee extends React.Component {
     this.changeCustomerToUpdateCustomer = this.changeCustomerToUpdateCustomer.bind(this);
     this.changeParcelToEditParcel = this.changeParcelToEditParcel.bind(this);
     this.changeEditParcelToParcel = this.changeEditParcelToParcel.bind(this);
-    this.editEmployee = this.editEmployee.bind(this);
+    this.editCustomer = this.editCustomer.bind(this);
     this.backMenu = this.backMenu.bind(this);
   }
 
@@ -43,11 +43,11 @@ class Employee extends React.Component {
     this.setState({onParcelEditPage: false, onParcelPage: true, parcel: null});
   }
 
-  editEmployee(){
+  editCustomer(){
     this.setState({
       onCustomerPage: false,
-      onCustomerEditPage: false,
-      onEmployeeEditPage: true,
+      onCustomerEditPage: true,
+      onEmployeeEditPage: false,
       onParcelPage: false,
       onParcelEditPage: false,
       customerID: null,
@@ -63,18 +63,25 @@ class Employee extends React.Component {
   }
 
   render() {
-    var editEmployee = <button className="btn btn-outline-primary" onClick={this.editEmployee}>Edit Your Infomation</button>;
+    var addBtn;
+    if(this.state.onCustomerPage) {
+      addBtn = <button className="btn btn-dark" onClick={this.editCustomer}>Add Customer</button>;
+    }
+    
     var search = (this.state.onParcelEditPage?null:
       <div className="search form-inline">
         <input className="form-control mr-1" type="text" placeholder="Search.." />
         <button className="btn btn-outline-primary" type="submit">search</button>
       </div>);
-    var backBtn = <button className="btn btn-dark" onClick={this.backMenu}>Back</button>
+    var backBtn;
+    if(!this.state.onCustomerPage){
+      backBtn = <button className="btn btn-dark" onClick={this.backMenu}>Back</button>;
+    }
     var topMenu = 
       <div className="container d-flex flex-row justify-content-between mb-3">
         {backBtn}
         {search}
-        {editEmployee}
+        {addBtn}
       </div>
 
     var stage;
