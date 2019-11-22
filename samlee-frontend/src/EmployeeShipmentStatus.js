@@ -52,6 +52,9 @@ class EmployeeShipmentStatus extends React.Component {
 
         return <div className="parcel-container">
         <h1 className="parcel-header">Shipment Status List</h1>
+        <div className="container">
+            <button className="btn btn-primary" onClick={this.props.goAddShipmentStatus}>Add Shipment Status</button>
+        </div>
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">

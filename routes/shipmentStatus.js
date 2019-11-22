@@ -96,44 +96,78 @@ router.post('/add/:Employee_DeliverSSN',(req,res) => {
 	var ShipmentStatus_ShipmentID = "" + mxId;
 	const tmp=10-ShipmentStatus_ShipmentID.length;
 	for(var i=1;i<=tmp;i++) ShipmentStatus_ShipmentID = "0"+ShipmentStatus_ShipmentID;
-	const ResponseTo = {
+	var ResponseTo = [
         Employee_DeliverSSN,
         Parcel_ParcelID,
         ShipmentStatus_ShipmentID,
         ShipmentPoint,
         Timestamp
-    }
-    const ShipmentStatus = {
-        ShipmentStatus_ShipmentID : ShipmentID,
-        Status : Status
-	}
+	]
+    var ShipmentStatus = [
+        ShipmentStatus_ShipmentID,
+        Status
+	]
+	console.log(ResponseTo);
+	console.log(ShipmentStatus);
+
 	if(Employee_DeliverSSN == undefined || Employee_DeliverSSN == "")
 	{
 		res.status(507).send("Employee_DeliverSSN can't be empty");
 	}
 	else if(Parcel_ParcelID == undefined|| Parcel_ParcelID == "")
 	{
-		Parcel_ParcelID.status(508).send("Parcel_ParcelID can't be empty");
+		res.status(508).send("Parcel_ParcelID can't be empty");
     }
     else if(ShipmentStatus_ShipmentID == undefined|| ShipmentStatus_ShipmentID == "")
 	{
-		ShipmentStatus_ShipmentID.status(509).send("ShipmentStatus_ShipmentID can't be empty");
+		res.status(509).send("ShipmentStatus_ShipmentID can't be empty");
     }
     else if(ShipmentPoint == undefined|| ShipmentPoint == "")
 	{
-		ShipmentPoint.status(510).send("ShipmentPoint can't be empty");
+		res.status(510).send("ShipmentPoint can't be empty");
     }
 	else
 	{
-		connection.query('INSERT INTO ResponseTo SET ?',ResponseTo,(err) => {
-			console.log('Inserted ResponseTo Employee_DeliverSSN : '+ Employee_DeliverSSN + ' Parcel_ParcelID :'+Parcel_ParcelID+' ShipmentStatus_ShipmentID '+ShipmentStatus_ShipmentID);
-			return res.redirect('/customer');
-        });
-        
-        connection.query('INSERT INTO ShipmentStatus SET ?',ResponseTo,(err) => {
-			console.log('Inserted ShipmentStatus ShipmentID : '+ Employee_DeliverSSN + ' Parcel_ParcelID :'+Parcel_ParcelID+' ShipmentStatus_ShipmentID '+ShipmentStatus_ShipmentID);
-			return res.redirect('/customer');
+		connection.beginTransaction(function(err){
+			if ( err ) {
+				res.status(403).send("internal error!");
+				throw err;
+			}
+			var query = "INSERT INTO ResponseTo VALUES(?, ?, ?, ?, ?);";
+			connection.query(query,ResponseTo,(error,result) => {
+				console.log('Inserted ResponseTo Employee_DeliverSSN : '+ Employee_DeliverSSN + ' Parcel_ParcelID :'+Parcel_ParcelID+' ShipmentStatus_ShipmentID '+ShipmentStatus_ShipmentID);
+				if ( error ) {
+					return connection.rollback(function() {
+						res,status(403).send("internal error!");
+						throw error;
+					});
+				}
+				query = "INSERT INTO ShipmentStatus VALUES(?, ?);"
+				connection.query(query,ShipmentStatus,(error,result) => {
+					console.log('Inserted ShipmentStatus ShipmentID : '+ Employee_DeliverSSN + ' Parcel_ParcelID :'+Parcel_ParcelID+' ShipmentStatus_ShipmentID '+ShipmentStatus_ShipmentID);
+					if ( error ) {
+						return connection.rollback(function() {
+							res,status(403).send("internal error!");
+							throw error;
+						});
+					}
+					connection.commit(function(err){
+						if (err) {
+							return connection.rollback(function() {
+							res,status(403).send("internal error!");
+								throw err;
+							});
+						}
+						res.send("success");
+						console.log("shipment status updated");
+					});
+				});
+			});
 		});
+
+		
+        
+        
 
 	}
 

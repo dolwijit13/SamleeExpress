@@ -24,6 +24,7 @@ class Employee extends React.Component {
       responseToKey: null,
       SSN: "1314651155100",
       addCustomer: false,
+      addShipmentStatus: false
     };
     this.changeCustomerToParcel = this.changeCustomerToParcel.bind(this);
     this.changeCustomerToUpdateCustomer = this.changeCustomerToUpdateCustomer.bind(this);
@@ -33,6 +34,7 @@ class Employee extends React.Component {
     this.backMenu = this.backMenu.bind(this);
     this.changeParcelToShipmentStatus = this.changeParcelToShipmentStatus.bind(this);
     this.changeShipmentStatusToEditShipmentStatus = this.changeShipmentStatusToEditShipmentStatus.bind(this);
+    this.goAddShipmentStatus = this.goAddShipmentStatus.bind(this);
   }
 
   changeCustomerToUpdateCustomer(customerID){
@@ -56,7 +58,7 @@ class Employee extends React.Component {
   }
 
   changeShipmentStatusToEditShipmentStatus(responseToKey){
-    this.setState({onShipmentStatusPage: false, onShipmentStatusEditPage: true, responseToKey: responseToKey});
+    this.setState({onShipmentStatusPage: false, onShipmentStatusEditPage: true, addShipmentStatus: false, responseToKey: responseToKey});
   }
 
   addCustomer(){
@@ -72,12 +74,24 @@ class Employee extends React.Component {
     });
   }
 
+  goAddShipmentStatus(){
+    this.setState({
+      onShipmentStatusPage: false,
+      onShipmentStatusEditPage: true,
+      addShipmentStatus: true,
+      responseToKey: {
+        Employee_DeliverSSN: null,
+      }
+    });
+  }
+
   backMenu(){
     if(this.state.onCustomerEditPage) this.setState({onCustomerEditPage: false, onCustomerPage: true});
     else if(this.state.onEmployeeEditPage)  this.setState({onEmployeeEditPage: false, onCustomerPage: true});
     else if(this.state.onParcelPage) this.setState({onParcelPage: false, onCustomerPage: true});
     else if(this.state.onParcelEditPage) this.setState({onParcelEditPage: false, onParcelPage: true});
     else if(this.state.onShipmentStatusPage) this.setState({onShipmentStatusPage: false, onParcelPage: true});
+    else if(this.state.onShipmentStatusEditPage) this.setState({onShipmentStatusEditPage: false, onShipmentStatusPage:true});
   }
 
   render() {
@@ -98,8 +112,8 @@ class Employee extends React.Component {
     var topMenu = 
       <div className="container d-flex flex-row justify-content-between mt-3">
         {backBtn}
-        {search}
         {addBtn}
+        {search}
       </div>
 
     var stage;
@@ -108,8 +122,8 @@ class Employee extends React.Component {
     else if(this.state.onParcelPage) stage = <EmployeeParcel senderID={this.state.customerID} changeParcelToEditParcel={this.changeParcelToEditParcel} changeParcelToShipmentStatus={this.changeParcelToShipmentStatus}/>;
     else if(this.state.onParcelEditPage) stage = <EmployeeParcelEdit senderID={this.state.customerID} parcel={this.state.parcel} changeEditParcelToParcel={this.changeEditParcelToParcel} />;
     else if ( this.state.onEmployeeEditPage) stage = <EmployeeEdit SSN={this.state.SSN}/>;
-    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel} changeShipmentStatusToEditShipmentStatus={this.changeShipmentStatusToEditShipmentStatus}/>;
-    else if (this.state.onShipmentStatusEditPage) stage = <EmployeeShipmentStatusEdit responseToKey={this.state.responseToKey}/>
+    else if (this.state.onShipmentStatusPage) stage = <EmployeeShipmentStatus parcel={this.state.parcel} goAddShipmentStatus={this.goAddShipmentStatus} changeShipmentStatusToEditShipmentStatus={this.changeShipmentStatusToEditShipmentStatus}/>;
+    else if (this.state.onShipmentStatusEditPage) stage = <EmployeeShipmentStatusEdit parcel={this.state.parcel} addShipmentStatus={this.state.addShipmentStatus} responseToKey={this.state.responseToKey}/>
     return (
       <div className="mb-5">
         <ul>
