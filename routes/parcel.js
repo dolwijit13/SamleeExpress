@@ -1,7 +1,14 @@
 var express = require('express')
 var router = express.Router()
 const connection = require('../database')
- 
+var cors = require('cors');
+
+router.use(cors());
+
+connection.on('error', function(err){
+	console.log(err.code);
+});
+
 
 //Read
 router.get('/:SenderID',(req,res) => {
@@ -13,6 +20,21 @@ router.get('/:SenderID',(req,res) => {
 });
 
 
+router.post('/edit/:ParcelID', (req,res) => {
+	const ParcelID = req.params.ParcelID;
+	const parcel = req.body;
+
+	const query = "UPDATE Parcel SET ?";
+
+	connection.query(query,parcel, (err)=>{
+		if ( err ){
+			res.status(403).send("internal error");
+			throw err;
+		}
+		res.status(200).send("seccess");
+	});
+
+});
 
 //Add
 //ParcelID,Type,InsuranceType,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,ShipmentType,FK_Send_Customer_SenderID,FK_Receive_Customer_ReceiverID,FK_Store_Employee_StockSSN
@@ -59,7 +81,7 @@ router.post('/add/:stockSSN',(req,res) => {
 		connection.query('INSERT INTO parcel SET ?',parcel,(err) => {
 			console.log('Inserted parcel id : '+ ParcelID + ' Adress :'+HouseNo+' '+Street+' '+SubDistrict+' '+District+' '+
 			Province+' '+Country+' '+PostalCode);
-			return res.redirect('/parcel');
+			res.status(200).send("success");
 		});
 
 	}

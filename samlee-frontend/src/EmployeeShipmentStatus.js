@@ -34,10 +34,11 @@ class EmployeeShipmentStatus extends React.Component {
         }
 
         var data = this.state.responseTos.map((responseTo,index)=>
+        
         <tr key={index} className="parcel-table-data">
             <td width="15%">{responseTo.FirstName}</td>
             <td width="15%">{responseTo.LastName}</td>
-            <td width="30%">{Date(responseTo.Timestamp)}</td>
+            <td width="30%">{(new Date(responseTo.Timestamp)).toString()}</td>
             <td width="10%">{responseTo.ShipmentPoint}</td>
             <td width="30%">{responseTo.Status}</td>
             <td><button className="btn btn-primary" onClick={
