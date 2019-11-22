@@ -14,6 +14,14 @@ router.get('/',(req,res) => {
 	})
 });
 
+router.get('/search/:RegisterID',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	connection.query('SELECT * FROM CUSTOMER where RegisterID=?',req.params.RegisterID,(err,result) => {
+		//console.log(result[0].RegisterID);
+		res.json(result);
+	})
+});
+
 
 //Delete
 router.get('/delete/:RegisterID',(req,res) => {

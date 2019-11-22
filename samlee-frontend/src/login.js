@@ -8,14 +8,68 @@ class App extends React.Component {
     this.state = {
       username: '',
       password: '',
-	    redirect: false,
+      redirect: false,
+      employee: null,
+      customer: null,
+      logInAsEmployee: false,
+      logInAsCustomer: false
 	  };
   }
+
+
+  fetchCustomer(username) { //case log in as customer
+    fetch('http://localhost:8000/customer/search/'+username)
+      .then(response => response.json())
+      .then(data =>{
+        this.setState({
+          customer: data[0],
+          logInAsCustomer: true,
+      })}
+      )
+      .catch(error => this.setState({ error, logInAsCustomer: false }));
+  }
+
   loginHandler = (event) => {
     event.preventDefault();
+    let username = this.state.username;
     let passwd = this.state.password;
     if (passwd.trim() == "") {
       alert("Please enter password.");
+    }
+    else if(username.length == 13) //case log in as employee
+    {
+      //Not implement yet
+      var a=1;
+    }
+    else if(username.length == 10) //case log in as customer
+    {
+      //fetchCustomer(username);
+      fetch('http://localhost:8000/customer/search/'+username)
+      .then(response => response.json())
+      .then(
+        data =>{ this.setState({
+          customer: data[0],
+          logInAsCustomer: true,
+          })
+        }
+      )
+      .then(() => {
+
+      if(this.state.customer === undefined)
+      {
+        alert("Wrong username or password");
+      }
+      else if(this.state.customer.RegisterID === username)
+      {
+        ///will redirect to ParcelPage
+        alert("Log in as : "+this.state.customer.FirstName);
+      }
+      
+    })
+    } 
+    else
+    {
+      alert("Wrong username or password");
     }
   }
   paramField = (event) => {
