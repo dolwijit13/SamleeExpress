@@ -19,12 +19,9 @@ class EmployeeCustomerUpdate extends React.Component {
                 Province: null,
                 Country: null,
                 PostalCode: null,
-                StartingDate: null,
                 Gender: null,
             },
             error: null,
-            gotoParcelPage: false,
-            gotoEditPage: false,
             customerID: this.props.customerID,
             addCustomer: this.props.addCustomer,
         };
@@ -64,7 +61,26 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     resetData(){
-        this.fetchDatas();
+        if(this.state.customerID !== null)  this.fetchDatas();
+        else{
+            var data = {
+                RegisterID: null,
+                FirstName: null,
+                LastName: null,
+                TelephoneNo: null,
+                EMail: null,
+                HouseNo: null,
+                Street: null,
+                SubDistrict: null,
+                District: null,
+                Province: null,
+                Country: null,
+                PostalCode: null,
+                Gender: null,
+            };
+            this.setState({data: data});
+        }
+        window.location.reload();
     }
 
     handleChange(event){
@@ -102,6 +118,7 @@ class EmployeeCustomerUpdate extends React.Component {
                 console.log(err);
             });
         }
+        window.location.reload();
     }
 
     render(){
@@ -119,13 +136,6 @@ class EmployeeCustomerUpdate extends React.Component {
                 if(value !== null){
                     input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange} disabled></input>
                 } 
-            }
-            else if ( key === "StartingDate" ){
-                if(value === null)  continue;
-                if(value !== null){
-                    const date = this.getOnlyDate(this.state.data["StartingDate"]);
-                    input = <input name={key} className="form-control" type="date" id={key} value={date} onChange={this.handleChange}></input>
-                }
             }
             else if ( key === "Gender" ){
                 if ( value === "M"){

@@ -6,6 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './login';
 
 ReactDOM.render(
-  <Login />,
+  <Employee />,
   document.getElementById('root')
 );
