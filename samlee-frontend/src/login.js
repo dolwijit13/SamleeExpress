@@ -23,7 +23,7 @@ class App extends React.Component {
 
   loginHandler = (event) => {
     event.preventDefault();
-    alert('click');
+    //alert('click');
     let username = this.state.username;
     let passwd = this.state.password;
     if (passwd.trim() == "") {
