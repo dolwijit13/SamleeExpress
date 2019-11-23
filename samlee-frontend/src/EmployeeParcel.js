@@ -44,7 +44,7 @@ class EmployeeParcel extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.delete(url,data);
+            Axios.post(url,data);
             window.location.reload();
           }
         },

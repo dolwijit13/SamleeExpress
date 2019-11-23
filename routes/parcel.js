@@ -20,7 +20,7 @@ router.get('/:SenderID',(req,res) => {
 });
 
 //Delete
-router.delete('/delete',(req,res) => {
+router.post('/delete',(req,res) => {
 	connection.query("DELETE FROM PARCEL WHERE ParcelID = ?",[req.body.ParcelID],(err,result) => {
 		if(!err){
 			res.json(result);
