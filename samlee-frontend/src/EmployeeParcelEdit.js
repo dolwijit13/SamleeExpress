@@ -17,11 +17,10 @@ class EmployeeParcelEdit extends React.Component {
             Country: "",
             PostalCode: "",
             ShipmentType: "",
-            FK_Send_Customer_SenderID: "",
+            FK_Send_Customer_SenderID: this.props.senderID,
             FK_Receive_Customer_ReceiverID: "",
-            FK_Store_Employee_StockSSN: "",
-            addParcel: this.props.addParcel
-
+            FK_Store_Employee_StockSSN: this.props.stockSSN,
+            addParcel: this.props.addParcel,
         };
         this.changeHandler = this.changeHandler.bind(this);
         this.resetForm = this.resetForm.bind(this);
@@ -40,9 +39,8 @@ class EmployeeParcelEdit extends React.Component {
             Country: "",
             PostalCode: "",
             ShipmentType: "",
-            FK_Send_Customer_SenderID: "",
             FK_Receive_Customer_ReceiverID: "",
-            FK_Store_Employee_StockSSN: "",});
+            });
         }
         else {
             this.setState({Type: this.state.parcel.Type,
@@ -84,7 +82,7 @@ class EmployeeParcelEdit extends React.Component {
                 ShipmentType:  this.state.ShipmentType,
                 FK_Send_Customer_SenderID: this.state.FK_Send_Customer_SenderID,
                 FK_Receive_Customer_ReceiverID: this.state.FK_Receive_Customer_ReceiverID,
-                FK_Store_Employee_StockSSN: ""};
+                FK_Store_Employee_StockSSN: this.state.FK_Store_Employee_StockSSN};
             const url = "http://localhost:8000/parcel/add/" + this.state.FK_Store_Employee_StockSSN;
             axios.post(url,data).then(res=>{
                 if ( res.status === 200 ){
@@ -164,10 +162,6 @@ class EmployeeParcelEdit extends React.Component {
                     <tr>
                         <td className="parcel-detail-topic">ShipmentType</td>
                         <td><input type="text" value={this.state.ShipmentType} name="ShipmentType" onChange={this.changeHandler}/></td>
-                    </tr>
-                    <tr>
-                        <td className="parcel-detail-topic">FK_Send_Customer_SenderID</td>
-                        <td><input type="text" value={this.state.FK_Send_Customer_SenderID} name="FK_Send_Customer_SenderID" onChange={this.changeHandler}/></td>
                     </tr>
                     <tr>
                         <td className="parcel-detail-topic">FK_Receive_Customer_ReceiverID</td>
