@@ -49,20 +49,26 @@ router.get('/edit/:RegisterID', (req,res) => {
 router.post('/edit/:RegisterID', (req,res) => { 
 	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
 		PostalCode,StartingDate,Gender } = req.body;
+	
+	const oldId = req.params.RegisterID;
 
-	const oldId = req.params.RegisterID
+	if(req.body.StartingDate.indexOf('Z')!=-1)
+	{
+		req.body.StartingDate.slice(0,-1);
+	}
 	
 	connection.query('UPDATE CUSTOMER SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
-	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?, Gender = ?  WHERE RegisterID = ?',
+	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?,  Gender = ?  WHERE RegisterID = ?',
 	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode, StartingDate,
 		Gender,oldId], (err, results) => {
+
 			if ( err ){
 				res.send(err);
 			}
         if(results.changedRows === 1){
 			console.log('Updated customer id : '+ oldId);
 			res.send("success");
-        }
+		}
     });
 });
 
