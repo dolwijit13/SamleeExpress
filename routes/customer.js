@@ -77,7 +77,7 @@ router.post('/add',(req,res) => {
 	var mxId = 0;
 	connection.query('select MAX(RegisterID) FROM CUSTOMER;',(err,result) => {
 		mxId = parseInt(result[0]['MAX(RegisterID)'])+1;
-		if(Number.isNaN(mxID)) mxID = 1; //Case first customer
+		if(Number.isNaN(mxId)) mxId = 1; //Case first customer
 	
 
 
