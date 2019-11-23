@@ -48,18 +48,13 @@ router.get('/edit/:RegisterID', (req,res) => {
 
 router.post('/edit/:RegisterID', (req,res) => { 
 	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,
-		PostalCode,StartingDate,Gender } = req.body;
+		PostalCode,Gender } = req.body;
 	
 	const oldId = req.params.RegisterID;
-
-	if(req.body.StartingDate.indexOf('Z')!=-1)
-	{
-		req.body.StartingDate.slice(0,-1);
-	}
 	
 	connection.query('UPDATE CUSTOMER SET FirstName = ?, LastName = ?,TelephoneNo = ?, EMail = ?, HouseNo = ?, Street = ?\
-	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, StartingDate = ?,  Gender = ?  WHERE RegisterID = ?',
-	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode, StartingDate,
+	, SubDistrict = ?, District = ?, Province = ?, Country = ?, PostalCode = ?, Gender = ?  WHERE RegisterID = ?',
+	[FirstName, LastName, TelephoneNo, EMail, HouseNo, Street, SubDistrict, District, Province, Country, PostalCode,
 		Gender,oldId], (err, results) => {
 
 			if ( err ){
@@ -74,7 +69,7 @@ router.post('/edit/:RegisterID', (req,res) => {
 
 
 
-//RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender
+//RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender
 
 router.post('/add',(req,res) => {
 	var mxId = 0;
@@ -84,7 +79,6 @@ router.post('/add',(req,res) => {
 
 
 	const {FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender } = req.body;
-	StartingDate = new Date();
 	var RegisterID = "" + mxId;
 	const tmp=10-RegisterID.length;
 	for(var i=1;i<=tmp;i++) RegisterID = "0"+RegisterID;
@@ -101,7 +95,6 @@ router.post('/add',(req,res) => {
 		Province,
 		Country,
 		PostalCode,
-		StartingDate,
 		Gender
 	}
 	if(FirstName == undefined || FirstName == "")

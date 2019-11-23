@@ -21,7 +21,7 @@ class EmployeeCustomer extends React.Component {
       .then(data =>{
         this.setState({
           customers: data,
-          doneLoading: true,
+          doneLoading: true
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
