@@ -48,6 +48,9 @@ class EmployeeParcel extends React.Component {
     return (
       <div className="parcel-container">
         <h1 className="parcel-header">Parcel List</h1>
+        <div className="container">
+          <button className="btn btn-primary" onClick={this.props.goAddParcel}>Add Parcel</button>
+        </div>
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
