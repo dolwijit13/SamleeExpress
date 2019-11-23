@@ -22,7 +22,7 @@ class Employee extends React.Component {
       customerID: null,
       parcel: null,
       responseToKey: null,
-      SSN: "1314651155100",
+      SSN: this.props.ssn,
       addCustomer: false,
       addShipmentStatus: false,
       addParcel: true
