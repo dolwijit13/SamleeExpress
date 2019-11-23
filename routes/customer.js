@@ -24,12 +24,13 @@ router.get('/search/:RegisterID',(req,res) => {
 
 
 //Delete
-router.get('/delete/:RegisterID',(req,res) => {
-	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
+router.delete('/delete',(req,res) => {
+	console.log(req);
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.body.RegisterID],(err,result) => {
 		if(!err){
 			res.json(result);
-			console.log('WoW');
-			console.log(result);
+			console.log('Deleted Customer RegisterID : ' + req.body.RegisterID);
+			//console.log(result);
 		}
 		else{
 			console.log(err);
@@ -69,6 +70,7 @@ router.post('/edit/:RegisterID', (req,res) => {
 
 
 
+//Add
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender
 
 router.post('/add',(req,res) => {

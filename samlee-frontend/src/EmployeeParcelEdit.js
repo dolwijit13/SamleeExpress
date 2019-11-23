@@ -21,6 +21,7 @@ class EmployeeParcelEdit extends React.Component {
             FK_Receive_Customer_ReceiverID: "",
             FK_Store_Employee_StockSSN: this.props.stockSSN,
             addParcel: this.props.addParcel,
+
         };
         this.changeHandler = this.changeHandler.bind(this);
         this.resetForm = this.resetForm.bind(this);
@@ -41,6 +42,7 @@ class EmployeeParcelEdit extends React.Component {
             ShipmentType: "",
             FK_Receive_Customer_ReceiverID: "",
             });
+
         }
         else {
             this.setState({Type: this.state.parcel.Type,
