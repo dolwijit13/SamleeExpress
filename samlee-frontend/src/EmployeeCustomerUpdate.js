@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import EmployeeCustomer from './EmployeeCustomer';
+import {Redirect} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 
 class EmployeeCustomerUpdate extends React.Component {
     constructor(props){
@@ -24,6 +27,8 @@ class EmployeeCustomerUpdate extends React.Component {
             error: null,
             customerID: this.props.customerID,
             addCustomer: this.props.addCustomer,
+            goToEmpCus: false,
+            employeeSSN: this.props.ssn,
         };
         this.resetData = this.resetData.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -154,7 +159,14 @@ class EmployeeCustomerUpdate extends React.Component {
         }
     }
 
+    backHandler = () =>{
+        this.setState({goToEmpCus: true});
+    }
+
     render(){
+        var EmpCusManage;
+        if(this.state.goToEmpCus)   return EmpCusManage = <Redirect to="/customerList/"/>;
+
         if ( !this.state.doneLoading && !this.state.addCustomer){
             return null;
         }
@@ -215,14 +227,36 @@ class EmployeeCustomerUpdate extends React.Component {
                             <button className="btn btn-primary" type="submit">{submitBtnText}</button>
                             <button type="button" className="btn btn-secondary" onClick={()=>this.resetData()}>{cancelBtnText}</button>
                         </div>;
+        var backBtn = <button className="btn btn-dark" onClick={this.backHandler}>Back</button>;
+        var topMenu = 
+            <div className="container d-flex flex-row justify-content-between mt-3">
+                {backBtn}
+            </div>
 
-        return <div className="container mt-5">
+        return (
+            <Router>
+                <Switch>
+                    <Route exact path="/customerUpdate/">
+            <div className="mb-5">
+            <ul>
+            <li className="left"><a>SamleeExpress</a></li>
+            <li className="right"><a>Log out</a></li>
+            </ul>
+            {topMenu}
+            <div className="container mt-5">
             <h1 className="text-center">Edit Customer</h1>
             <form onSubmit={this.handleSubmit}>
             {items}
             {btnGroup}
             </form>
-        </div>;
+            </div>
+            </div>
+                    {EmpCusManage}
+                    </Route>
+                    <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+                </Switch>
+            </Router>
+        );
     }
 }
 
