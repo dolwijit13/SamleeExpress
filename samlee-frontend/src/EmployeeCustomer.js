@@ -1,8 +1,11 @@
 import React from 'react';
+import EmployeeCustomerUpdate from './EmployeeCustomerUpdate';
 import EmployeeParcel from './EmployeeParcel';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
+import {Redirect} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
   
 
 class EmployeeCustomer extends React.Component {
@@ -12,6 +15,9 @@ class EmployeeCustomer extends React.Component {
         doneLoading: false,
         customers: null,
         error: null,
+        employeeSSN: this.props.ssn,
+        goToEmpCusUpt: false,
+        customerID: null,
     };
   }
 
@@ -21,7 +27,8 @@ class EmployeeCustomer extends React.Component {
       .then(data =>{
         this.setState({
           customers: data,
-          doneLoading: true
+          doneLoading: true,
+          customerID: data.RegisterID,
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -52,7 +59,25 @@ class EmployeeCustomer extends React.Component {
     });
   }
 
+  addHandler = (event) =>{
+    this.setState({goToEmpCusUpt: true});
+  }
+
   render() {
+    var EmpCusUptManage = null;
+    if(this.state.goToEmpCusUpt)  EmpCusUptManage = <Redirect to="/customerManage/"/>;  
+    var addBtn = <button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button>;
+    
+    var search = 
+      <div className="search form-inline">
+        <input className="form-control mr-1" type="text" placeholder="Search.." />
+        <button className="btn btn-outline-primary" type="submit">search</button>
+      </div>;
+    var topMenu = 
+      <div className="container d-flex flex-row justify-content-between mt-3">
+        {addBtn}
+        {search}
+      </div>
     if(!this.state.doneLoading) return null;
     var dataCustomer = this.state.customers.map((customer,index)=>
         <tr key={index} className="customer-table-data">
@@ -69,6 +94,15 @@ class EmployeeCustomer extends React.Component {
         </tr>
     );
     return (
+      <Router>
+        <Switch>
+          <Route exact path='/customerList/'>
+      <div className="mb-5">
+        <ul>
+          <li className="left"><a>SamleeExpress</a></li>
+          <li className="right"><a>Log out</a></li>
+        </ul>
+      {topMenu}
       <div className="customer-container">
         <h1 className="customer-header">Customer List</h1>
         <table className="customer-table">
@@ -87,6 +121,12 @@ class EmployeeCustomer extends React.Component {
             </tbody>
         </table>
       </div>
+      </div>
+      {EmpCusUptManage}
+          </Route>
+          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN}/>} />
+        </Switch>
+      </Router>
     );
   }
 }
