@@ -84,7 +84,7 @@ class EmployeeParcelEdit extends React.Component {
                 ShipmentType:  this.state.ShipmentType,
                 FK_Send_Customer_SenderID: this.state.FK_Send_Customer_SenderID,
                 FK_Receive_Customer_ReceiverID: this.state.FK_Receive_Customer_ReceiverID,
-                FK_Store_Employee_StockSSN: this.state.FK_Store_Employee_StockSSN};
+                FK_Store_Employee_StockSSN: ""};
             const url = "http://localhost:8000/parcel/add/" + this.state.FK_Store_Employee_StockSSN;
             axios.post(url,data).then(res=>{
                 if ( res.status === 200 ){
@@ -172,10 +172,6 @@ class EmployeeParcelEdit extends React.Component {
                     <tr>
                         <td className="parcel-detail-topic">FK_Receive_Customer_ReceiverID</td>
                         <td><input type="text" value={this.state.FK_Receive_Customer_ReceiverID} name="FK_Receive_Customer_ReceiverID" onChange={this.changeHandler}/></td>
-                    </tr>
-                    <tr>
-                        <td className="parcel-detail-topic">FK_Store_Employee_StockSSN</td>
-                        <td><input type="text" value={this.state.FK_Store_Employee_StockSSN} name="FK_Store_Employee_StockSSN" onChange={this.changeHandler}/></td>
                     </tr>
                 </tbody>
             );
