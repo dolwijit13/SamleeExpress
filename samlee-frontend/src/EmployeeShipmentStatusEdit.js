@@ -89,42 +89,75 @@ class EmployeeShipmentStatusEdit extends React.Component {
     }
 
     handleSubmit(event){
-        if ( !this.state.addShipmentStatus ){
+        if ( !this.state.addShipmentStatus ){ //Case edit
             event.preventDefault();
             const data = this.state.data;
-            const url = 'http://localhost:8000/shipmentStatus/edit/' + this.props.responseToKey.Employee_DeliverSSN
-            + '&' + this.props.responseToKey.Parcel_ParcelID
-            + '&' + this.props.responseToKey.ShipmentStatus_ShipmentID;
-            axios.post(url, data).then((res)=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("shipment status updated!");
-                }
-                else {
-                    console.log("something wrong!");
-                    alert("something went wrong! please try again later.");
-                }
-            }).catch((err)=>{
-                console.log(err);
-            });
+            if(data.Timestamp === null || data.Timestamp == "")
+            {
+                alert("Date Time can't be empty");
+            }
+            else if(data.ShipmentPoint === null || data.ShipmentPoint == "")
+            {
+                alert("Shipment Point can't be empty");
+            }
+            else if(data.Status === null || data.Status == "")
+            {
+                alert("Status can't be empty");
+            }
+            else
+            {
+
+                const url = 'http://localhost:8000/shipmentStatus/edit/' + this.props.responseToKey.Employee_DeliverSSN
+                + '&' + this.props.responseToKey.Parcel_ParcelID
+                + '&' + this.props.responseToKey.ShipmentStatus_ShipmentID;
+                axios.post(url, data).then((res)=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("shipment status updated!");
+                    }
+                    else {
+                        console.log("something wrong!");
+                        alert("something went wrong! please try again later.");
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            }
         }
-        else {
+        else { //Case add
             event.preventDefault();
             const data = this.state.data;
-            const url = 'http://localhost:8000/shipmentStatus/add/' + this.state.data.Employee_DeliverSSN;
-            data["Parcel_ParcelID"] = this.state.parcel.ParcelID;
-            axios.post(url, data).then((res)=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("shipment status added!");
-                }
-                else {
-                    console.log("something wrong!");
-                    alert("something went wrong! please try again later.");
-                }
-            }).catch((err)=>{
-                console.log(err);
-            });
+
+            if(data.Timestamp === null || data.Timestamp == "")
+            {
+                alert("Date Time can't be empty");
+            }
+            else if(data.ShipmentPoint === null || data.ShipmentPoint == "")
+            {
+                alert("Shipment Point can't be empty");
+            }
+            else if(data.Status === null || data.Status == "")
+            {
+                alert("Status can't be empty");
+            }
+            else
+            {
+
+                const url = 'http://localhost:8000/shipmentStatus/add/' + this.state.data.Employee_DeliverSSN;
+                data["Parcel_ParcelID"] = this.state.parcel.ParcelID;
+                axios.post(url, data).then((res)=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("shipment status added!");
+                    }
+                    else {
+                        console.log("something wrong!");
+                        alert("something went wrong! please try again later.");
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            }
         }
         
     }

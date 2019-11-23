@@ -20,7 +20,7 @@ router.get('/:Parcel_ParcelID',(req,res) => {
 	INNER JOIN Employee e on e.SSN = rt.Employee_DeliverSSN \
 	WHERE rt.Parcel_ParcelID = ?";
 	*/
-	const query = "SELECT e.FirstName \
+	const query = "SELECT rt.ShipmentPoint, rt.Timestamp, ss.Status, rt.Employee_DeliverSSN, rt.Parcel_ParcelID, rt.ShipmentStatus_ShipmentID \
 	FROM ResponseTo rt \
 	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
 	WHERE rt.Parcel_ParcelID = ?";

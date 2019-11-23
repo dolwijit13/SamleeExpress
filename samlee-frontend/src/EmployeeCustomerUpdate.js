@@ -92,33 +92,66 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     handleSubmit(event){
-        if(this.state.customerID !== null){
+
+        
+
+        if(this.state.customerID !== null){ //Case Edit
             event.preventDefault();
             const data = this.state.data;
-            const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
-            axios.post(url, data).then((res)=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("customer data updated!");
-                }
-            }).catch((err)=>{
-                console.log(err);
-            });
+
+            //chk First and Last name can't be empty
+            if(data.FirstName == "" || data.FirstName == null)
+            {
+                alert("FirstName can't be empty");
+            }
+            else if(data.LastName == "" || data.LastName == null)
+            {
+                alert("Last can't be empty");
+            }
+
+            else
+            {
+                const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
+                axios.post(url, data).then((res)=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("customer data updated!");
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                });
+                window.location.reload();
+            }
         }
-        else {
+        else { //Case Add
             event.preventDefault();
             const data = this.state.data;
             const url = "http://localhost:8000/customer/add";
-            axios.post(url, data).then((res)=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("customer data added!");
-                }
-            }).catch((err)=>{
-                console.log(err);
-            });
+
+            console.log(data);
+            //chk First and Last name can't be empty
+            if(data.FirstName == "" || data.FirstName == null)
+            {
+                alert("FirstName can't be empty");
+            }
+            else if(data.LastName == "" || data.LastName == null)
+            {
+                alert("Last can't be empty");
+            }
+
+            else
+            {
+                axios.post(url, data).then((res)=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("customer data added!");
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                });
+                //window.location.reload();
+            }
         }
-        window.location.reload();
     }
 
     render(){

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { exportDefaultSpecifier } from 'babel-types';
 
 class EmployeeParcelEdit extends React.Component {
     constructor(props) {
@@ -71,7 +72,8 @@ class EmployeeParcelEdit extends React.Component {
 
     handleSubmit(event){
         event.preventDefault();
-        if ( this.state.addParcel ){
+        if ( this.state.addParcel ){ //Case Add
+
             const data = {Type: this.state.Type,
                 InsuranceType:  this.state.InsuranceType,
                 HouseNo:  this.state.HouseNo,
@@ -84,18 +86,45 @@ class EmployeeParcelEdit extends React.Component {
                 ShipmentType:  this.state.ShipmentType,
                 FK_Send_Customer_SenderID: this.state.FK_Send_Customer_SenderID,
                 FK_Receive_Customer_ReceiverID: this.state.FK_Receive_Customer_ReceiverID,
-                FK_Store_Employee_StockSSN: this.state.FK_Store_Employee_StockSSN};
-            const url = "http://localhost:8000/parcel/add/" + this.state.FK_Store_Employee_StockSSN;
-            axios.post(url,data).then(res=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("parcel added!");
-                }
-            }).catch(err=>{
-                console.log(err);
-            });
+                FK_Store_Employee_StockSSN: this.state.FK_Store_Employee_StockSSN
+            };
+
+            
+            if(data.HouseNo == null || data.HouseNo == "")
+            {
+                alert("HouseNo can't be empty");
+            }
+            else if(data.SubDistrict == null || data.SubDistrict == "")
+            {
+                alert("SubDistrict can't be empty");
+            }
+            else if(data.District == null || data.District == "")
+            {
+                alert("District can't be empty");
+            }
+            else if(data.Province == null || data.Province == "")
+            {
+                alert("Province can't be empty");
+            }
+            else if(data.PostalCode == null || data.PostalCode == "")
+            {
+                alert("PostalCode can't be empty");
+            }
+            else
+            {
+                const url = "http://localhost:8000/parcel/add/" + this.state.FK_Store_Employee_StockSSN;
+                axios.post(url,data).then(res=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("parcel added!");
+                    }
+                }).catch(err=>{
+                    console.log(err);
+                });
+
+            }
         }
-        else {
+        else { //Case Edit
             const data = {Type: this.state.Type,
                 InsuranceType:  this.state.InsuranceType,
                 HouseNo:  this.state.HouseNo,
@@ -105,16 +134,41 @@ class EmployeeParcelEdit extends React.Component {
                 Province:  this.state.Province,
                 Country:  this.state.Country,
                 PostalCode:  this.state.PostalCode,
-                ShipmentType:  this.state.ShipmentType};
-            const url = "http://localhost:8000/parcel/edit/" + this.state.parcel.ParcelID;
-            axios.post(url,data).then(res=>{
-                if ( res.status === 200 ){
-                    console.log("success");
-                    alert("parcel updated!");
-                }
-            }).catch(err=>{
-                console.log(err);
-            });
+                ShipmentType:  this.state.ShipmentType
+            };
+
+            if(data.HouseNo == null || data.HouseNo == "")
+            {
+                alert("HouseNo can't be empty");
+            }
+            else if(data.SubDistrict == null || data.SubDistrict == "")
+            {
+                alert("SubDistrict can't be empty");
+            }
+            else if(data.District == null || data.District == "")
+            {
+                alert("District can't be empty");
+            }
+            else if(data.Province == null || data.Province == "")
+            {
+                alert("Province can't be empty");
+            }
+            else if(data.PostalCode == null || data.PostalCode == "")
+            {
+                alert("PostalCode can't be empty");
+            }
+            else
+            {
+                const url = "http://localhost:8000/parcel/edit/" + this.state.parcel.ParcelID;
+                axios.post(url,data).then(res=>{
+                    if ( res.status === 200 ){
+                        console.log("success");
+                        alert("parcel updated!");
+                    }
+                }).catch(err=>{
+                    console.log(err);
+                });
+            }
         }
     }
 
