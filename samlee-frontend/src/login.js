@@ -41,7 +41,6 @@ class App extends React.Component {
     else if(username.length == 13) //case log in as employee
     {
       //Not implement yet
-	//fetchCustomer(username);
       fetch('http://localhost:8000/employee/search/'+username)
       .then(response => response.json())
       .then(
@@ -132,7 +131,7 @@ class App extends React.Component {
       </form>
 	);
 	if(this.state.logInAsCustomer){
-	stage=<Employee />
+	stage=<Customer />
 	}
 	if(this.state.logInAsEmployee){
 	stage=<Employee />
