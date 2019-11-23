@@ -13,12 +13,19 @@ connection.on('error', function(err){
 
 router.get('/:Parcel_ParcelID',(req,res) => {
 	res.header("Access-Control-Allow-Origin", "*");
+	/*
 	const query = "SELECT e.FirstName, e.LastName, rt.ShipmentPoint, rt.Timestamp, ss.Status, rt.Employee_DeliverSSN, rt.Parcel_ParcelID, rt.ShipmentStatus_ShipmentID \
 	FROM ResponseTo rt \
 	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
 	INNER JOIN Employee e on e.SSN = rt.Employee_DeliverSSN \
 	WHERE rt.Parcel_ParcelID = ?";
+	*/
+	const query = "SELECT e.FirstName \
+	FROM ResponseTo rt \
+	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
+	WHERE rt.Parcel_ParcelID = ?";
 	connection.query(query,req.params.Parcel_ParcelID,(err,result) => {
+		console.log(result);
 		res.json(result);
     })
 });

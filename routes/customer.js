@@ -24,8 +24,8 @@ router.get('/search/:RegisterID',(req,res) => {
 
 
 //Delete
-router.delete('/delete',(req,res) => {
-	console.log(req);
+router.post('/delete',(req,res) => {
+	console.log(req.body.RegisterID);
 	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.body.RegisterID],(err,result) => {
 		if(!err){
 			res.json(result);
