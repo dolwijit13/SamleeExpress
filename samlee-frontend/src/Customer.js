@@ -28,18 +28,20 @@ class Customer extends React.Component {
         <button type="submit">search</button>
       </div>);
     var stage;
-    if(this.state.onParcelList) stage = <CustomerParcel senderID={this.state.parcelID} changeToParcelPage={this.changeToParcelPage}/>;
-    else if(this.state.onParcelPage) stage = <ParcelPage  changeToParcelList={this.changeToParcelList}/>;
-    return (
-      <div>
+	stage=(<div>
         <ul>
           <li className="left"><a>SamleeExpress</a></li>
           <li className="right"><a>Log out</a></li>
         </ul>
         {search}
-        {stage}
       </div>
-      
+	)
+    if(this.state.onParcelList) stage = <CustomerParcel senderID={this.state.parcelID} changeToParcelPage={this.changeToParcelPage}/>;
+    else if(this.state.onParcelPage) stage = <ParcelPage  changeToParcelList={this.changeToParcelList}/>;
+    return (
+	<div>
+ 	{stage}
+	</div>     
     );
   }
 }

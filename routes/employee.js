@@ -9,6 +9,25 @@ connection.on('error', function(err){
 	console.log(err.code);
 });
 
+//Read
+
+router.get('/',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	connection.query('SELECT * FROM EMPLOYEE',(err,result) => {
+		res.json(result);
+	})
+});
+
+router.get('/search/:SSN',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	connection.query('SELECT * FROM EMPLOYEE WHERE SSN=?',[req.params.SSN],(err,result) => {
+		//console.log(result[0].RegisterID);
+		res.json(result);
+	})
+});
+
+
+
 //update
 router.get('/edit/:SSN', (req,res) => { 
 	connection.query("SELECT * FROM EMPLOYEE WHERE SSN = ?",[req.params.SSN],(err,result) => {

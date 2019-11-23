@@ -18,6 +18,7 @@ class App extends React.Component {
       logInAsEmployee: false,
       logInAsCustomer: false
 	  };
+      
   }
 
   loginHandler = (event) => {
@@ -53,8 +54,8 @@ class App extends React.Component {
       }
       else if(this.state.customer.RegisterID === username)
       {
-        ///will redirect to ParcelPage
         alert("Log in as : "+this.state.customer.FirstName);
+	this.setState({ logInAsCustomer: true })
       }
       
     })
@@ -69,6 +70,7 @@ class App extends React.Component {
     let passwd = event.target.value;
     this.setState({[uname]: passwd});
   }
+	
   render() {
     var employeeScreen = null;
     if(this.state.logInAsEmployee)  employeeScreen= <Redirect to="/customerList/"/>;
