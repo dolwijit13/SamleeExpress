@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Customer from './Customer.js';
+import Employee from './Employee.js';
 
 class App extends React.Component {
   constructor(props){
@@ -14,6 +15,7 @@ class App extends React.Component {
       logInAsEmployee: false,
       logInAsCustomer: false
 	  };
+      
   }
 
 
@@ -39,7 +41,32 @@ class App extends React.Component {
     else if(username.length == 13) //case log in as employee
     {
       //Not implement yet
-      var a=1;
+	//fetchCustomer(username);
+      fetch('http://localhost:8000/employee/search/'+username)
+      .then(response => response.json())
+      .then(
+        data =>{ this.setState({
+          employee: data[0],
+          logInAsEmployee: true,
+          })
+        }
+      )
+      .then(() => {
+
+      if(this.state.employee === undefined)
+      {
+        alert("Wrong username or password");
+      }
+      else if(this.state.employee.SSN === username)
+      {
+        alert("Log in as : "+this.state.employee.FirstName);
+	this.setState({ logInAsEmployee: true })
+      }
+      
+    })
+
+      //Not implement yet
+	    
     }
     else if(username.length == 10) //case log in as customer
     {
@@ -61,8 +88,8 @@ class App extends React.Component {
       }
       else if(this.state.customer.RegisterID === username)
       {
-        ///will redirect to ParcelPage
         alert("Log in as : "+this.state.customer.FirstName);
+	this.setState({ logInAsCustomer: true })
       }
       
     })
@@ -77,8 +104,10 @@ class App extends React.Component {
     let passwd = event.target.value;
     this.setState({[uname]: passwd});
   }
+	
   render() {
-    return (
+	var stage;
+	stage = (
       <form onSubmit={this.loginHandler}>
       <div>
         <ul>
@@ -94,13 +123,24 @@ class App extends React.Component {
 	        <input className="form-control" type="password" placeholder="Password" name='password' onChange={this.paramField}/>
         </div>
 	<     div className="center">
-          <button className="btn btn-primary" type="submit" onClick = { <Customer /> }>Sign in</button>
+          <button className="btn btn-primary" type="submit">Sign in</button>
         </div>
         <div className="center">
           <h4>Hello {this.state.username}</h4>
         </div>
       </div>
       </form>
+	);
+	if(this.state.logInAsCustomer){
+	stage=<Employee />
+	}
+	if(this.state.logInAsEmployee){
+	stage=<Employee />
+	}
+    return (
+	<div>
+	{stage}
+	</div>
     );
   }
 }
