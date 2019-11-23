@@ -25,7 +25,6 @@ router.post('/delete',(req,res) => {
 		if(!err){
 			res.json(result);
 			console.log('Deleted Parcel ParcelID : ' + req.body.ParcelID);
-			console.log(result);
 		}
 		else{
 			console.log(err);

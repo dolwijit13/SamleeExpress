@@ -25,10 +25,40 @@ router.get('/:Parcel_ParcelID',(req,res) => {
 	INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID \
 	WHERE rt.Parcel_ParcelID = ?";
 	connection.query(query,req.params.Parcel_ParcelID,(err,result) => {
-		console.log(result);
+		//console.log(result);
 		res.json(result);
     })
 });
+
+
+//Delete
+router.post('/delete',(req,res) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	connection.query("DELETE FROM ResponseTo WHERE ShipmentStatus_ShipmentID = ?",[req.body.ShipmentStatus_ShipmentID],(err,result) => {
+		if(!err){
+			//res.json(result);
+			console.log('Deleted ResponseTo ShipmentStatus_ShipmentID : ' + req.body.ShipmentStatus_ShipmentID);
+		}
+		else{
+			console.log(err);
+			//res.sendStatus(500);
+			return;
+		}
+	})
+
+	connection.query("DELETE FROM ShipmentStatus WHERE ShipmentID = ?",[req.body.ShipmentStatus_ShipmentID],(err,result) => {
+		if(!err){
+			res.json(result);
+			console.log('Deleted ShipmentStatus ShipmentID : ' + req.body.ShipmentStatus_ShipmentID);
+		}
+		else{
+			console.log(err);
+			//res.sendStatus(500);
+			return;
+		}
+	})
+});
+
 
 //update
 router.get('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
@@ -85,8 +115,8 @@ router.post('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_Shipmen
 	
 });
 
-//Add
 
+//Add
 //ShipmentID,Status
 //Employee_DeliverSSN,Parcel_ParcelID,ShipmentStatus_ShipmentID,ShipmentPoint,Timestamp
 
@@ -114,8 +144,8 @@ router.post('/add/:Employee_DeliverSSN',(req,res) => {
         ShipmentStatus_ShipmentID,
         Status
 	]
-	console.log(ResponseTo);
-	console.log(ShipmentStatus);
+	//console.log(ResponseTo);
+	//console.log(ShipmentStatus);
 
 	if(Employee_DeliverSSN == undefined || Employee_DeliverSSN == "")
 	{
