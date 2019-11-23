@@ -19,7 +19,24 @@ router.get('/:SenderID',(req,res) => {
     })
 });
 
+//Delete
+router.delete('/delete',(req,res) => {
+	connection.query("DELETE FROM PARCEL WHERE ParcelID = ?",[req.body.ParcelID],(err,result) => {
+		if(!err){
+			res.json(result);
+			console.log('Deleted Parcel ParcelID : ' + req.body.ParcelID);
+			console.log(result);
+		}
+		else{
+			console.log(err);
+			//res.sendStatus(500);
+			return;
+		}
+	})
+});
 
+
+//Update
 router.post('/edit/:ParcelID', (req,res) => {
 	const ParcelID = req.params.ParcelID;
 	const parcel = req.body;

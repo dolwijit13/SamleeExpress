@@ -19,7 +19,7 @@ class EmployeeParcelEdit extends React.Component {
             ShipmentType: "",
             FK_Send_Customer_SenderID: "",
             FK_Receive_Customer_ReceiverID: "",
-            FK_Store_Employee_StockSSN: "",
+            FK_Store_Employee_StockSSN: "0000000001", //TO BE EDIT
             addParcel: this.props.addParcel
 
         };
@@ -41,8 +41,8 @@ class EmployeeParcelEdit extends React.Component {
             PostalCode: "",
             ShipmentType: "",
             FK_Send_Customer_SenderID: "",
-            FK_Receive_Customer_ReceiverID: "",
-            FK_Store_Employee_StockSSN: "",});
+            FK_Receive_Customer_ReceiverID: ""
+        });
         }
         else {
             this.setState({Type: this.state.parcel.Type,
@@ -84,7 +84,8 @@ class EmployeeParcelEdit extends React.Component {
                 ShipmentType:  this.state.ShipmentType,
                 FK_Send_Customer_SenderID: this.state.FK_Send_Customer_SenderID,
                 FK_Receive_Customer_ReceiverID: this.state.FK_Receive_Customer_ReceiverID,
-                FK_Store_Employee_StockSSN: ""};
+                };
+            console.log(data);
             const url = "http://localhost:8000/parcel/add/" + this.state.FK_Store_Employee_StockSSN;
             axios.post(url,data).then(res=>{
                 if ( res.status === 200 ){

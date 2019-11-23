@@ -33,6 +33,7 @@ class EmployeeCustomer extends React.Component {
 
   deleteHandler(event, person){
     var url = "http://localhost:8000/customer/delete/";
+    const data = {RegisterID : person.RegisterID};
     confirmAlert({
       title: 'Confirm to delete',
       message: "Are you sure to delete " + person.FirstName + " " + person.LastName,
@@ -40,7 +41,7 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.get(url + person.RegisterID);
+            Axios.delete(url,data);
             window.location.reload();
           }
         },
