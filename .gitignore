@@ -1,8 +1,9 @@
 database.js
-*package.json*
+/package.json
 package-lock.json
 /package-lock.json
-*node_modules*
+node_modules/
+node_modules/body-parser/package.json
 1.sql
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
