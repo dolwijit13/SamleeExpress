@@ -1,4 +1,7 @@
 import React from 'react';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import Axios from 'axios';
 
 class EmployeeShipmentStatus extends React.Component {
 
@@ -28,6 +31,26 @@ class EmployeeShipmentStatus extends React.Component {
           .catch(error => this.setState({ error, doneLoading: false }));
       }
 
+    deleteHandler(event,responseTo){
+        var url = "http://localhost:8000/shipmentStatus/delete/";
+        const data = {ShipmentStatus_ShipmentID : responseTo.ShipmentStatus_ShipmentID};
+        confirmAlert({
+          title: 'Confirm to delete',
+          message: "Are you sure to delete status " + responseTo.Status + " of parcelID " + responseTo.Parcel_ParcelID + " at shipment point " + responseTo.ShipmentPoint,
+          buttons:[
+            {
+              label: 'Yes',
+              onClick: () => {
+                Axios.post(url,data);
+              }
+            },
+            {
+              label: 'No',
+            }
+          ]
+        });
+      }
+
     render(){
         if ( !this.state.doneLoading ){
             return null;
@@ -47,7 +70,7 @@ class EmployeeShipmentStatus extends React.Component {
                     Parcel_ParcelID: responseTo.Parcel_ParcelID,
                     ShipmentStatus_ShipmentID: responseTo.ShipmentStatus_ShipmentID
                 })}>Edit</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
+            <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,responseTo)}>Delete</button></td>
         </tr>
     );
 
