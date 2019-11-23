@@ -58,6 +58,7 @@ router.post('/add/:stockSSN',(req,res) => {
 	var mxId = 0;
 	connection.query('select MAX(ParcelID) FROM PARCEL;',(err,result) => {
 		mxId = parseInt(result[0]['MAX(ParcelID)'])+1;
+		if(Number.isNaN(mxID)) mxID = 1; //Case first parcel
 	
 
 

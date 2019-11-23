@@ -125,6 +125,7 @@ router.post('/add/:Employee_DeliverSSN',(req,res) => {
     var mxId = 0;
 	connection.query('select MAX(ShipmentStatus_ShipmentID) FROM ResponseTo;',(err,result) => {
 		mxId = parseInt(result[0]['MAX(ShipmentStatus_ShipmentID)'])+1;
+		if(Number.isNaN(mxID)) mxID = 1; //Case first ShipmentStatus
 	
 
 
