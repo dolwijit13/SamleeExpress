@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import EmployeeCustomer from './EmployeeCustomer';
-import {Redirect} from 'react-router-dom';
-import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import {Redirect,useHistory} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 
 class EmployeeCustomerUpdate extends React.Component {
     constructor(props){
@@ -159,13 +159,10 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     backHandler(){
-        this.setState({goToEmpCus: true});
-        alert("clicked");
+
     }
 
     render(){
-        var EmpCusManage;
-        if(this.state.goToEmpCus)   return EmpCusManage = <Redirect from="/customerManage" to="/customerList/"/>;
 
         if ( !this.state.doneLoading && !this.state.addCustomer){
             return null;
@@ -226,7 +223,7 @@ class EmployeeCustomerUpdate extends React.Component {
                             <button className="btn btn-primary" type="submit">{submitBtnText}</button>
                             <button type="button" className="btn btn-secondary" onClick={()=>this.resetData()}>{cancelBtnText}</button>
                         </div>;
-        var backBtn = <button className="btn btn-dark" onClick={this.backHandler}>Back</button>;
+        var backBtn = <Link to="/customerList/"><button className="btn btn-dark">Back</button></Link>;
         var topMenu = 
             <div className="container d-flex flex-row justify-content-between mt-3">
                 {backBtn}
@@ -249,13 +246,17 @@ class EmployeeCustomerUpdate extends React.Component {
             </form>
             </div>
             </div>
-                    {EmpCusManage}
                     </Route>
                     <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
                 </Switch>
             </Router>
         );
     }
+}
+
+function backToCustomerList(){
+    let history = useHistory();
+    history.goBack();
 }
 
 export default EmployeeCustomerUpdate;
