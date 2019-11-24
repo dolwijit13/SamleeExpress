@@ -18,7 +18,6 @@ class EmployeeCustomer extends React.Component {
         customerID: null,
         addCustomer: false,
     };
-    this.backToCustomerList = this.backToCustomerList.bind(this);
   }
 
   fetchDatas() {
@@ -67,9 +66,8 @@ class EmployeeCustomer extends React.Component {
     this.setState({customerID: customer.RegisterID});
   }
 
-  backToCustomerList(){
-    this.setState({goToEmpCusUpt: false});
-    alert("gotoEmpCusUpt" + this.state.goToEmpCusUpt);
+  parcelHandler = (event,customer) => {
+    this.setState({customerID: customer.RegisterID});
   }
 
   render() {
@@ -92,9 +90,7 @@ class EmployeeCustomer extends React.Component {
             <td>{customer.RegisterID}</td>
             <td>{customer.FirstName}</td>
             <td>{customer.LastName}</td>
-            <td><button onClick={
-              ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
-              className="btn btn-success">Parcel</button></td>
+            <td><Link to="/customerParcel/"><button onClick={(e)=>this.parcelHandler(e,customer)} className="btn btn-success">Parcel</button></Link></td>
             <td><Link to="/customerManage/"><button onClick={(e)=>this.updateHandler(e,customer)} 
               className="btn btn-primary">Edit Customer</button></Link></td>
             <td><button className="btn btn-danger" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
@@ -131,7 +127,8 @@ class EmployeeCustomer extends React.Component {
       </div>
     
           </Route>
-          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} backToCustomerList={this.backToCustomerList}/>} />
+          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} />} />
+          <Route path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.customerID} ssn={this.state.employeeSSN} />} />
         </Switch>
       </Router>
     );

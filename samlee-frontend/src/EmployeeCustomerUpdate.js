@@ -52,20 +52,6 @@ class EmployeeCustomerUpdate extends React.Component {
         }
     }
 
-    /*getOnlyDate(dtFromQuery){	
-        var d = new Date(dtFromQuery),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-    
-    return [year, month, day].join('-');
-    }*/
-
     resetData(event){
         if(!this.state.addCustomer)  this.fetchDatas();
         else{
@@ -148,8 +134,8 @@ class EmployeeCustomerUpdate extends React.Component {
                 axios.post(url, data).then((res)=>{
                     if ( res.status === 200 ){
                         console.log("success");
-                        alert("customer data added!");
-                        this.setState({goToEmpCus: true});
+                        return <Link to="/customerList/"></Link>;
+                        
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -253,10 +239,4 @@ class EmployeeCustomerUpdate extends React.Component {
         );
     }
 }
-
-function backToCustomerList(){
-    let history = useHistory();
-    history.goBack();
-}
-
 export default EmployeeCustomerUpdate;
