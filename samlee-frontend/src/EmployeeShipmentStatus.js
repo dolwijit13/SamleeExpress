@@ -12,7 +12,7 @@ class EmployeeShipmentStatus extends React.Component {
         super(props);
         this.state = {
             doneLoading: false,
-            employeeSSN: this.props.ssn,
+            employeeSSN: this.props.employeeSSN,
             parcel: this.props.parcel,
             responseTos: null,
             ShipmentStatus_ShipmentID: null,
@@ -63,8 +63,6 @@ class EmployeeShipmentStatus extends React.Component {
     }
 
     ShipmentStatusHandler = (event,responseTo) =>{
-      console.log("pppp");
-      console.log(responseTo);
       this.setState({addShipmentStatus: false, ShipmentStatus_ShipmentID:responseTo.ShipmentStatus_ShipmentID});
     }
 
@@ -81,8 +79,8 @@ class EmployeeShipmentStatus extends React.Component {
             <td width="30%">{(new Date(responseTo.Timestamp)).toString()}</td>
             <td width="10%">{responseTo.ShipmentPoint}</td>
             <td width="30%">{responseTo.Status}</td>
-            <td><button className="btn btn-primary" onClick={
-                (e)=>{this.ShipmentStatusHandler(e,responseTo)}}>Edit</button></td>
+            <td><Link to="/customerShipmentStatusManage/"><button className="btn btn-primary" onClick={
+                (e)=>{this.ShipmentStatusHandler(e,responseTo)}}>Edit</button></Link></td>
             <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,responseTo)}>Delete</button></td>
         </tr>
     );

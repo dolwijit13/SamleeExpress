@@ -61,33 +61,35 @@ router.post('/delete',(req,res) => {
 
 
 //update
-router.get('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
-	const Employee_DeliverSSN = req.params.Employee_DeliverSSN;
+router.get('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 	const Parcel_ParcelID = req.params.Parcel_ParcelID;
 	const ShipmentStatus_ShipmentID = req.params.ShipmentStatus_ShipmentID;
 
 	const query = "SELECT rt.Timestamp, rt.ShipmentPoint, ss.Status \
 				FROM ResponseTo rt \
 				INNER JOIN ShipmentStatus ss on rt.ShipmentStatus_ShipmentID = ss.ShipmentID\
-				WHERE rt.Employee_DeliverSSN = ? AND rt.Parcel_ParcelID = ? AND rt.ShipmentStatus_ShipmentID = ?";
-	connection.query(query,[Employee_DeliverSSN,Parcel_ParcelID,ShipmentStatus_ShipmentID], (err,result)=>{
+				WHERE rt.Parcel_ParcelID = ? AND rt.ShipmentStatus_ShipmentID = ?";
+	connection.query(query,[Parcel_ParcelID,ShipmentStatus_ShipmentID], (err,result)=>{
 		res.json(result);
 	});
 	
 });
 
-router.post('/edit/:Employee_DeliverSSN&:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
-	const Employee_DeliverSSN = req.params.Employee_DeliverSSN;
+router.post('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 	const Parcel_ParcelID = req.params.Parcel_ParcelID;
 	const ShipmentStatus_ShipmentID = req.params.ShipmentStatus_ShipmentID;
 
 	var {Timestamp,ShipmentPoint,Status} = req.body;
+
+	console.log(Parcel_ParcelID);
+	console.log(ShipmentStatus_ShipmentID);
+
 	
 	connection.beginTransaction(function(err){
 		if ( err ) throw err;
 		connection.query("UPDATE ResponseTo SET Timestamp = ?, ShipmentPoint = ? 	\
-			WHERE Employee_DeliverSSN = ? AND Parcel_ParcelID = ? AND ShipmentStatus_ShipmentID = ?;",
-			[Timestamp,ShipmentPoint,Employee_DeliverSSN,Parcel_ParcelID,ShipmentStatus_ShipmentID],(error,result)=>{
+			WHERE Parcel_ParcelID = ? AND ShipmentStatus_ShipmentID = ?;",
+			[Timestamp,ShipmentPoint,Parcel_ParcelID,ShipmentStatus_ShipmentID],(error,result)=>{
 				if ( error ) {
 					return connection.rollback(function() {
 						throw error;

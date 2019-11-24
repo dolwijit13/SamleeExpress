@@ -19,7 +19,6 @@ class EmployeeShipmentStatusEdit extends React.Component {
             },
             addShipmentStatus: this.props.addShipmentStatus
         };
-        console.log(this.state);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.formatDateTimeLocal = this.formatDateTimeLocal.bind(this);
@@ -27,7 +26,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
     }
 
     fetchDatas() {
-        if ( this.state.addShipmentStatus )
+        if ( this.state.addShipmentStatus ) //Case Add
         {
             var data = this.state.data;
             data["Timestamp"] = new Date();
@@ -39,15 +38,18 @@ class EmployeeShipmentStatusEdit extends React.Component {
                 doneLoading: true
             });
         }
-        else {
-            const url = 'http://localhost:8000/shipmentStatus/edit/' + this.state.data.Employee_DeliverSSN
-            + '&' + this.state.data.Parcel_ParcelID
+        else { //Case Edit
+            const url = 'http://localhost:8000/shipmentStatus/edit/' + this.state.data.Parcel_ParcelID
             + '&' + this.state.data.ShipmentStatus_ShipmentID;
             fetch(url)
             .then(response => response.json())
             .then(data =>{
+                var data0 = this.state.data;
+                data0["Timestamp"] = data[0].Timestamp;
+                data0["ShipmentPoint"] = data[0].ShipmentPoint;
+                data0["Status"]=data[0].Status;
                 this.setState({
-                    data: data[0],
+                    data: data0,
                     doneLoading: true
                 })}
             )
@@ -108,10 +110,8 @@ class EmployeeShipmentStatusEdit extends React.Component {
             }
             else
             {
-
-                const url = 'http://localhost:8000/shipmentStatus/edit/' + this.props.responseToKey.Employee_DeliverSSN
-                + '&' + this.props.responseToKey.Parcel_ParcelID
-                + '&' + this.props.responseToKey.ShipmentStatus_ShipmentID;
+                const url = 'http://localhost:8000/shipmentStatus/edit/' + this.state.data.Parcel_ParcelID
+                + '&' + this.state.data.ShipmentStatus_ShipmentID;
                 axios.post(url, data).then((res)=>{
                     if ( res.status === 200 ){
                         console.log("success");
