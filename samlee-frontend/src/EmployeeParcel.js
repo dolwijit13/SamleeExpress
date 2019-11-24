@@ -2,6 +2,9 @@ import React from 'react';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
+import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
+import EmployeeParcelEdit from './EmployeeParcelEdit';
+import EmployeeCustomer from './EmployeeCustomer';
 
 class EmployeeParcel extends React.Component {
   constructor(props){
@@ -10,8 +13,11 @@ class EmployeeParcel extends React.Component {
         doneLoading: false,
         parcels: null,
         error: null,
-        senderID: props.senderID,
+        senderID: this.props.senderID,
         parcelID: null,
+        employeeSSN: this.props.ssn,
+        parcel: null,
+        addParcel: false,
     };
   }
 
@@ -55,7 +61,26 @@ class EmployeeParcel extends React.Component {
     });
   }
 
+  addHandler = (event) =>{
+    this.setState({addParcel: true});
+  }
+
   render() {
+    var addBtn = 
+      <Link to="/customerParcelManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Parcel</button></Link>;
+    
+    var search = 
+      <div className="search form-inline">
+        <input className="form-control mr-1" type="text" placeholder="Search.." />
+        <button className="btn btn-outline-primary" type="submit">search</button>
+      </div>;
+    var backBtn = <Link to="/customerList"><button className="btn btn-dark">Back</button></Link>;
+    var topMenu = 
+      <div className="container d-flex flex-row justify-content-between mt-3">
+        {backBtn}
+        {search}
+        {addBtn}
+      </div>
     if(!this.state.doneLoading) return null;
     var dataParcel = this.state.parcels.map((parcel,index)=>
         <tr key={index} className="parcel-table-data">
@@ -72,11 +97,17 @@ class EmployeeParcel extends React.Component {
         </tr>
     );
     return (
+      <Router>
+        <Switch>
+          <Route exact path='/customerParcel/'>
+      <div className="mb-5">
+        <ul>
+          <li className="left"><a>SamleeExpress</a></li>
+          <li className="right"><a>Log out</a></li>
+        </ul>
+      {topMenu}
       <div className="parcel-container">
         <h1 className="parcel-header">Parcel List</h1>
-        <div className="container">
-          <button className="btn btn-primary" onClick={this.props.goAddParcel}>Add Parcel</button>
-        </div>
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
@@ -94,6 +125,12 @@ class EmployeeParcel extends React.Component {
             </tbody>
         </table>
       </div>
+      </div>
+      </Route>
+      <Route path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.par}/>}/>
+      <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+      </Switch>
+      </Router>
     );
   }
 }
