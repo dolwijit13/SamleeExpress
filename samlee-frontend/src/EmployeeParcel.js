@@ -4,6 +4,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import EmployeeParcelEdit from './EmployeeParcelEdit';
+import EmployeeCustomer from './EmployeeCustomer';
 
 class EmployeeParcel extends React.Component {
   constructor(props){
@@ -15,6 +16,8 @@ class EmployeeParcel extends React.Component {
         senderID: this.props.senderID,
         parcelID: null,
         employeeSSN: this.props.ssn,
+        parcel: null,
+        addParcel: false,
     };
   }
 
@@ -58,6 +61,10 @@ class EmployeeParcel extends React.Component {
     });
   }
 
+  addHandler = (event) =>{
+    this.setState({addParcel: true});
+  }
+
   render() {
     var addBtn = 
       <Link to="/customerParcelManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Parcel</button></Link>;
@@ -67,7 +74,7 @@ class EmployeeParcel extends React.Component {
         <input className="form-control mr-1" type="text" placeholder="Search.." />
         <button className="btn btn-outline-primary" type="submit">search</button>
       </div>;
-    var backBtn = <Link to="/customerParcel/"><button className="btn btn-dark">Back</button></Link>;
+    var backBtn = <Link to="/customerList"><button className="btn btn-dark">Back</button></Link>;
     var topMenu = 
       <div className="container d-flex flex-row justify-content-between mt-3">
         {backBtn}
@@ -120,7 +127,8 @@ class EmployeeParcel extends React.Component {
       </div>
       </div>
       </Route>
-      <Route path="/customerParcelManage" component={()=><EmployeeParcelEdit />}/>
+      <Route path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.par}/>}/>
+      <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
       </Switch>
       </Router>
     );
