@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
+import Login from './login2';
 
 class EmployeeShipmentStatusEdit extends React.Component {
 
@@ -214,18 +216,41 @@ class EmployeeShipmentStatusEdit extends React.Component {
                         </div>);
         }
 
-        return <div className="container mt-5">
-            <h1 className="text-center">Edit Shipment Status</h1>
-            <form onSubmit={this.handleSubmit}>
-                {items}
-                {inputs}
-            <div className="d-flex flex-row justify-content-between">
-                <button className="btn btn-primary" type="submit">save</button>
-                <button className="btn btn-secondary" type="button" onClick={this.resetForm}>cancel</button>
-            </div>
-        </form>
+        var backBtn = <Link to="/customerShipmentStatus/"><button className="btn btn-dark">Back</button></Link>;
+        var topMenu = 
+        <div className="container d-flex flex-row justify-content-between mt-3">
+            {backBtn}
         </div>
+
+        return (
         
+            <Router>
+                <Switch>
+                    <Route exact path="/customerShipmentStatusManage/">
+                        <div className="mb-5">
+                            <ul>
+                                <li className="left"><a>SamleeExpress</a></li>
+                                <Link to="/"><li className="right"><a>Log out</a></li></Link>
+                            </ul>
+                            {topMenu}
+
+                            <div className="container mt-5">
+                                <h1 className="text-center">Edit Shipment Status</h1>
+                                <form onSubmit={this.handleSubmit}>
+                                    {items}
+                                    {inputs}
+                                <div className="d-flex flex-row justify-content-between">
+                                    <button className="btn btn-primary" type="submit">save</button>
+                                    <button className="btn btn-secondary" type="button" onClick={this.resetForm}>cancel</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </Route>
+                    <Route exact path="/" component={()=><Login/>} />
+                </Switch>
+            </Router>
+        )
     }
 }
 

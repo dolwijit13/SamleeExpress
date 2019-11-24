@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { exportDefaultSpecifier } from 'babel-types';
+import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
+import Login from './login2'
 
 class EmployeeParcelEdit extends React.Component {
     constructor(props) {
@@ -285,23 +287,43 @@ class EmployeeParcelEdit extends React.Component {
                             <button className="btn btn-secondary" type="button" onClick={this.resetForm}>{cancelBtnText}</button>
                         </div>
 
+        var backBtn = <Link to="/customerParcel/"><button className="btn btn-dark">Back</button></Link>;
+        var topMenu = 
+        <div className="container d-flex flex-row justify-content-between mt-3">
+            {backBtn}
+        </div>
+
         return(
-            <form onSubmit={this.handleSubmit}>
-                <div className="parcel-edit-container">
-                    <h1 className="parcel-edit-header">Manage Parcel</h1>
-                    <table className="parcel-edit-table">
-                        <thead>
-                            <tr className="parcel-edit-table-head">
-                                <th className="data-width-table">Topic</th>
-                                <th className="data-width-table">Detail</th>
-                            </tr>
-                        </thead>
-                        {stage}
-                    </table>
-                </div>
-                {btnGroup}
-            </form>
-        
+            <Router>
+                <Switch>
+                    <Route exact path="/customerParcelManage/">
+                        <div className="mb-5">
+                            <ul>
+                                <li className="left"><a>SamleeExpress</a></li>
+                                <Link to="/"><li className="right"><a>Log out</a></li></Link>
+                            </ul>
+                            {topMenu}
+
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="parcel-edit-container">
+                                    <h1 className="parcel-edit-header">Manage Parcel</h1>
+                                    <table className="parcel-edit-table">
+                                        <thead>
+                                            <tr className="parcel-edit-table-head">
+                                                <th className="data-width-table">Topic</th>
+                                                <th className="data-width-table">Detail</th>
+                                            </tr>
+                                        </thead>
+                                        {stage}
+                                    </table>
+                                </div>
+                                {btnGroup}
+                            </form>
+                        </div>
+                    </Route>
+                    <Route exact path="/" component={()=><Login/>} />
+                </Switch>
+            </Router>
         );
     }
 }
