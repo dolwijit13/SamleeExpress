@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Customer from './Customer.js';
-import Employee from './Employee';
+import EmployeeCustomer from './EmployeeCustomer';
 import {Redirect} from 'react-router-dom';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import { fdatasync } from 'fs';
@@ -158,7 +158,7 @@ class App extends React.Component {
         </form>
         {employeeScreen}
         </Route>
-          <Route path="/customerList/" component={()=><Employee ssn={this.state.username}  />} />
+        <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.username}/>} />
         </Switch>
       </Router>
     );

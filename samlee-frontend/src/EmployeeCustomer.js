@@ -4,8 +4,7 @@ import EmployeeParcel from './EmployeeParcel';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
-import {Redirect} from 'react-router-dom';
-import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
   
 
 class EmployeeCustomer extends React.Component {
@@ -16,12 +15,12 @@ class EmployeeCustomer extends React.Component {
         customers: null,
         error: null,
         employeeSSN: this.props.ssn,
-        goToEmpCusUpt: false,
         customerID: null,
         addCustomer: false,
         editCustomer: true,
         firstRender: true
     };
+    this.backToCustomerList = this.backToCustomerList.bind(this);
   }
 
   fetchDatas() {
@@ -85,22 +84,21 @@ class EmployeeCustomer extends React.Component {
   }
 
   addHandler = (event) =>{
-    this.setState({goToEmpCusUpt: true, addCustomer: true});
+    this.setState({addCustomer: true});
   }
 
   updateHandler = (event,customer) => {
-    this.setState({goToEmpCusUpt: true, customerID: customer.RegisterID, editCustomer: true});
+    this.setState({customerID: customer.RegisterID});
+  }
+
+  backToCustomerList(){
+    this.setState({goToEmpCusUpt: false});
+    alert("gotoEmpCusUpt" + this.state.goToEmpCusUpt);
   }
 
   render() {
-    var EmpCusUptManage = null;
-    console.log("render");
-    if(this.state.goToEmpCusUpt)
-    {
-      console.log("test");
-      EmpCusUptManage = <Redirect from="/customerList" to="/customerManage/"/>; 
-    }
-    var addBtn = <button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button>;
+    var addBtn = 
+      <Link to="/customerManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button></Link>;
     
     var search = 
       <div className="search form-inline">
@@ -121,8 +119,8 @@ class EmployeeCustomer extends React.Component {
             <td><button onClick={
               ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
               className="btn btn-success">Parcel</button></td>
-            <td><button onClick={(e)=>this.updateHandler(e,customer)} 
-              className="btn btn-primary">Edit Customer</button></td>
+            <td><Link to="/customerManage/"><button onClick={(e)=>this.updateHandler(e,customer)} 
+              className="btn btn-primary">Edit Customer</button></Link></td>
             <td><button className="btn btn-danger" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
         </tr>
     );
@@ -155,9 +153,9 @@ class EmployeeCustomer extends React.Component {
         </table>
       </div>
       </div>
-      {EmpCusUptManage}
+    
           </Route>
-          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer}/>} />
+          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} backToCustomerList={this.backToCustomerList}/>} />
         </Switch>
       </Router>
     );
