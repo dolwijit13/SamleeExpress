@@ -70,7 +70,7 @@ create table Customer
     Province Text,
     Country Text,
     PostalCode char(5),
-    StartingDate date,
+    -- StartingDate date,
     Gender char(1)
 );
 
@@ -114,10 +114,10 @@ delete From CUSTOMER where RegisterID = "2";
 */
 
 select * from customer;
-insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000",DATE("2019-11-17"),"M");
+insert into CUSTOMER VALUES ("0000000001","Inuyama","Shibata","0123456789","inuyama.s@dogmail.com","1","Shiba","Inu","ShibaInu","Chiba","Japan","00000","M");
 #(RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,StartingDate,Gender)
 #insert into CUSTOMER (FirstName,LastName) VALUES ("Bump","Dolwijit");
-insert into CUSTOMER VALUES ("0000000002", "Sookjai","Painaidee","0115484652","Sookjai@hotmail.com","2","street_2","subdis_2","dis_2","Bangkok","Thailand","10800","2019-11-180","F");
+insert into CUSTOMER VALUES ("0000000002", "Sookjai","Painaidee","0115484652","Sookjai@hotmail.com","2","street_2","subdis_2","dis_2","Bangkok","Thailand","10800","F");
 select MAX(RegisterID) FROM CUSTOMER c;
 
 select * from Parcel;
