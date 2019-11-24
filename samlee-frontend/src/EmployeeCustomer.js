@@ -64,6 +64,10 @@ class EmployeeCustomer extends React.Component {
     this.setState({goToEmpCusUpt: true, addCustomer: true});
   }
 
+  updateHandler = (event,customer) => {
+    this.setState({goToEmpCusUpt: true, customerID: customer.RegisterID});
+  }
+
   render() {
     var EmpCusUptManage = null;
     if(this.state.goToEmpCusUpt)  EmpCusUptManage = <Redirect from="/customerList" to="/customerManage/"/>;  
@@ -88,8 +92,7 @@ class EmployeeCustomer extends React.Component {
             <td><button onClick={
               ()=>this.props.changeCustomerToParcel(customer.RegisterID)} 
               className="btn btn-success">Parcel</button></td>
-            <td><button onClick={
-              ()=>this.props.changeCustomerToUpdateCustomer(customer.RegisterID)} 
+            <td><button onClick={(e)=>this.updateHandler(e,customer)} 
               className="btn btn-primary">Edit Customer</button></td>
             <td><button className="btn btn-danger" onClick={(e) => this.deleteHandler(e,customer)}>Delete</button></td>
         </tr>
