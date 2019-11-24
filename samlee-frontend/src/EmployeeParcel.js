@@ -65,6 +65,10 @@ class EmployeeParcel extends React.Component {
     this.setState({addParcel: true});
   }
 
+  editHandler = (event,parcel) =>{
+    this.setState({addParcel: false, parcel:parcel});
+  }
+
   render() {
     var addBtn = 
       <Link to="/customerParcelManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Parcel</button></Link>;
@@ -89,9 +93,7 @@ class EmployeeParcel extends React.Component {
             {parcel.Province + " " + parcel.Country + " " + parcel.PostalCode}</td>
             <td>{parcel.Type}</td>
             <td>{parcel.InsuranceType}</td>
-            <td><button onClick={
-              ()=>this.props.changeParcelToEditParcel(parcel)} 
-              className="btn btn-success">Edit</button></td>
+            <td><Link to="/customerParcelManage/"><button onClick={(e)=>{this.editHandler(e,parcel)}} className="btn btn-success">Edit</button></Link></td>
             <td><button className="btn btn-primary" onClick={()=>this.props.changeParcelToShipmentStatus(parcel)}>Status</button></td>
             <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,parcel)}>Delete</button></td>
         </tr>

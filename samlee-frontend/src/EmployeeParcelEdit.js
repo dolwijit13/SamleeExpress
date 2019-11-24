@@ -5,6 +5,7 @@ import { exportDefaultSpecifier } from 'babel-types';
 class EmployeeParcelEdit extends React.Component {
     constructor(props) {
         super(props);
+        console.log("props : ");
         console.log(props);
         this.state = {
             parcel: props.parcel,
