@@ -134,7 +134,7 @@ class EmployeeParcel extends React.Component {
       <Route exact path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.parcel}
           senderID={this.state.senderID} stockSSN={this.state.employeeSSN} addParcel = {this.state.addParcel}/>}/>
       <Route exact path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
-      <Route exact path="/customerShipmentStatus/" component={()=><EmployeeShipmentStatus employeeSSN={this.state.employeeSSN} parcel={this.state.parcel} />} />
+      <Route exact path="/customerShipmentStatus/" component={()=><EmployeeShipmentStatus employeeSSN={this.state.employeeSSN} parcelID={this.state.parcel.ParcelID} senderID={this.state.senderID}/>} />
       <Route exact path="/" component={()=><Login/>} />
       </Switch>
       </Router>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { exportDefaultSpecifier } from 'babel-types';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import Login from './login2'
+import EmployeeParcel from './EmployeeParcel';
 
 class EmployeeParcelEdit extends React.Component {
     constructor(props) {
@@ -321,6 +322,7 @@ class EmployeeParcelEdit extends React.Component {
                             </form>
                         </div>
                     </Route>
+                    <Route path="/customerParcel" component={()=><EmployeeParcel senderID={this.state.FK_Send_Customer_SenderID} ssn={this.state.FK_Store_Employee_StockSSN}/>} />
                     <Route exact path="/" component={()=><Login/>} />
                 </Switch>
             </Router>

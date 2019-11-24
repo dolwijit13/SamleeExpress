@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import Login from './login2';
+import EmployeeShipmentStatus from './EmployeeShipmentStatus';
 
 class EmployeeShipmentStatusEdit extends React.Component {
 
@@ -10,7 +11,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
         this.state = {
             doneLoading: false,
             // responseToKey: this.props.responseToKey,
-            parcel: this.props.parcel,
+            parcel: null,
             data: {
                 Timestamp: null,
                 ShipmentPoint: null,
@@ -19,7 +20,8 @@ class EmployeeShipmentStatusEdit extends React.Component {
                 Parcel_ParcelID: this.props.Parcel_ParcelID,
                 ShipmentStatus_ShipmentID: this.props.ShipmentStatus_ShipmentID
             },
-            addShipmentStatus: this.props.addShipmentStatus
+            addShipmentStatus: this.props.addShipmentStatus,
+            senderID: this.props.senderID,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -247,6 +249,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
                             </div>
                         </div>
                     </Route>
+                    <Route path="/customerShipmentStatus" component={()=><EmployeeShipmentStatus employeeSSN={this.state.data.Employee_DeliverSSN} parcelID={this.state.data.Parcel_ParcelID} senderID={this.state.senderID}/>} />
                     <Route exact path="/" component={()=><Login/>} />
                 </Switch>
             </Router>

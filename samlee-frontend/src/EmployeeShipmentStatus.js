@@ -14,10 +14,11 @@ class EmployeeShipmentStatus extends React.Component {
         this.state = {
             doneLoading: false,
             employeeSSN: this.props.employeeSSN,
-            parcel: this.props.parcel,
+            parcelID: this.props.parcelID,
             responseTos: null,
             ShipmentStatus_ShipmentID: null,
-            addShipmentStatus : true
+            addShipmentStatus : true,
+            senderID: this.props.senderID,
         };
     }
 
@@ -26,7 +27,7 @@ class EmployeeShipmentStatus extends React.Component {
     }
     
     fetchDatas() {
-        fetch('http://localhost:8000/shipmentStatus/' + this.state.parcel.ParcelID)
+        fetch('http://localhost:8000/shipmentStatus/' + this.state.parcelID)
           .then(response => response.json())
           .then(data =>{
             //console.log(data);
@@ -137,9 +138,9 @@ class EmployeeShipmentStatus extends React.Component {
             </div>
             </Route>
             <Route exact path="/customerShipmentStatusManage/" component={()=><EmployeeShipmentStatusEdit 
-              Employee_DeliverSSN={this.state.employeeSSN} Parcel_ParcelID={this.state.parcel.ParcelID}
+              Employee_DeliverSSN={this.state.employeeSSN} Parcel_ParcelID={this.state.parcelID} senderID={this.state.senderID}
               ShipmentStatus_ShipmentID = {this.state.ShipmentStatus_ShipmentID} addShipmentStatus={this.state.addShipmentStatus}/>}/>
-            <Route exact path="/customerParcel/" component={()=><EmployeeParcel />} />
+            <Route exact path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.senderID} ssn={this.state.employeeSSN} />} />
             <Route exact path="/" component={()=><Login/>} />
         </Switch>
       </Router>
