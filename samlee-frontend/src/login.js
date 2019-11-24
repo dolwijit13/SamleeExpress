@@ -18,7 +18,6 @@ class App extends React.Component {
       logInAsEmployee: false,
       logInAsCustomer: false
 	  };
-      
   }
 
   loginHandler = (event) => {
@@ -73,7 +72,7 @@ class App extends React.Component {
 	
   render() {
     var employeeScreen = null;
-    if(this.state.logInAsEmployee)  employeeScreen= <Redirect to="/customerList/"/>;
+    if(this.state.logInAsEmployee)  employeeScreen= <Redirect from="/" to="/customerList/"/>;
     return (
       <Router>
         <Switch>

@@ -33,6 +33,7 @@ class EmployeeCustomerUpdate extends React.Component {
         this.resetData = this.resetData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.backHandler = this.backHandler.bind(this);
     }
 
     fetchDatas() {
@@ -46,12 +47,12 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     componentDidMount(){
-        if(this.state.customerID !== null) {
+        if(!this.state.addCustomer) {
             this.fetchDatas();
         }
     }
 
-    getOnlyDate(dtFromQuery){	
+    /*getOnlyDate(dtFromQuery){	
         var d = new Date(dtFromQuery),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -63,10 +64,10 @@ class EmployeeCustomerUpdate extends React.Component {
         day = '0' + day;
     
     return [year, month, day].join('-');
-    }
+    }*/
 
-    resetData(){
-        if(this.state.customerID !== null)  this.fetchDatas();
+    resetData(event){
+        if(!this.state.addCustomer)  this.fetchDatas();
         else{
             var data = {
                 RegisterID: null,
@@ -89,6 +90,7 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     handleChange(event){
+        event.preventDefault();
         const data = this.state.data;
         data[event.target.name] = event.target.value;
         this.setState({
@@ -97,10 +99,7 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     handleSubmit(event){
-
-        
-
-        if(this.state.customerID !== null){ //Case Edit
+        if(!this.state.addCustomer){ //Case Edit
             event.preventDefault();
             const data = this.state.data;
 
@@ -150,31 +149,31 @@ class EmployeeCustomerUpdate extends React.Component {
                     if ( res.status === 200 ){
                         console.log("success");
                         alert("customer data added!");
+                        this.setState({goToEmpCus: true});
                     }
                 }).catch((err)=>{
                     console.log(err);
                 });
-                //window.location.reload();
             }
         }
     }
 
-    backHandler = () =>{
+    backHandler(){
         this.setState({goToEmpCus: true});
+        alert("clicked");
     }
 
     render(){
         var EmpCusManage;
-        if(this.state.goToEmpCus)   return EmpCusManage = <Redirect to="/customerList/"/>;
+        if(this.state.goToEmpCus)   return EmpCusManage = <Redirect from="/customerManage" to="/customerList/"/>;
 
         if ( !this.state.doneLoading && !this.state.addCustomer){
             return null;
         }
-
         const items = [];
         for(var key in this.state.data){
+            
             var value = this.state.data[key];
-
             let input;
             if ( key === "RegisterID" ){
                 if(value === null)  continue;
@@ -232,11 +231,10 @@ class EmployeeCustomerUpdate extends React.Component {
             <div className="container d-flex flex-row justify-content-between mt-3">
                 {backBtn}
             </div>
-
         return (
             <Router>
                 <Switch>
-                    <Route exact path="/customerUpdate/">
+                    <Route exact path="/customerManage/">
             <div className="mb-5">
             <ul>
             <li className="left"><a>SamleeExpress</a></li>

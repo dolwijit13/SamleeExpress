@@ -18,6 +18,7 @@ class EmployeeCustomer extends React.Component {
         employeeSSN: this.props.ssn,
         goToEmpCusUpt: false,
         customerID: null,
+        addCustomer: false,
     };
   }
 
@@ -60,12 +61,12 @@ class EmployeeCustomer extends React.Component {
   }
 
   addHandler = (event) =>{
-    this.setState({goToEmpCusUpt: true});
+    this.setState({goToEmpCusUpt: true, addCustomer: true});
   }
 
   render() {
     var EmpCusUptManage = null;
-    if(this.state.goToEmpCusUpt)  EmpCusUptManage = <Redirect to="/customerManage/"/>;  
+    if(this.state.goToEmpCusUpt)  EmpCusUptManage = <Redirect from="/customerList" to="/customerManage/"/>;  
     var addBtn = <button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button>;
     
     var search = 
@@ -124,7 +125,7 @@ class EmployeeCustomer extends React.Component {
       </div>
       {EmpCusUptManage}
           </Route>
-          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN}/>} />
+          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer}/>} />
         </Switch>
       </Router>
     );
