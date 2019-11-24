@@ -9,6 +9,7 @@ class EmployeeShipmentStatus extends React.Component {
         super(props);
         this.state = {
             doneLoading: false,
+            employeeSSN: this.props.ssn,
             parcel: this.props.parcel,
             responseTos: null
         };

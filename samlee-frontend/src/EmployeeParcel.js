@@ -6,6 +6,7 @@ import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import Login from './login2'
 import EmployeeParcelEdit from './EmployeeParcelEdit';
 import EmployeeCustomer from './EmployeeCustomer';
+import EmployeeShipmentStatus from './EmployeeShipmentStatus';
 
 class EmployeeParcel extends React.Component {
   constructor(props){
@@ -65,7 +66,7 @@ class EmployeeParcel extends React.Component {
     this.setState({addParcel: true});
   }
 
-  editHandler = (event,parcel) =>{
+  parcelHandler = (event,parcel) =>{
     this.setState({addParcel: false, parcel:parcel});
   }
 
@@ -93,8 +94,8 @@ class EmployeeParcel extends React.Component {
             {parcel.Province + " " + parcel.Country + " " + parcel.PostalCode}</td>
             <td>{parcel.Type}</td>
             <td>{parcel.InsuranceType}</td>
-            <td><Link to="/customerParcelManage/"><button onClick={(e)=>{this.editHandler(e,parcel)}} className="btn btn-success">Edit</button></Link></td>
-            <td><button className="btn btn-primary" onClick={()=>this.props.changeParcelToShipmentStatus(parcel)}>Status</button></td>
+            <td><Link to="/customerParcelManage/"><button onClick={(e)=>{this.parcelHandler(e,parcel)}} className="btn btn-success">Edit</button></Link></td>
+            <td><Link to="/customerShipmentStatus/"><button className="btn btn-primary" onClick={(e)=>{this.parcelHandler(e,parcel)}}>Status</button></Link></td>
             <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,parcel)}>Delete</button></td>
         </tr>
     );
@@ -132,6 +133,7 @@ class EmployeeParcel extends React.Component {
       <Route exact path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.parcel}
           senderID={this.state.senderID} stockSSN={this.state.employeeSSN} addParcel = {this.state.addParcel}/>}/>
       <Route exact path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+      <Route exact path="/customerShipmentStatus/" component={()=><EmployeeShipmentStatus ssn={this.state.ssn} parcel={this.state.parcel} />} />
       <Route exact path="/" component={()=><Login/>} />
       </Switch>
       </Router>
