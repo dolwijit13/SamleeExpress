@@ -21,17 +21,53 @@ router.get('/:SenderID',(req,res) => {
 
 //Delete
 router.post('/delete',(req,res) => {
+	//delte from parcel
 	connection.query("DELETE FROM PARCEL WHERE ParcelID = ?",[req.body.ParcelID],(err,result) => {
 		if(!err){
-			res.json(result);
+			//res.json(result);
 			console.log('Deleted Parcel ParcelID : ' + req.body.ParcelID);
 		}
 		else{
 			console.log(err);
 			//res.sendStatus(500);
-			return;
+			//return;
 		}
 	})
+
+	const query = "SELECT ShipmentStatus_ShipmentID FROM ResponseTo WHERE Parcel_ParcelID = ?";
+	connection.query(query,req.body.ParcelID,(err,result) => {
+		for(var i=0;i<result.length;i++)
+		{
+			const id = result[i].ShipmentStatus_ShipmentID;
+			//delete from ResponseTo
+			connection.query("DELETE FROM ResponseTo WHERE ShipmentStatus_ShipmentID = ?",[id],(err2,result2) => {
+				if(!err2){
+					//res.json(result);
+					console.log('Deleted ResponseTo ShipmentStatus_ShipmentID : ' + id);
+				}
+				else{
+					console.log(err);
+					//res.sendStatus(500);
+					return;
+				}
+			})
+
+			//delete from ShipmentStatus
+			connection.query("DELETE FROM ShipmentStatus WHERE ShipmentID = ?",[id],(err3,result3) => {
+				if(!err3){
+					//res.json(result);
+					console.log('Deleted ShipmentStatus ShipmentID : ' + id);
+				}
+				else{
+					console.log(err);
+					//res.sendStatus(500);
+					return;
+				}
+			})
+		}
+
+	})
+	return true;
 });
 
 

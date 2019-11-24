@@ -40,6 +40,8 @@ router.post('/delete',(req,res) => {
 		}
 	})
 
+
+	//edit from parcel
 	connection.query('SELECT * FROM PARCEL WHERE FK_Send_Customer_SenderID = ?',[req.body.RegisterID],(err,result) => {
 		for(i=0;i<result.length;i++)
 		{
