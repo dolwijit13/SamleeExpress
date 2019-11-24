@@ -3,6 +3,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
+import Login from './login2'
 import EmployeeParcelEdit from './EmployeeParcelEdit';
 import EmployeeCustomer from './EmployeeCustomer';
 
@@ -103,7 +104,7 @@ class EmployeeParcel extends React.Component {
       <div className="mb-5">
         <ul>
           <li className="left"><a>SamleeExpress</a></li>
-          <li className="right"><a>Log out</a></li>
+          <Link to="/"><li className="right"><a>Log out</a></li></Link>
         </ul>
       {topMenu}
       <div className="parcel-container">
@@ -127,8 +128,9 @@ class EmployeeParcel extends React.Component {
       </div>
       </div>
       </Route>
-      <Route path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.par}/>}/>
-      <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+      <Route exact path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.par}/>}/>
+      <Route exact path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+      <Route exact path="/" component={()=><Login/>} />
       </Switch>
       </Router>
     );

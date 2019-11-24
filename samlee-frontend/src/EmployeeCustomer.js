@@ -1,6 +1,7 @@
 import React from 'react';
 import EmployeeCustomerUpdate from './EmployeeCustomerUpdate';
 import EmployeeParcel from './EmployeeParcel';
+import Login from './login2';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from 'axios';
@@ -94,6 +95,7 @@ class EmployeeCustomer extends React.Component {
     this.setState({customerID: customer.RegisterID});
   }
 
+
   render() {
     var addBtn = 
       <Link to="/customerManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button></Link>;
@@ -123,11 +125,12 @@ class EmployeeCustomer extends React.Component {
     return (
       <Router>
         <Switch>
+        <Route exact path="/" component = {()=> <Login/> }/>
           <Route exact path='/customerList/'>
       <div className="mb-5">
         <ul>
           <li className="left"><a>SamleeExpress</a></li>
-          <li className="right"><a>Log out</a></li>
+          <Link to="/"><li className="right"><a>Log out</a></li></Link>
         </ul>
       {topMenu}
       <div className="customer-container">
@@ -151,8 +154,8 @@ class EmployeeCustomer extends React.Component {
       </div>
     
           </Route>
-          <Route path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} />} />
-          <Route path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.customerID} ssn={this.state.employeeSSN} />} />
+          <Route exact path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} />} />
+          <Route exact path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.customerID} ssn={this.state.employeeSSN} />} />
         </Switch>
       </Router>
     );

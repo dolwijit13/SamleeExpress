@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Customer from './Customer.js';
 import EmployeeCustomer from './EmployeeCustomer';
 import {Redirect} from 'react-router-dom';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';

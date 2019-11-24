@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import EmployeeCustomer from './EmployeeCustomer';
+import Login from './login2';
 import {Redirect,useHistory} from 'react-router-dom';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 
@@ -222,7 +223,7 @@ class EmployeeCustomerUpdate extends React.Component {
             <div className="mb-5">
             <ul>
             <li className="left"><a>SamleeExpress</a></li>
-            <li className="right"><a>Log out</a></li>
+            <Link to="/"><li className="right"><a>Log out</a></li></Link>
             </ul>
             {topMenu}
             <div className="container mt-5">
@@ -234,7 +235,8 @@ class EmployeeCustomerUpdate extends React.Component {
             </div>
             </div>
                     </Route>
-                    <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} addCustomer={false} />} />
+                    <Route exact path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} addCustomer={false} />} />
+                    <Route exact path="/" component={()=><Login/>} />
                 </Switch>
             </Router>
         );
