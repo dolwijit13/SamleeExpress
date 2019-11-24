@@ -24,7 +24,6 @@ class EmployeeCustomer extends React.Component {
   }
 
   fetchDatas() {
-    console.log("fetch");
     fetch('http://localhost:8000/customer')
       .then(response => response.json())
       .then(data =>{
@@ -40,26 +39,6 @@ class EmployeeCustomer extends React.Component {
 
   componentDidMount(){
     this.fetchDatas();
-  }
-
-  componentDidUpdate(prevProps, prevState)
-  {
-    this.setState({goToEmpCusUpt:false});
-  }
-
-  shouldComponentUpdate(nextProps, nextState)
-  {
-    console.log("shouldComponentUpdate");
-    if(this.state.firstRender) return true;
-    if(this.state.addCustomer!=nextState.addCustomer)
-    {
-      return true;
-    }
-    if(this.state.editCustomer!=nextState.editCustomer)
-    {
-      return true;
-    }
-    return false;
   }
 
   deleteHandler(event, person){

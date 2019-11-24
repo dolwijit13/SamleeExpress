@@ -23,7 +23,6 @@ class EmployeeParcel extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.senderID);
     this.fetchDatas();
   }
 
@@ -128,7 +127,8 @@ class EmployeeParcel extends React.Component {
       </div>
       </div>
       </Route>
-      <Route exact path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.par}/>}/>
+      <Route exact path="/customerParcelManage/" component={()=><EmployeeParcelEdit parcel={this.state.parcel}
+          senderID={this.state.senderID} stockSSN={this.state.employeeSSN} addParcel = {this.state.addParcel}/>}/>
       <Route exact path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
       <Route exact path="/" component={()=><Login/>} />
       </Switch>

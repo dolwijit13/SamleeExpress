@@ -5,6 +5,7 @@ import { exportDefaultSpecifier } from 'babel-types';
 class EmployeeParcelEdit extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             parcel: props.parcel,
             newParcel: props.parcel,
@@ -22,7 +23,6 @@ class EmployeeParcelEdit extends React.Component {
             FK_Receive_Customer_ReceiverID: "",
             FK_Store_Employee_StockSSN: this.props.stockSSN,
             addParcel: this.props.addParcel,
-
         };
         this.changeHandler = this.changeHandler.bind(this);
         this.resetForm = this.resetForm.bind(this);
