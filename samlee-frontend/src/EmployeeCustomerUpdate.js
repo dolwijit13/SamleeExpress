@@ -50,6 +50,7 @@ class EmployeeCustomerUpdate extends React.Component {
         if(!this.state.addCustomer) {
             this.fetchDatas();
         }
+        this.setState({goToEmpCus:false});
     }
 
     /*getOnlyDate(dtFromQuery){	
@@ -159,13 +160,16 @@ class EmployeeCustomerUpdate extends React.Component {
     }
 
     backHandler(){
-        this.setState({goToEmpCus: true});
-        alert("clicked");
+        this.setState({goToEmpCus: true, addCustomer:false});
+        //alert("clicked");
     }
 
     render(){
         var EmpCusManage;
-        if(this.state.goToEmpCus)   return EmpCusManage = <Redirect from="/customerManage" to="/customerList/"/>;
+        if(this.state.goToEmpCus)
+        { 
+            return EmpCusManage = <Redirect from="/customerManage" to="/customerList/"/>;
+        }
 
         if ( !this.state.doneLoading && !this.state.addCustomer){
             return null;
@@ -251,7 +255,7 @@ class EmployeeCustomerUpdate extends React.Component {
             </div>
                     {EmpCusManage}
                     </Route>
-                    <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} />} />
+                    <Route path="/customerList/" component={()=><EmployeeCustomer ssn={this.state.employeeSSN} addCustomer={false} />} />
                 </Switch>
             </Router>
         );

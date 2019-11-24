@@ -158,7 +158,7 @@ class App extends React.Component {
         </form>
         {employeeScreen}
         </Route>
-          <Route path="/customerList/" component={()=><Employee ssn={this.state.username} />} />
+          <Route path="/customerList/" component={()=><Employee ssn={this.state.username}  />} />
         </Switch>
       </Router>
     );

@@ -19,10 +19,13 @@ class EmployeeCustomer extends React.Component {
         goToEmpCusUpt: false,
         customerID: null,
         addCustomer: false,
+        editCustomer: true,
+        firstRender: true
     };
   }
 
   fetchDatas() {
+    console.log("fetch");
     fetch('http://localhost:8000/customer')
       .then(response => response.json())
       .then(data =>{
@@ -30,6 +33,7 @@ class EmployeeCustomer extends React.Component {
           customers: data,
           doneLoading: true,
           customerID: data.RegisterID,
+          firstRender:false
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -37,6 +41,26 @@ class EmployeeCustomer extends React.Component {
 
   componentDidMount(){
     this.fetchDatas();
+  }
+
+  componentDidUpdate(prevProps, prevState)
+  {
+    this.setState({goToEmpCusUpt:false});
+  }
+
+  shouldComponentUpdate(nextProps, nextState)
+  {
+    console.log("shouldComponentUpdate");
+    if(this.state.firstRender) return true;
+    if(this.state.addCustomer!=nextState.addCustomer)
+    {
+      return true;
+    }
+    if(this.state.editCustomer!=nextState.editCustomer)
+    {
+      return true;
+    }
+    return false;
   }
 
   deleteHandler(event, person){
@@ -65,12 +89,17 @@ class EmployeeCustomer extends React.Component {
   }
 
   updateHandler = (event,customer) => {
-    this.setState({goToEmpCusUpt: true, customerID: customer.RegisterID});
+    this.setState({goToEmpCusUpt: true, customerID: customer.RegisterID, editCustomer: true});
   }
 
   render() {
     var EmpCusUptManage = null;
-    if(this.state.goToEmpCusUpt)  EmpCusUptManage = <Redirect from="/customerList" to="/customerManage/"/>;  
+    console.log("render");
+    if(this.state.goToEmpCusUpt)
+    {
+      console.log("test");
+      EmpCusUptManage = <Redirect from="/customerList" to="/customerManage/"/>; 
+    }
     var addBtn = <button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button>;
     
     var search = 
