@@ -19,6 +19,7 @@ class EmployeeShipmentStatus extends React.Component {
             ShipmentStatus_ShipmentID: null,
             addShipmentStatus : true,
             senderID: this.props.senderID,
+            isDeleted : true //true for first render
         };
     }
 
@@ -34,6 +35,7 @@ class EmployeeShipmentStatus extends React.Component {
             this.setState({
               responseTos: data,
               doneLoading: true,
+              isDeleted: false
           })}
           )
           .catch(error => this.setState({ error, doneLoading: false }));
@@ -44,12 +46,13 @@ class EmployeeShipmentStatus extends React.Component {
         const data = {ShipmentStatus_ShipmentID : responseTo.ShipmentStatus_ShipmentID};
         confirmAlert({
           title: 'Confirm to delete',
-          message: "Are you sure to delete status " + responseTo.Status + " of parcelID " + responseTo.Parcel_ParcelID + " at shipment point " + responseTo.ShipmentPoint,
+          message: "Are you sure to delete status " + responseTo.Status + " of ShipmentID " + responseTo.ShipmentStatus_ShipmentID + " at shipment point " + responseTo.ShipmentPoint,
           buttons:[
             {
               label: 'Yes',
               onClick: () => {
-                Axios.post(url,data);
+                Axios.post(url,data)
+                .then(() => this.setState({isDeleted:true}));
               }
             },
             {
@@ -66,6 +69,19 @@ class EmployeeShipmentStatus extends React.Component {
 
     ShipmentStatusHandler = (event,responseTo) =>{
       this.setState({addShipmentStatus: false, ShipmentStatus_ShipmentID:responseTo.ShipmentStatus_ShipmentID});
+    }
+
+    componentWillUpdate(nextProps, nextState)
+    {
+      this.fetchDatas()
+    }
+
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+      if(this.state.isDeleted) return true;
+      if(nextState.isDeleted) return true;
+      return false;
     }
 
     render(){

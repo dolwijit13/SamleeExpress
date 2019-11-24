@@ -149,8 +149,8 @@ class EmployeeShipmentStatusEdit extends React.Component {
             }
             else
             {
-
                 const url = 'http://localhost:8000/shipmentStatus/add/' + this.state.data.Employee_DeliverSSN;
+                console.log(url);
                 data["Parcel_ParcelID"] = this.state.data.Parcel_ParcelID;
                 axios.post(url, data).then((res)=>{
                     if ( res.status === 200 ){
