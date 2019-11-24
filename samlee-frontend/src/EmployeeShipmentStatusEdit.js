@@ -13,12 +13,13 @@ class EmployeeShipmentStatusEdit extends React.Component {
                 Timestamp: null,
                 ShipmentPoint: null,
                 Status: null,
-                Employee_DeliverSSN: this.props.responseToKey.Employee_DeliverSSN,
-                Parcel_ParcelID: this.props.responseToKey.Parcel_ParcelID,
-                ShipmentStatus_ShipmentID: this.props.responseToKey.ShipmentStatus_ShipmentID
+                Employee_DeliverSSN: this.props.Employee_DeliverSSN,
+                Parcel_ParcelID: this.props.Parcel_ParcelID,
+                ShipmentStatus_ShipmentID: this.props.ShipmentStatus_ShipmentID
             },
             addShipmentStatus: this.props.addShipmentStatus
         };
+        console.log(this.state);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.formatDateTimeLocal = this.formatDateTimeLocal.bind(this);
@@ -26,21 +27,22 @@ class EmployeeShipmentStatusEdit extends React.Component {
     }
 
     fetchDatas() {
-        if ( this.state.addShipmentStatus ){
+        if ( this.state.addShipmentStatus )
+        {
+            var data = this.state.data;
+            data["Timestamp"] = new Date();
+            data["ShipmentPoint"] = null;
+            data["Status"]=null;
+            
             this.setState({
-                data : {
-                    Timestamp: new Date(),
-                    ShipmentPoint: null,
-                    Status: null,
-                    Employee_DeliverSSN: ""
-                },
+                data : data,
                 doneLoading: true
             });
         }
         else {
-            const url = 'http://localhost:8000/shipmentStatus/edit/' + this.props.responseToKey.Employee_DeliverSSN
-            + '&' + this.props.responseToKey.Parcel_ParcelID
-            + '&' + this.props.responseToKey.ShipmentStatus_ShipmentID;
+            const url = 'http://localhost:8000/shipmentStatus/edit/' + this.state.data.Employee_DeliverSSN
+            + '&' + this.state.data.Parcel_ParcelID
+            + '&' + this.state.data.ShipmentStatus_ShipmentID;
             fetch(url)
             .then(response => response.json())
             .then(data =>{
@@ -72,7 +74,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
         if ( minute < 10 ) minute = '0'+minute;
 
         let formatted_date = year + "-" + month + "-" + date + "T" + hour + ":" + minute;
-        console.log(formatted_date)
+        //console.log(formatted_date)
         return formatted_date;
     }
 
@@ -127,6 +129,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
         else { //Case add
             event.preventDefault();
             const data = this.state.data;
+            //console.log(data);
 
             if(data.Timestamp === null || data.Timestamp == "")
             {
@@ -144,7 +147,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
             {
 
                 const url = 'http://localhost:8000/shipmentStatus/add/' + this.state.data.Employee_DeliverSSN;
-                data["Parcel_ParcelID"] = this.state.parcel.ParcelID;
+                data["Parcel_ParcelID"] = this.state.data.Parcel_ParcelID;
                 axios.post(url, data).then((res)=>{
                     if ( res.status === 200 ){
                         console.log("success");
@@ -176,13 +179,6 @@ class EmployeeShipmentStatusEdit extends React.Component {
                     <input className="form-control" type="text" id={key} name={key} defaultValue={this.props.responseToKey[key]} disabled></input>
                 </div>);
             }
-        }
-        else{
-            items.push(<div key="Employee_DeliverSSN-holder" className="form-group">
-                <label className="font-weight-bold" htmlFor="Employee_DeliverSSN">Employee_DeliverSSN   </label>
-                <input className="form-control" type="text" id="Employee_DeliverSSN" name="Employee_DeliverSSN" value={this.state.data.Employee_DeliverSSN} onChange={this.handleChange}></input>
-            </div>);
-            
         }
         
 
