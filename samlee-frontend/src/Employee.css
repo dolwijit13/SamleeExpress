@@ -77,6 +77,9 @@ html,body {
   .data-width-table {
     width: 25%;
   }
+  .parcel-data-width-table {
+    width: 20%;
+  }
   td a {
     color: black;
   }

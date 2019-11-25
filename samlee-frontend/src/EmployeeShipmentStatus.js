@@ -92,10 +92,10 @@ class EmployeeShipmentStatus extends React.Component {
         var data = this.state.responseTos.map((responseTo,index)=>
         
           <tr key={index} className="parcel-table-data">
-              <td width="30%">{responseTo.Employee_DeliverSSN}</td>
-              <td width="30%">{(new Date(responseTo.Timestamp)).toString()}</td>
-              <td width="10%">{responseTo.ShipmentPoint}</td>
-              <td width="30%">{responseTo.Status}</td>
+              <td width="25%">{responseTo.Employee_DeliverSSN}</td>
+              <td width="25%">{(new Date(responseTo.Timestamp)).toString()}</td>
+              <td width="15%">{responseTo.ShipmentPoint}</td>
+              <td width="20%">{responseTo.Status}</td>
               <td><Link to="/customerShipmentStatusManage/"><button className="btn btn-primary" onClick={
                   (e)=>{this.ShipmentStatusHandler(e,responseTo)}}>Edit</button></Link></td>
               <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,responseTo)}>Delete</button></td>
@@ -136,10 +136,10 @@ class EmployeeShipmentStatus extends React.Component {
                 <table className="parcel-table">
                     <thead>
                         <tr className="parcel-table-head">
-                            <th width="30%">Deliver SSN</th>
-                            <th width="30%">Date Time</th>
-                            <th width="10%">Shipment Point</th>
-                            <th width="30%">Shipment Status</th>
+                            <th width="25%">Deliver SSN</th>
+                            <th width="25%">Date Time</th>
+                            <th width="15%">Shipment Point</th>
+                            <th width="20%">Shipment Status</th>
                             <th></th>
                             <th></th>
                         </tr>

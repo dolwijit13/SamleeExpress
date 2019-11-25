@@ -110,8 +110,8 @@ class EmployeeParcel extends React.Component {
             {parcel.Province + " " + parcel.Country + " " + parcel.PostalCode}</td>
             <td>{parcel.Type}</td>
             <td>{parcel.InsuranceType}</td>
-            <td><Link to="/customerParcelManage/"><button onClick={(e)=>{this.parcelHandler(e,parcel)}} className="btn btn-success">Edit</button></Link></td>
-            <td><Link to="/customerShipmentStatus/"><button className="btn btn-primary" onClick={(e)=>{this.parcelHandler(e,parcel)}}>Status</button></Link></td>
+            <td><Link to="/customerShipmentStatus/"><button className="btn btn-success" onClick={(e)=>{this.parcelHandler(e,parcel)}}>Status</button></Link></td>
+            <td><Link to="/customerParcelManage/"><button onClick={(e)=>{this.parcelHandler(e,parcel)}} className="btn btn-primary">Edit</button></Link></td>
             <td><button className="btn btn-danger" onClick={(e)=>this.deleteHandler(e,parcel)}>Delete</button></td>
         </tr>
     );
@@ -131,10 +131,10 @@ class EmployeeParcel extends React.Component {
         <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
-                    <th className="data-width-table">ParcelID</th>
-                    <th className="data-width-table">Terminal</th>
-                    <th className="data-width-table">Type</th>
-                    <th className="data-width-table">InsuranceType</th>
+                    <th className="parcel-data-width-table">ParcelID</th>
+                    <th className="parcel-data-width-table">Terminal</th>
+                    <th className="parcel-data-width-table">Type</th>
+                    <th className="parcel-data-width-table">InsuranceType</th>
                     <th></th>
                     <th></th>
                     <th></th>
