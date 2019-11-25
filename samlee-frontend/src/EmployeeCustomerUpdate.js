@@ -33,7 +33,6 @@ class EmployeeCustomerUpdate extends React.Component {
         this.resetData = this.resetData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.backHandler = this.backHandler.bind(this);
     }
 
     fetchDatas() {
@@ -214,9 +213,9 @@ class EmployeeCustomerUpdate extends React.Component {
                 <Switch>
                     <Route exact path="/customerManage/">
             <div className="mb-5">
-            <ul>
-            <li className="left"><a>SamleeExpress</a></li>
-            <Link to="/"><li className="right"><a>Log out</a></li></Link>
+            <ul className="navbar">
+            <li className="left">SamleeExpress</li>
+            <Link to="/"><li className="right">Log out</li></Link>
             </ul>
             {topMenu}
             <div className="container mt-5">

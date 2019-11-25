@@ -19,7 +19,7 @@ class EmployeeCustomer extends React.Component {
         customerID: null,
         addCustomer: false,
         editCustomer: true,
-        isDeleted: true,
+        isDeleted: true //For first render
     };
   }
 
@@ -31,7 +31,7 @@ class EmployeeCustomer extends React.Component {
           customers: data,
           doneLoading: true,
           customerID: data.RegisterID,
-          isDeleted: false,
+          isDeleted:false
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -51,8 +51,8 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.post(url,data);
-            window.location.reload();
+            Axios.post(url,data)
+            .then(()=>this.setState({isDeleted:true}))
           }
         },
         {
@@ -74,12 +74,19 @@ class EmployeeCustomer extends React.Component {
     this.setState({customerID: customer.RegisterID});
   }
 
+  componentWillUpdate(nextProps, nextState)
+  {
+    this.fetchDatas()
+  }
+
+
   shouldComponentUpdate(nextProps, nextState)
   {
     if(nextState.isDeleted) return true;
     if(this.state.isDeleted) return true;
     return false;
   }
+
 
   render() {
     console.log("render");
@@ -93,8 +100,8 @@ class EmployeeCustomer extends React.Component {
       </div>;
     var topMenu = 
       <div className="container d-flex flex-row justify-content-between mt-3">
-        {addBtn}
         {search}
+        {addBtn}
       </div>
     if(!this.state.doneLoading) return null;
     var dataCustomer = this.state.customers.map((customer,index)=>
@@ -112,36 +119,35 @@ class EmployeeCustomer extends React.Component {
       <Router>
         <Switch>
         <Route exact path="/" component = {()=> <Login/> }/>
-          <Route exact path='/customerList/'>
-      <div className="mb-5">
-        <ul>
-          <li className="left"><a>SamleeExpress</a></li>
-          <Link to="/"><li className="right"><a>Log out</a></li></Link>
-        </ul>
-      {topMenu}
-      <div className="customer-container">
-        <h1 className="customer-header">Customer List</h1>
-        <table className="customer-table">
-            <thead>
-                <tr className="customer-table-head">
+        <Route exact path='/customerList/'>
+          <div className="mb-5">
+            <ul className="navbar">
+              <li className="left">SamleeExpress</li>
+              <Link to="/"><li className="right">Log out</li></Link>
+            </ul>
+            {topMenu}
+            <div className="customer-container">
+              <h1 className="customer-header">Customer List</h1>
+              <table className="customer-table">
+                <thead>
+                  <tr className="customer-table-head">
                     <th className="data-width-table">RegisterID</th>
                     <th className="data-width-table">First name</th>
                     <th className="data-width-table">Last name</th>
                     <th className="link-width-table"></th>
                     <th className="link-width-table"></th>
                     <th className="link-width-table"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {dataCustomer}
-            </tbody>
-        </table>
-      </div>
-      </div>
-    
-          </Route>
-          <Route exact path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} />} />
-          <Route exact path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.customerID} ssn={this.state.employeeSSN} />} />
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataCustomer}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Route>
+        <Route exact path="/customerManage/" component={()=><EmployeeCustomerUpdate customerID={this.state.customerID} ssn={this.state.employeeSSN} addCustomer={this.state.addCustomer} />} />
+        <Route exact path="/customerParcel/" component={()=><EmployeeParcel senderID={this.state.customerID} ssn={this.state.employeeSSN} />} />
         </Switch>
       </Router>
     );

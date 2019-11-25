@@ -3,7 +3,7 @@ import './App.css';
 import EmployeeCustomer from './EmployeeCustomer';
 import {Redirect} from 'react-router-dom';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import { fdatasync } from 'fs';
+import './Employee.css';
 
 
 class App extends React.Component {
