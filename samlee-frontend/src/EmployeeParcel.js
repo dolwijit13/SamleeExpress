@@ -52,7 +52,7 @@ class EmployeeParcel extends React.Component {
           label: 'Yes',
           onClick: () => {
             Axios.post(url,data);
-            window.location.reload();
+            window.location = "/customerParcel/";
           }
         },
         {

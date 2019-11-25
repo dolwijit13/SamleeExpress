@@ -113,7 +113,6 @@ class EmployeeCustomerUpdate extends React.Component {
                 }).catch((err)=>{
                     console.log(err);
                 });
-                window.location.reload();
             }
         }
         else { //Case Add
