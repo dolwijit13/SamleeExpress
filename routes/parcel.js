@@ -79,7 +79,6 @@ router.post('/edit/:ParcelID', (req,res) => {
 	const parcel = req.body;
 
 	const query = "UPDATE Parcel SET ? WHERE ParcelID = ?";
-	console.log(query);
 
 	connection.query(query,[parcel,ParcelID], (err)=>{
 		if ( err ){

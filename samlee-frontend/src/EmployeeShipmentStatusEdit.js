@@ -230,9 +230,9 @@ class EmployeeShipmentStatusEdit extends React.Component {
                 <Switch>
                     <Route exact path="/customerShipmentStatusManage/">
                         <div className="mb-5">
-                            <ul>
-                                <li className="left"><a>SamleeExpress</a></li>
-                                <Link to="/"><li className="right"><a>Log out</a></li></Link>
+                            <ul className="navbar">
+                                <li className="left">SamleeExpress</li>
+                                <Link to="/"><li className="right">Log out</li></Link>
                             </ul>
                             {topMenu}
 

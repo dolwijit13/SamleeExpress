@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import EmployeeCustomer from './EmployeeCustomer';
 import Login from './login2';
-import {Redirect} from 'react-router-dom';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 
 class EmployeeCustomerUpdate extends React.Component {
@@ -244,9 +243,9 @@ class EmployeeCustomerUpdate extends React.Component {
                 <Switch>
                     <Route exact path="/customerManage/">
             <div className="mb-5">
-            <ul>
-            <li className="left"><a>SamleeExpress</a></li>
-            <Link to="/"><li className="right"><a>Log out</a></li></Link>
+            <ul className="navbar">
+            <li className="left">SamleeExpress</li>
+            <Link to="/"><li className="right">Log out</li></Link>
             </ul>
             {topMenu}
             <div className="container mt-5">

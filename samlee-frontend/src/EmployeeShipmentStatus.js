@@ -92,8 +92,7 @@ class EmployeeShipmentStatus extends React.Component {
         var data = this.state.responseTos.map((responseTo,index)=>
         
           <tr key={index} className="parcel-table-data">
-              <td width="15%">{responseTo.FirstName}</td>
-              <td width="15%">{responseTo.LastName}</td>
+              <td width="30%">{responseTo.Employee_DeliverSSN}</td>
               <td width="30%">{(new Date(responseTo.Timestamp)).toString()}</td>
               <td width="10%">{responseTo.ShipmentPoint}</td>
               <td width="30%">{responseTo.Status}</td>
@@ -104,7 +103,7 @@ class EmployeeShipmentStatus extends React.Component {
         );
 
         var addBtn = 
-        <Link to="/customerShipmentStatusManage/"><button className="btn btn-primary" onClick={this.addHandler}>Add Shipment Status</button></Link>
+        <Link to="/customerShipmentStatusManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Shipment Status</button></Link>
         var search = 
           <div className="search form-inline">
             <input className="form-control mr-1" type="text" placeholder="Search.." />
@@ -125,9 +124,9 @@ class EmployeeShipmentStatus extends React.Component {
             <Route exact path='/customerShipmentStatus/'>
 
             <div className="mb-5">
-              <ul>
-                <li className="left"><a>SamleeExpress</a></li>
-                <Link to="/"><li className="right"><a>Log out</a></li></Link>
+              <ul className="navbar">
+                <li className="left">SamleeExpress</li>
+                <Link to="/"><li className="right">Log out</li></Link>
               </ul>
 
               {topMenu}
@@ -137,8 +136,7 @@ class EmployeeShipmentStatus extends React.Component {
                 <table className="parcel-table">
                     <thead>
                         <tr className="parcel-table-head">
-                            <th width="15%">Deliver FirstName</th>
-                            <th width="15%">Deliver LastName</th>
+                            <th width="30%">Deliver SSN</th>
                             <th width="30%">Date Time</th>
                             <th width="10%">Shipment Point</th>
                             <th width="30%">Shipment Status</th>

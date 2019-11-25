@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { exportDefaultSpecifier } from 'babel-types';
 import {BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import Login from './login2'
 import EmployeeParcel from './EmployeeParcel';
@@ -344,9 +343,9 @@ class EmployeeParcelEdit extends React.Component {
                 <Switch>
                     <Route exact path="/customerParcelManage/">
                         <div className="mb-5">
-                            <ul>
-                                <li className="left"><a>SamleeExpress</a></li>
-                                <Link to="/"><li className="right"><a>Log out</a></li></Link>
+                            <ul className="navbar">
+                                <li className="left">SamleeExpress</li>
+                                <Link to="/"><li className="right">Log out</li></Link>
                             </ul>
                             {topMenu}
 
