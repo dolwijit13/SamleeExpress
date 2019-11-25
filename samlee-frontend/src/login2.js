@@ -82,8 +82,7 @@ class App extends React.Component {
         var trackingTable = this.state.responseTos.map((responseTo,index)=>
         
         <tr key={index} className="parcel-table-data">
-            <td width="15%">{responseTo.FirstName}</td>
-            <td width="15%">{responseTo.LastName}</td>
+            <td width="30%">{responseTo.Employee_DeliverSSN}</td>
             <td width="30%">{(new Date(responseTo.Timestamp)).toString()}</td>
             <td width="10%">{responseTo.ShipmentPoint}</td>
             <td width="30%">{responseTo.Status}</td>
@@ -140,8 +139,7 @@ class App extends React.Component {
             <table className="parcel-table">
             <thead>
                 <tr className="parcel-table-head">
-                    <th width="15%">Deliver FirstName</th>
-                    <th width="15%">Deliver LastName</th>
+                    <th width="30%">Deliver SSN</th>
                     <th width="30%">Date Time</th>
                     <th width="10%">Shipment Point</th>
                     <th width="30%">Shipment Status</th>
