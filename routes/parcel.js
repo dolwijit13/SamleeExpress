@@ -74,6 +74,7 @@ router.post('/delete',(req,res) => {
 
 //Update
 router.post('/edit/:ParcelID', (req,res) => {
+	console.log("add parcel");
 	const ParcelID = req.params.ParcelID;
 	const parcel = req.body;
 

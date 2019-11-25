@@ -19,7 +19,7 @@ class EmployeeCustomer extends React.Component {
         customerID: null,
         addCustomer: false,
         editCustomer: true,
-        firstRender: true
+        isDeleted: true //For first render
     };
   }
 
@@ -31,7 +31,7 @@ class EmployeeCustomer extends React.Component {
           customers: data,
           doneLoading: true,
           customerID: data.RegisterID,
-          firstRender:false
+          isDeleted:false
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -51,8 +51,8 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.post(url,data);
-            window.location.reload();
+            Axios.post(url,data)
+            .then(()=>this.setState({isDeleted:true}))
           }
         },
         {
@@ -72,6 +72,19 @@ class EmployeeCustomer extends React.Component {
 
   parcelHandler = (event,customer) => {
     this.setState({customerID: customer.RegisterID});
+  }
+
+  componentWillUpdate(nextProps, nextState)
+  {
+    this.fetchDatas()
+  }
+
+
+  shouldComponentUpdate(nextProps, nextState)
+  {
+    if(nextState.isDeleted) return true;
+    if(this.state.isDeleted) return true;
+    return false;
   }
 
 

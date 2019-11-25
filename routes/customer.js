@@ -26,20 +26,6 @@ router.get('/search/:RegisterID',(req,res) => {
 //Delete
 router.post('/delete',(req,res) => {
 	console.log(req.body.RegisterID);
-	//delete from customer
-	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.body.RegisterID],(err,result) => {
-		if(!err){
-			//res.json(result);
-			console.log('Deleted Customer RegisterID : ' + req.body.RegisterID);
-			//console.log(result);
-		}
-		else{
-			console.log(err);
-			//res.sendStatus(500);
-			//return;
-		}
-	})
-
 
 	//edit from parcel
 	connection.query('SELECT * FROM PARCEL WHERE FK_Send_Customer_SenderID = ?',[req.body.RegisterID],(err,result) => {
@@ -63,7 +49,19 @@ router.post('/delete',(req,res) => {
 		}
 	});
 
-	return true;
+	//delete from customer
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.body.RegisterID],(err,result) => {
+		if(!err){
+			res.json(result);
+			console.log('Deleted Customer RegisterID : ' + req.body.RegisterID);
+			//console.log(result);
+		}
+		else{
+			console.log(err);
+			//res.sendStatus(500);
+			//return;
+		}
+	})
 
 });
 
