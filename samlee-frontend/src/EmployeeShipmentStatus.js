@@ -103,7 +103,7 @@ class EmployeeShipmentStatus extends React.Component {
         );
 
         var addBtn = 
-        <Link to="/customerShipmentStatusManage/"><button className="btn btn-primary" onClick={this.addHandler}>Add Shipment Status</button></Link>
+        <Link to="/customerShipmentStatusManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Shipment Status</button></Link>
         var search = 
           <div className="search form-inline">
             <input className="form-control mr-1" type="text" placeholder="Search.." />
