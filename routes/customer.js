@@ -24,52 +24,27 @@ router.get('/search/:RegisterID',(req,res) => {
 
 
 //Delete
-router.post('/delete',(req,res) => {
-	console.log(req.body.RegisterID);
-	//delete from customer
-	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.body.RegisterID],(err,result) => {
+router.get('/delete/:RegisterID',(req,res) => {
+	connection.query("DELETE FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
 		if(!err){
 			//res.json(result);
-			console.log('Deleted Customer RegisterID : ' + req.body.RegisterID);
-			//console.log(result);
+			console.log('WoW');
+			console.log(result);
 		}
 		else{
 			console.log(err);
 			//res.sendStatus(500);
-			//return;
+			return;
 		}
 	})
-
-
-	//edit from parcel
-	connection.query('SELECT * FROM PARCEL WHERE FK_Send_Customer_SenderID = ?',[req.body.RegisterID],(err,result) => {
-		for(i=0;i<result.length;i++)
-		{
-			var parcel= {
-				FK_Send_Customer_SenderID : ""
-			};
-			var ParcelID = result[i].ParcelID;
-
-			const query = "UPDATE Parcel SET FK_Send_Customer_SenderID = ? WHERE ParcelID = ?";
-
-			connection.query(query,[parcel,ParcelID], (err2)=>{
-				if ( err2 ){
-					//res.status(403).send("internal error");
-					throw err2;
-				}
-				console.log('Edit Parcel ParcelID : ' + ParcelID);
-				//res.status(200).send("seccess");
-			});
-		}
-	});
-
-	return true;
-
 });
+
+
 
 //update
 router.get('/edit/:RegisterID', (req,res) => { 
 	connection.query("SELECT * FROM CUSTOMER WHERE RegisterID = ?",[req.params.RegisterID],(err,result) => {
+		console.log("adasasd");
 		res.json(result);
 	})
 });
@@ -97,14 +72,12 @@ router.post('/edit/:RegisterID', (req,res) => {
 
 
 
-//Add
 //RegisterID,FirstName,LastName,TelephoneNo,EMail,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,Gender
 
 router.post('/add',(req,res) => {
 	var mxId = 0;
 	connection.query('select MAX(RegisterID) FROM CUSTOMER;',(err,result) => {
 		mxId = parseInt(result[0]['MAX(RegisterID)'])+1;
-		if(Number.isNaN(mxId)) mxId = 1; //Case first customer
 	
 
 

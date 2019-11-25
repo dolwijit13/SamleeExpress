@@ -67,6 +67,7 @@ router.post('/delete',(req,res) => {
 		}
 
 	})
+	res.json({});
 	return true;
 });
 

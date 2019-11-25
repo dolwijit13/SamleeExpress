@@ -26,6 +26,7 @@ router.get('/:Parcel_ParcelID',(req,res) => {
 	WHERE rt.Parcel_ParcelID = ?";
 	connection.query(query,req.params.Parcel_ParcelID,(err,result) => {
 		//console.log(result);
+		result.sort((a,b) => (a.Timestamp > b.Timestamp) ? 1 : ((b.Timestamp > a.Timestamp) ? -1 : 0)); 
 		res.json(result);
     })
 });

@@ -19,7 +19,7 @@ class EmployeeCustomer extends React.Component {
         customerID: null,
         addCustomer: false,
         editCustomer: true,
-        firstRender: true
+        isDeleted: true,
     };
   }
 
@@ -31,7 +31,7 @@ class EmployeeCustomer extends React.Component {
           customers: data,
           doneLoading: true,
           customerID: data.RegisterID,
-          firstRender:false
+          isDeleted: false,
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -51,8 +51,8 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.post(url,data);
-            window.location.reload();
+            Axios.post(url,data).then(()=>console.log("deletedasdsa"))
+            .then(()=>this.setState({isDeleted:true}));
           }
         },
         {
@@ -74,8 +74,15 @@ class EmployeeCustomer extends React.Component {
     this.setState({customerID: customer.RegisterID});
   }
 
+  shouldComponentUpdate(nextProps, nextState)
+  {
+    if(nextState.isDeleted) return true;
+    if(this.state.isDeleted) return true;
+    return false;
+  }
 
   render() {
+    console.log("render");
     var addBtn = 
       <Link to="/customerManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Customer</button></Link>;
     

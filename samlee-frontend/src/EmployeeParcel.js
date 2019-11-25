@@ -20,6 +20,7 @@ class EmployeeParcel extends React.Component {
         employeeSSN: this.props.ssn,
         parcel: null,
         addParcel: false,
+        isDeleted: true //true for first render
     };
   }
 
@@ -35,6 +36,7 @@ class EmployeeParcel extends React.Component {
         this.setState({
           parcels: data,
           doneLoading: true,
+          isDeleted: false
       })}
       )
       .catch(error => this.setState({ error, doneLoading: false }));
@@ -51,8 +53,8 @@ class EmployeeParcel extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.post(url,data);
-            window.location = "/customerParcel/";
+            Axios.post(url,data).then(()=>
+            this.setState({isDeleted:true}));
           }
         },
         {
@@ -70,7 +72,21 @@ class EmployeeParcel extends React.Component {
     this.setState({addParcel: false, parcel:parcel});
   }
 
+  componentWillUpdate(nextProps, nextState)
+  {
+    this.fetchDatas()
+  }
+
+
+  shouldComponentUpdate(nextProps, nextState)
+  {
+    if(nextState.isDeleted) return true;
+    if(this.state.isDeleted) return true;
+    return false;
+  }
+
   render() {
+    console.log("render");
     var addBtn = 
       <Link to="/customerParcelManage/"><button className="btn btn-dark" onClick={this.addHandler}>Add Parcel</button></Link>;
     
