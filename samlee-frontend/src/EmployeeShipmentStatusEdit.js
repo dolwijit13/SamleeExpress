@@ -90,11 +90,27 @@ class EmployeeShipmentStatusEdit extends React.Component {
 
     handleChange(event){
         const data = this.state.data;
+
+        let nam = event.target.name;
+        let val = event.target.value;
+        if(this.isHaveSpecialChar(val)) return;
         data[event.target.name] = event.target.value;  
         this.setState({
             data: data,
         });
     }
+
+    isHaveSpecialChar(s)
+    {
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]+/;
+
+        if(format.test(s)){
+        return true;
+        } else {
+        return false;
+        }
+    }
+
 
     handleSubmit(event){
         if ( !this.state.addShipmentStatus ){ //Case edit
