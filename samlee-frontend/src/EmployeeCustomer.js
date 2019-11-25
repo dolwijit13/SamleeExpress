@@ -51,8 +51,8 @@ class EmployeeCustomer extends React.Component {
         {
           label: 'Yes',
           onClick: () => {
-            Axios.post(url,data).then(()=>console.log("deletedasdsa"))
-            .then(()=>this.setState({isDeleted:true}));
+            Axios.post(url,data);
+            window.location.reload();
           }
         },
         {
