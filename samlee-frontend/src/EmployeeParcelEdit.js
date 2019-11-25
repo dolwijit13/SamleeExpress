@@ -66,6 +66,17 @@ class EmployeeParcelEdit extends React.Component {
     changeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;
+        if(this.isHaveSpecialChar(val)) return;
+        if("PostalCode" == nam.trim())
+        {
+            if(val.length >5) return;
+            if(this.isHaveChar(val)) return;
+        }
+        if("FK_Receive_Customer_ReceiverID" == nam.trim())
+        {
+            if(val.length >10) return;
+            if(this.isHaveChar(val)) return;
+        }
         this.setState({[nam]: val});
         console.log(nam, val);
     }
@@ -74,8 +85,42 @@ class EmployeeParcelEdit extends React.Component {
         this.resetForm();
     }
 
+    isHaveChar(s)
+    {
+        var format = /[a-zA-Z]+/;
+
+        if(format.test(s)){
+        return true;
+        } else {
+        return false;
+        }
+    }
+
+    isHaveSpecialChar(s)
+    {
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]+/;
+
+        if(format.test(s)){
+        return true;
+        } else {
+        return false;
+        }
+    }
+
+//ParcelID,Type,InsuranceType,HouseNo,Street,SubDistrict,District,Province,Country,PostalCode,ShipmentType,FK_Send_Customer_SenderID,FK_Receive_Customer_ReceiverID,FK_Store_Employee_StockSSN
     handleSubmit(event){
         event.preventDefault();
+        console.log(this.state.FK_Receive_Customer_ReceiverID);
+        if(this.state.PostalCode < "10000" || this.state.PostalCode.length<5)
+        {
+            alert("Wrong Postal Code (must be 10000-99999)");
+            return;
+        }
+        if(this.state.addParcel && this.state.FK_Receive_Customer_ReceiverID.length<10)
+        {
+            alert("Wrong ReceiverID (must have exactly 10 characters)");
+            return;
+        }
         if ( this.state.addParcel ){ //Case Add
 
             const data = {Type: this.state.Type,

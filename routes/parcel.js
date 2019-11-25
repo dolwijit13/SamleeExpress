@@ -78,9 +78,10 @@ router.post('/edit/:ParcelID', (req,res) => {
 	const ParcelID = req.params.ParcelID;
 	const parcel = req.body;
 
-	const query = "UPDATE Parcel SET ?";
+	const query = "UPDATE Parcel SET ? WHERE ParcelID = ?";
+	console.log(query);
 
-	connection.query(query,parcel, (err)=>{
+	connection.query(query,[parcel,ParcelID], (err)=>{
 		if ( err ){
 			res.status(403).send("internal error");
 			throw err;

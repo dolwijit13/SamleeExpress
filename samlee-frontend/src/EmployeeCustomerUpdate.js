@@ -22,7 +22,7 @@ class EmployeeCustomerUpdate extends React.Component {
                 District: null,
                 Province: null,
                 Country: null,
-                PostalCode: null,
+                PostalCode: "",
                 Gender: null,
             },
             error: null,
@@ -34,7 +34,6 @@ class EmployeeCustomerUpdate extends React.Component {
         this.resetData = this.resetData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.backHandler = this.backHandler.bind(this);
     }
 
     fetchDatas() {
@@ -69,7 +68,7 @@ class EmployeeCustomerUpdate extends React.Component {
                 District: null,
                 Province: null,
                 Country: null,
-                PostalCode: null,
+                PostalCode: "",
                 Gender: null,
             };
             this.setState({data: data});
@@ -79,6 +78,21 @@ class EmployeeCustomerUpdate extends React.Component {
 
     handleChange(event){
         event.preventDefault();
+
+        let nam = event.target.name;
+        let val = event.target.value;
+        if(this.isHaveSpecialChar(val)) return;
+        if("TelephoneNo" == nam.trim())
+        {
+            if(val.length >10) return;
+            if(this.isHaveChar(val))return;
+        }
+        if("PostalCode" == nam.trim())
+        {
+            if(val.length >5) return;
+            if(this.isHaveChar(val)) return;
+        }
+        console.log("test");
         const data = this.state.data;
         data[event.target.name] = event.target.value;
         this.setState({
@@ -86,71 +100,79 @@ class EmployeeCustomerUpdate extends React.Component {
         });
     }
 
+    isHaveChar(s)
+    {
+        var format = /[a-zA-Z]+/;
+
+        if(format.test(s)){
+        return true;
+        } else {
+        return false;
+        }
+    }
+
+    isHaveSpecialChar(s)
+    {
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]+/;
+
+        if(format.test(s)){
+        return true;
+        } else {
+        return false;
+        }
+    }
+
     handleSubmit(event){
-        if(!this.state.addCustomer){ //Case Edit
-            event.preventDefault();
-            const data = this.state.data;
+        event.preventDefault();
+        const data = this.state.data;
+        console.log(data);
 
-            //chk First and Last name can't be empty
-            if(data.FirstName == "" || data.FirstName == null)
-            {
-                alert("FirstName can't be empty");
-            }
-            else if(data.LastName == "" || data.LastName == null)
-            {
-                alert("Last can't be empty");
-            }
-
-            else
-            {
-                const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
-                axios.post(url, data).then((res)=>{
-                    if ( res.status === 200 ){
-                        console.log("success");
-                        alert("customer data updated!");
-                        window.location = "/customerList/";
-                    }
-                }).catch((err)=>{
-                    console.log(err);
-                });
-                window.location.reload();
-            }
+        //chk First and Last name can't be empty
+        if(data.FirstName == "" || data.FirstName == null)
+        {
+            alert("First name can't be empty");
+        }
+        else if(data.LastName == "" || data.LastName == null)
+        {
+            alert("Last name can't be empty");
+        }
+        else if(data.PostalCode == "" || data.PostalCode == null)
+        {
+            alert("Postal Code can't be empty");
+        }
+        else if(data.PostalCode < "10000" || data.PostalCode.length<5)
+        {
+            alert("Wrong Postal Code (must be 10000-99999)");
+        }
+        else if(!this.state.addCustomer){ //Case Edit
+            const url = "http://localhost:8000/customer/edit/"  + this.state.customerID;
+            axios.post(url, data).then((res)=>{
+                if ( res.status === 200 ){
+                    console.log("success");
+                    alert("customer data updated!");
+                    window.location = "/customerList/";
+                }
+            }).catch((err)=>{
+                console.log(err);
+            });
+            window.location.reload();
         }
         else { //Case Add
-            event.preventDefault();
             const data = this.state.data;
             const url = "http://localhost:8000/customer/add";
 
-            console.log(data);
-            //chk First and Last name can't be empty
-            if(data.FirstName == "" || data.FirstName == null)
-            {
-                alert("FirstName can't be empty");
-            }
-            else if(data.LastName == "" || data.LastName == null)
-            {
-                alert("Last can't be empty");
-            }
-
-            else
-            {
-                axios.post(url, data).then((res)=>{
-                    if ( res.status === 200 ){
-                        console.log("success");
-                        alert("customer data added!");
-                        window.location = "/customerList/";
-                    }
-                }).catch((err)=>{
-                    console.log(err);
-                });
-            }
+            
+            axios.post(url, data).then((res)=>{
+                if ( res.status === 200 ){
+                    console.log("success");
+                    alert("customer data added!");
+                    window.location = "/customerList/";
+                }
+            }).catch((err)=>{
+                console.log(err);
+            });
         }
     }
-
-    backHandler(){
-
-    }
-
     render(){
 
         if ( !this.state.doneLoading && !this.state.addCustomer){
@@ -195,7 +217,7 @@ class EmployeeCustomerUpdate extends React.Component {
             }
             else {
                 if(value !== null) input = <input name={key} className="form-control" type="text" id={key} value={value} onChange={this.handleChange}></input>
-                else input = <input name={key} className="form-control" type="text" id={key} onChange={this.handleChange}></input>
+                else input = <input name={key} className="form-control" type="text" id={key} value={""} onChange={this.handleChange}></input>
             }
 
             items.push(

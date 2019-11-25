@@ -74,7 +74,7 @@ class EmployeeParcel extends React.Component {
 
   componentWillUpdate(nextProps, nextState)
   {
-    this.fetchDatas()
+    this.fetchDatas();
   }
 
 
