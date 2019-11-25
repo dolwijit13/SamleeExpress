@@ -80,12 +80,21 @@ router.post('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 	const Parcel_ParcelID = req.params.Parcel_ParcelID;
 	const ShipmentStatus_ShipmentID = req.params.ShipmentStatus_ShipmentID;
 
+
 	var {Timestamp,ShipmentPoint,Status} = req.body;
+	var tmp = (new Date(Timestamp));
 
-	console.log(Parcel_ParcelID);
-	console.log(ShipmentStatus_ShipmentID);
+	const TimeData = {
+		y : tmp.getFullYear(),
+		mo : tmp.getMonth()+1,
+		d : tmp.getDate(),
+		h : tmp.getHours(),
+		mi : tmp.getMinutes(),
+		s : tmp.getSeconds()
+	}
 
-	
+	Timestamp = TimeData.y + "-" + TimeData.mo + "-" + TimeData.d + " " + TimeData.h + ":" + TimeData.mi + ":" + TimeData.s;
+
 	connection.beginTransaction(function(err){
 		if ( err ) throw err;
 		connection.query("UPDATE ResponseTo SET Timestamp = ?, ShipmentPoint = ? 	\
@@ -96,6 +105,7 @@ router.post('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 						throw error;
 					});
 				}
+				console.log("Updated RespondTo ShipmentStatus_ShipmentID : "+ShipmentStatus_ShipmentID);
 				connection.query("UPDATE ShipmentStatus SET Status = ? WHERE ShipmentID = ?;",
 					[Status,ShipmentStatus_ShipmentID], (error,result)=>{
 						if ( error ) {
@@ -103,6 +113,7 @@ router.post('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 								throw error;
 							});
 						}
+						console.log("Updated ShipmentStatus ShipmentID : "+ShipmentStatus_ShipmentID);
 						connection.commit(function(err){
 							if (err) {
 								return connection.rollback(function() {
@@ -110,7 +121,6 @@ router.post('/edit/:Parcel_ParcelID&:ShipmentStatus_ShipmentID', (req,res)=>{
 								});
 							}
 							res.send("success");
-							console.log("shipment status updated");
 						});
 					});
 			});

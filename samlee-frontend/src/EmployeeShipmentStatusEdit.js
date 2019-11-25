@@ -93,7 +93,13 @@ class EmployeeShipmentStatusEdit extends React.Component {
 
         let nam = event.target.name;
         let val = event.target.value;
-        if(this.isHaveSpecialChar(val)) return;
+        console.log(nam);
+        console.log(val);
+        if(nam.trim()!= "Timestamp" && this.isHaveSpecialChar(val))
+        {
+            console.log("yamero");
+            return;
+        }
         data[event.target.name] = event.target.value;  
         this.setState({
             data: data,
@@ -132,6 +138,7 @@ class EmployeeShipmentStatusEdit extends React.Component {
             {
                 const url = 'http://localhost:8000/shipmentStatus/edit/' + this.state.data.Parcel_ParcelID
                 + '&' + this.state.data.ShipmentStatus_ShipmentID;
+                console.log(url);
                 axios.post(url, data).then((res)=>{
                     if ( res.status === 200 ){
                         console.log("success");

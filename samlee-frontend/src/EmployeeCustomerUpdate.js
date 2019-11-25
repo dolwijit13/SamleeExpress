@@ -72,7 +72,6 @@ class EmployeeCustomerUpdate extends React.Component {
             };
             this.setState({data: data});
         }
-        window.location.reload();
     }
 
     handleChange(event){
@@ -149,12 +148,10 @@ class EmployeeCustomerUpdate extends React.Component {
                 if ( res.status === 200 ){
                     console.log("success");
                     alert("customer data updated!");
-                    window.location = "/customerList/";
                 }
             }).catch((err)=>{
                 console.log(err);
             });
-            window.location.reload();
         }
         else { //Case Add
             const data = this.state.data;
@@ -165,7 +162,6 @@ class EmployeeCustomerUpdate extends React.Component {
                 if ( res.status === 200 ){
                     console.log("success");
                     alert("customer data added!");
-                    window.location = "/customerList/";
                 }
             }).catch((err)=>{
                 console.log(err);
