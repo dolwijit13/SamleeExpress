@@ -111,7 +111,7 @@ class EmployeeCustomerUpdate extends React.Component {
 
     isHaveSpecialChar(s)
     {
-        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?]+/;
+        var format = /[!#$%^&*()+\-=\[\]{};':"\\|,<>?]+/;
 
         if(format.test(s)){
         return true;
